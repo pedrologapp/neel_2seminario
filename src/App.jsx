@@ -432,7 +432,10 @@ function App() {
               <p style={{fontFamily:"'Lora',Georgia,serif",color:'rgba(255,255,255,.5)',fontSize:'.88rem',margin:'.4rem 0 2rem'}}>
                 por participante
               </p>
-
+              {/* após o <p> de "por participante" */}
+              <p style={{fontFamily:"'Lora',Georgia,serif",color:'rgba(255,255,255,.6)',fontSize:'.82rem',margin:'0 0 2rem',display:'flex',alignItems:'center',justifyContent:'center',gap:'.4rem'}}>
+              🎟️ QR Code de entrada enviado por WhatsApp
+              </p>
               {/* 5 — Botão na linha própria */}
               <div>
                 {!showForm ? (
@@ -500,7 +503,7 @@ function App() {
                   {/* WhatsApp */}
                   <div style={{background:'#fffbf0',border:'1.5px solid #f0d98a',borderRadius:'1rem',padding:'1.25rem',marginBottom:'1.25rem'}}>
                     <p style={{fontFamily:"-apple-system,'Segoe UI',sans-serif",fontWeight:700,fontSize:'.82rem',color:'#92400e',display:'flex',alignItems:'center',gap:'.5rem',marginBottom:'1rem'}}>
-                      <Phone style={{width:'.9rem',height:'.9rem',color:'var(--gold)'}}/> O comprovante será enviado para este WhatsApp — digite com atenção!
+                      <Phone style={{width:'.9rem',height:'.9rem',color:'var(--gold)'}}/> Seu QR Code de entrada no evento será enviado para este WhatsApp — digite com atenção!
                     </p>
                     <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'1rem'}}>
                       <div>
