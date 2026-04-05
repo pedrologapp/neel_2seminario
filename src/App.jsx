@@ -277,7 +277,7 @@ function App() {
     if(!validate()) return;
     setIsProcessing(true);
     try {
-      const res = await fetch('https://webhook.escolaamadeus.com/webhook/neelseminariol',{
+      const res = await fetch('https://webhook.escolaamadeus.com/webhook/neelseminario',{
         method:'POST', headers:{'Content-Type':'application/json'},
         body:JSON.stringify({nomeParticipante:formData.nomeParticipante,cpf:formData.cpf,email:formData.email,phone:formData.phone,paymentMethod:formData.paymentMethod,installments:formData.installments,ticketQuantity:formData.quantidade,amount:valorTotal,timestamp:new Date().toISOString(),event:'NEEL-2SeminarioEspirita'}),
       });
