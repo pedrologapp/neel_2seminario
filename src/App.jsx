@@ -25,6 +25,7 @@ import {
   Star,
   Sparkles,
   Zap,
+  Instagram,
 } from 'lucide-react';
 
 function App() {
@@ -115,9 +116,9 @@ function App() {
 
   // ============================================
   // CÁLCULO DE PREÇO
-  // Cartão: à vista (1x) ou parcelado em 2x (com juros)
+  // Cartão: à vista (1x) ou parcelado em até 4x (com juros)
   // ============================================
-  const PRECO_BASE = 40.0;  // ← altere o valor do ingresso aqui
+  const PRECO_BASE = 100.0;  // ← Valor do 1º Lote
 
   const calculatePrice = (parcelas = null) => {
     const numParcelas = parcelas ?? (parseInt(formData.installments) || 1);
@@ -315,14 +316,14 @@ function App() {
     <div className="min-h-screen bg-white">
       {/* HERO SECTION */}
       <section className="hero-section relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/40 to-black/50 z-10"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/50 to-black/60 z-10"></div>
         <div className="absolute inset-0 bg-[url('./assets/hero.jpg')] bg-cover bg-center"></div>
         
         <div className="relative z-20 min-h-screen flex flex-col items-center justify-center px-4 py-20">
           <div className="max-w-2xl text-center space-y-6 animate-fade-in">
             <div className="flex items-center justify-center space-x-2 mb-4">
               <Sparkles className="h-5 w-5 text-yellow-300" />
-              <span className="text-yellow-300 text-sm font-semibold tracking-widest">2º SEMINÁRIO ESPÍRITA</span>
+              <span className="text-yellow-300 text-sm font-semibold tracking-widest uppercase">2º Seminário Espírita do NEEL</span>
               <Sparkles className="h-5 w-5 text-yellow-300" />
             </div>
             
@@ -334,10 +335,10 @@ function App() {
               "Todos os que estais cansados e oprimidos, e eu vos aliviarei."
             </p>
 
-            <div className="pt-8 space-y-4">
+            <div className="pt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
               <Button
                 size="lg"
-                className="bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-white font-bold px-8 py-6 text-lg rounded-full shadow-2xl transform hover:scale-105 transition-all"
+                className="bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-white font-bold px-8 py-6 text-lg rounded-full shadow-2xl transform hover:scale-105 transition-all w-full sm:w-auto"
                 onClick={showInscricaoForm}
               >
                 Garantir Minha Vaga
@@ -347,7 +348,7 @@ function App() {
               <Button
                 variant="outline"
                 size="lg"
-                className="border-2 border-white text-white hover:bg-white/10 font-semibold px-8 py-6 text-lg rounded-full"
+                className="border-2 border-white text-white hover:bg-white/20 font-semibold px-8 py-6 text-lg rounded-full w-full sm:w-auto"
                 onClick={() => scrollToSection('sobre')}
               >
                 Saiba Mais
@@ -375,269 +376,113 @@ function App() {
         </div>
       </section>
 
-      {/* SOBRE O EVENTO */}
+      {/* SOBRE O EVENTO - RESUMO DIRETO */}
       <section id="sobre" className="section-padding bg-gradient-to-b from-white to-blue-50">
         <div className="container mx-auto max-w-4xl">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-serif text-blue-900 mb-4">Sobre o Evento</h2>
+          <div className="text-center mb-12">
+            <h2 className="text-4xl md:text-5xl font-serif text-blue-900 mb-4">Resumo do Evento</h2>
             <div className="w-20 h-1 bg-gradient-to-r from-yellow-500 to-blue-600 mx-auto rounded-full"></div>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="space-y-6">
-              <p className="text-lg text-gray-700 leading-relaxed">
-                O <strong>2º Seminário Espírita do NEEL</strong> é um encontro de espiritualidade, reflexão e acolhimento. Reunimos pessoas que buscam compreender melhor os ensinamentos espíritas e encontrar paz interior.
-              </p>
-              <p className="text-lg text-gray-700 leading-relaxed">
-                Com palestrantes renomados e uma atmosfera de harmonia, este seminário promove o crescimento espiritual e o fortalecimento da fé.
-              </p>
-              <div className="space-y-3 pt-4">
-                <div className="flex items-start space-x-4">
-                  <Zap className="h-6 w-6 text-yellow-500 flex-shrink-0 mt-1" />
-                  <div>
-                    <h4 className="font-semibold text-blue-900">Palestras Inspiradoras</h4>
-                    <p className="text-sm text-gray-600">Ensinamentos profundos com especialistas renomados</p>
+          <Card className="border-0 shadow-xl overflow-hidden mb-12">
+            <CardContent className="p-8 md:p-12 space-y-6">
+              <div className="grid md:grid-cols-2 gap-8">
+                <div className="space-y-4">
+                  <div className="flex items-start space-x-3">
+                    <Sparkles className="h-6 w-6 text-yellow-500 flex-shrink-0 mt-1" />
+                    <div>
+                      <p className="text-sm uppercase text-gray-500 font-bold tracking-wider">Tema</p>
+                      <p className="text-xl font-serif text-blue-900">Vinde a Mim — 2º Seminário Espírita do NEEL</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start space-x-3">
+                    <MapPin className="h-6 w-6 text-yellow-500 flex-shrink-0 mt-1" />
+                    <div>
+                      <p className="text-sm uppercase text-gray-500 font-bold tracking-wider">Local</p>
+                      <p className="text-xl font-serif text-blue-900">Auditório SESC Cidade Alta, Natal-RN</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start space-x-3">
+                    <Users className="h-6 w-6 text-yellow-500 flex-shrink-0 mt-1" />
+                    <div>
+                      <p className="text-sm uppercase text-gray-500 font-bold tracking-wider">Palestrantes</p>
+                      <p className="text-xl font-serif text-blue-900">Jorge Elarrat (RO) e Rafael Siqueira (RJ)</p>
+                    </div>
                   </div>
                 </div>
-                <div className="flex items-start space-x-4">
-                  <Heart className="h-6 w-6 text-yellow-500 flex-shrink-0 mt-1" />
-                  <div>
-                    <h4 className="font-semibold text-blue-900">Comunidade Acolhedora</h4>
-                    <p className="text-sm text-gray-600">Encontro com pessoas que compartilham seus valores</p>
+                <div className="space-y-4">
+                  <div className="flex items-start space-x-3">
+                    <Heart className="h-6 w-6 text-yellow-500 flex-shrink-0 mt-1" />
+                    <div>
+                      <p className="text-sm uppercase text-gray-500 font-bold tracking-wider">Realização</p>
+                      <p className="text-xl font-serif text-blue-900">NEEL — Centro Espírita Esperança de Luz</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start space-x-3">
+                    <Shield className="h-6 w-6 text-yellow-500 flex-shrink-0 mt-1" />
+                    <div>
+                      <p className="text-sm uppercase text-gray-500 font-bold tracking-wider">Apoio</p>
+                      <p className="text-xl font-serif text-blue-900">CRENORTE e FERN</p>
+                    </div>
                   </div>
                 </div>
-                <div className="flex items-start space-x-4">
-                  <Star className="h-6 w-6 text-yellow-500 flex-shrink-0 mt-1" />
-                  <div>
-                    <h4 className="font-semibold text-blue-900">Experiência Transformadora</h4>
-                    <p className="text-sm text-gray-600">Momentos de reflexão que marcam vidas</p>
-                  </div>
+              </div>
+
+              <Separator className="my-8" />
+
+              <div className="bg-blue-50 p-6 rounded-2xl border border-blue-100">
+                <h4 className="text-lg font-bold text-blue-900 mb-4 flex items-center">
+                  <Phone className="h-5 w-5 mr-2" />
+                  Dúvidas? Fale Conosco:
+                </h4>
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <a href="https://wa.me/5584991335975" className="flex items-center p-3 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                    <Phone className="h-4 w-4 text-green-600 mr-2" />
+                    <span className="text-sm font-semibold">(84) 9 9133-5975</span>
+                  </a>
+                  <a href="https://wa.me/5584988049371" className="flex items-center p-3 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                    <Phone className="h-4 w-4 text-green-600 mr-2" />
+                    <span className="text-sm font-semibold">(84) 9 8804-9371</span>
+                  </a>
+                  <a href="https://instagram.com/neelsga" className="flex items-center p-3 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow sm:col-span-2">
+                    <Instagram className="h-4 w-4 text-pink-600 mr-2" />
+                    <span className="text-sm font-semibold">@neelsga (Instagram)</span>
+                  </a>
                 </div>
               </div>
-            </div>
-
-            <div className="bg-gradient-to-br from-blue-100 to-blue-50 rounded-2xl p-8 border-2 border-blue-200">
-              <h3 className="text-2xl font-serif text-blue-900 mb-6">O Que Você Receberá</h3>
-              <ul className="space-y-4">
-                <li className="flex items-center space-x-3">
-                  <CheckCircle className="h-5 w-5 text-yellow-500 flex-shrink-0" />
-                  <span className="text-gray-700">Acesso às palestras do dia inteiro</span>
-                </li>
-                <li className="flex items-center space-x-3">
-                  <CheckCircle className="h-5 w-5 text-yellow-500 flex-shrink-0" />
-                  <span className="text-gray-700">Material de apoio exclusivo</span>
-                </li>
-                <li className="flex items-center space-x-3">
-                  <CheckCircle className="h-5 w-5 text-yellow-500 flex-shrink-0" />
-                  <span className="text-gray-700">Coffee break durante o evento</span>
-                </li>
-                <li className="flex items-center space-x-3">
-                  <CheckCircle className="h-5 w-5 text-yellow-500 flex-shrink-0" />
-                  <span className="text-gray-700">Certificado de participação</span>
-                </li>
-                <li className="flex items-center space-x-3">
-                  <CheckCircle className="h-5 w-5 text-yellow-500 flex-shrink-0" />
-                  <span className="text-gray-700">Conexão com a comunidade espírita</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* PALESTRANTES */}
-      <section id="palestrantes" className="section-padding bg-white">
-        <div className="container mx-auto max-w-4xl">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-serif text-blue-900 mb-4">Palestrantes</h2>
-            <div className="w-20 h-1 bg-gradient-to-r from-yellow-500 to-blue-600 mx-auto rounded-full"></div>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-8">
-            <div className="group">
-              <div className="relative overflow-hidden rounded-2xl mb-6 h-64 bg-gradient-to-br from-blue-200 to-blue-100 flex items-center justify-center shadow-lg">
-                <div className="text-center">
-                  <Users className="h-20 w-20 text-blue-400 mx-auto mb-2" />
-                  <p className="text-blue-600 font-semibold">Foto do Palestrante</p>
-                </div>
-              </div>
-              <h3 className="text-2xl font-serif text-blue-900 mb-2">Jorge Elarrat</h3>
-              <p className="text-sm text-yellow-600 font-semibold mb-3">Rondônia (RO)</p>
-              <p className="text-gray-700 leading-relaxed">
-                Especialista em espiritismo com vasta experiência em palestras e orientação espiritual. Traz ensinamentos profundos e práticos para o dia a dia.
-              </p>
-            </div>
-
-            <div className="group">
-              <div className="relative overflow-hidden rounded-2xl mb-6 h-64 bg-gradient-to-br from-blue-200 to-blue-100 flex items-center justify-center shadow-lg">
-                <div className="text-center">
-                  <Users className="h-20 w-20 text-blue-400 mx-auto mb-2" />
-                  <p className="text-blue-600 font-semibold">Foto do Palestrante</p>
-                </div>
-              </div>
-              <h3 className="text-2xl font-serif text-blue-900 mb-2">Rafael Siqueira</h3>
-              <p className="text-sm text-yellow-600 font-semibold mb-3">Rio de Janeiro (RJ)</p>
-              <p className="text-gray-700 leading-relaxed">
-                Conferencista renomado no movimento espírita. Suas palestras tocam o coração e inspiram transformação espiritual genuína.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* INFORMAÇÕES PRÁTICAS */}
-      <section id="praticas" className="section-padding bg-gradient-to-b from-blue-50 to-white">
-        <div className="container mx-auto max-w-4xl">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-serif text-blue-900 mb-4">Informações Práticas</h2>
-            <div className="w-20 h-1 bg-gradient-to-r from-yellow-500 to-blue-600 mx-auto rounded-full"></div>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-8">
-            <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow">
-              <CardHeader className="bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-t-lg">
-                <div className="flex items-center space-x-3">
-                  <MapPin className="h-6 w-6" />
-                  <CardTitle>Local</CardTitle>
-                </div>
-              </CardHeader>
-              <CardContent className="pt-6">
-                <p className="font-semibold text-gray-900 mb-2">Auditório SESC Cidade Alta</p>
-                <p className="text-sm text-gray-600">
-                  Rua Coronel Bozerra, 33<br />
-                  Cidade Alta, Natal - RN
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow">
-              <CardHeader className="bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-t-lg">
-                <div className="flex items-center space-x-3">
-                  <Calendar className="h-6 w-6" />
-                  <CardTitle>Data e Hora</CardTitle>
-                </div>
-              </CardHeader>
-              <CardContent className="pt-6">
-                <p className="font-semibold text-gray-900 mb-2">31 de Outubro de 2026</p>
-                <p className="text-sm text-gray-600">
-                  Início: 08h00<br />
-                  Término: 17h00
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow">
-              <CardHeader className="bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-t-lg">
-                <div className="flex items-center space-x-3">
-                  <Users className="h-6 w-6" />
-                  <CardTitle>Público</CardTitle>
-                </div>
-              </CardHeader>
-              <CardContent className="pt-6">
-                <p className="text-sm text-gray-600">
-                  Aberto para todas as pessoas interessadas em espiritismo e crescimento espiritual. Não é necessário ser espírita para participar.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow">
-              <CardHeader className="bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-t-lg">
-                <div className="flex items-center space-x-3">
-                  <Heart className="h-6 w-6" />
-                  <CardTitle>Apoio</CardTitle>
-                </div>
-              </CardHeader>
-              <CardContent className="pt-6">
-                <p className="text-sm text-gray-600">
-                  <strong>CRENORTE</strong><br />
-                  <strong>FERN</strong> — Federação Espírita do RN
-                </p>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
-
-      {/* IMPORTANTE */}
-      <section id="documentacao" className="section-padding bg-white">
-        <div className="container mx-auto max-w-4xl">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-serif text-blue-900 mb-4">Importante — Leia</h2>
-            <div className="w-20 h-1 bg-gradient-to-r from-yellow-500 to-blue-600 mx-auto rounded-full"></div>
-          </div>
-
-          <div className="space-y-4">
-            <div className="p-6 bg-gradient-to-r from-blue-50 to-blue-100 rounded-xl border-l-4 border-blue-600">
-              <div className="flex items-start space-x-4">
-                <Calendar className="h-6 w-6 text-blue-600 flex-shrink-0 mt-1" />
-                <div>
-                  <p className="text-gray-800">
-                    O evento acontecerá no dia <strong>31 de outubro de 2026 (sábado)</strong>, das <strong>08h às 17h</strong>, no Auditório SESC Cidade Alta.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="p-6 bg-gradient-to-r from-blue-50 to-blue-100 rounded-xl border-l-4 border-blue-600">
-              <div className="flex items-start space-x-4">
-                <Shield className="h-6 w-6 text-blue-600 flex-shrink-0 mt-1" />
-                <div>
-                  <p className="text-gray-800">
-                    O ingresso é <strong>individual e intransferível</strong>. Apresente o comprovante de pagamento no dia do evento.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="p-6 bg-gradient-to-r from-blue-50 to-blue-100 rounded-xl border-l-4 border-blue-600">
-              <div className="flex items-start space-x-4">
-                <Phone className="h-6 w-6 text-blue-600 flex-shrink-0 mt-1" />
-                <div>
-                  <p className="text-gray-800">
-                    O comprovante de pagamento e as informações de acesso serão enviados para o <strong>WhatsApp informado no cadastro</strong>.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="p-6 bg-gradient-to-r from-red-50 to-red-100 rounded-xl border-l-4 border-red-600">
-              <div className="flex items-start space-x-4">
-                <X className="h-6 w-6 text-red-600 flex-shrink-0 mt-1" />
-                <div>
-                  <p className="text-red-800 font-semibold">
-                    Após o pagamento, não será permitido o reembolso.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
+            </CardContent>
+          </Card>
         </div>
       </section>
 
       {/* INGRESSO E FORMULÁRIO */}
-      <section id="custos" className="section-padding bg-gradient-to-b from-white to-blue-50">
+      <section id="custos" className="section-padding bg-white">
         <div className="container mx-auto max-w-4xl">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-serif text-blue-900 mb-4">Ingresso</h2>
+            <Badge className="mb-4 bg-yellow-500 hover:bg-yellow-600 text-blue-900 font-bold px-4 py-1 rounded-full animate-pulse">
+              1º LOTE DISPONÍVEL
+            </Badge>
+            <h2 className="text-4xl md:text-5xl font-serif text-blue-900 mb-4">Inscrição</h2>
             <p className="text-lg text-gray-700">
-              Garanta sua vaga no 2º Seminário Espírita do NEEL
+              Garanta sua vaga no valor promocional de lançamento
             </p>
             <div className="w-20 h-1 bg-gradient-to-r from-yellow-500 to-blue-600 mx-auto rounded-full mt-4"></div>
           </div>
 
-          <Card className="mb-8 border-0 shadow-xl">
-            <CardHeader className="bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-t-lg text-center">
-              <CardTitle className="text-5xl font-serif">R$ 40,00</CardTitle>
-              <CardDescription className="text-blue-100 text-lg">por participante</CardDescription>
+          <Card className="mb-8 border-0 shadow-2xl">
+            <CardHeader className="bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-t-lg text-center py-10">
+              <p className="text-blue-100 uppercase tracking-widest font-bold mb-2">Valor do Investimento</p>
+              <CardTitle className="text-6xl font-serif">R$ 100,00</CardTitle>
+              <CardDescription className="text-blue-100 text-lg mt-2">por participante</CardDescription>
             </CardHeader>
-            <CardContent className="pt-8">
+            <CardContent className="pt-10">
               <div className="grid md:grid-cols-2 gap-8 mb-8">
-                <div>
-                  <h4 className="font-serif text-xl text-blue-900 mb-4">O ingresso inclui:</h4>
+                <div className="space-y-4">
+                  <h4 className="font-serif text-xl text-blue-900 mb-2">O que está incluso:</h4>
                   <ul className="space-y-3">
                     <li className="flex items-center space-x-3">
                       <CheckCircle className="h-5 w-5 text-yellow-500 flex-shrink-0" />
-                      <span className="text-gray-700">Acesso às palestras do dia inteiro</span>
+                      <span className="text-gray-700">Acesso total às palestras</span>
                     </li>
                     <li className="flex items-center space-x-3">
                       <CheckCircle className="h-5 w-5 text-yellow-500 flex-shrink-0" />
@@ -645,29 +490,29 @@ function App() {
                     </li>
                     <li className="flex items-center space-x-3">
                       <CheckCircle className="h-5 w-5 text-yellow-500 flex-shrink-0" />
-                      <span className="text-gray-700">Coffee break</span>
+                      <span className="text-gray-700">Coffee break completo</span>
                     </li>
                     <li className="flex items-center space-x-3">
                       <CheckCircle className="h-5 w-5 text-yellow-500 flex-shrink-0" />
-                      <span className="text-gray-700">Certificado de participação</span>
+                      <span className="text-gray-700">Certificado digital</span>
                     </li>
                   </ul>
                 </div>
 
-                <div className="bg-gradient-to-br from-red-50 to-red-100 rounded-xl p-6 border-2 border-red-200">
-                  <h4 className="font-serif text-xl text-red-900 mb-4">Informações Importantes</h4>
+                <div className="bg-gradient-to-br from-yellow-50 to-orange-50 rounded-2xl p-6 border-2 border-yellow-200">
+                  <h4 className="font-serif text-xl text-blue-900 mb-4">Formas de Pagamento</h4>
                   <ul className="space-y-3">
                     <li className="flex items-start space-x-3">
-                      <Shield className="h-5 w-5 text-red-600 flex-shrink-0 mt-0.5" />
-                      <span className="text-gray-700 text-sm">Ingresso individual e intransferível</span>
+                      <Zap className="h-5 w-5 text-yellow-600 flex-shrink-0 mt-0.5" />
+                      <span className="text-gray-700 font-medium">PIX: Sem taxas e confirmação imediata</span>
                     </li>
                     <li className="flex items-start space-x-3">
-                      <CreditCard className="h-5 w-5 text-red-600 flex-shrink-0 mt-0.5" />
-                      <span className="text-gray-700 text-sm">PIX (sem taxas) ou Cartão em até 2x (com juros)</span>
+                      <CreditCard className="h-5 w-5 text-yellow-600 flex-shrink-0 mt-0.5" />
+                      <span className="text-gray-700 font-medium">Cartão: Parcele em até 4x (com juros)</span>
                     </li>
                     <li className="flex items-start space-x-3">
-                      <X className="h-5 w-5 text-red-600 flex-shrink-0 mt-0.5" />
-                      <span className="text-gray-700 text-sm">Sem reembolso após pagamento</span>
+                      <Shield className="h-5 w-5 text-yellow-600 flex-shrink-0 mt-0.5" />
+                      <span className="text-gray-700 text-sm">Transação 100% segura via Asaas</span>
                     </li>
                   </ul>
                 </div>
@@ -679,11 +524,11 @@ function App() {
                 {!showForm ? (
                   <Button
                     size="lg"
-                    className="bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-white font-bold px-8 py-6 text-lg rounded-full shadow-lg transform hover:scale-105 transition-all"
+                    className="bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-white font-bold px-12 py-8 text-xl rounded-full shadow-xl transform hover:scale-105 transition-all"
                     onClick={showInscricaoForm}
                   >
-                    Garantir Minha Vaga
-                    <ArrowRight className="ml-3 h-5 w-5" />
+                    Fazer Minha Inscrição Agora
+                    <ArrowRight className="ml-3 h-6 w-6" />
                   </Button>
                 ) : (
                   <Button
@@ -702,14 +547,14 @@ function App() {
 
           {/* FORMULÁRIO */}
           {showForm && (
-            <Card id="formulario-inscricao" className="border-0 shadow-2xl">
+            <Card id="formulario-inscricao" className="border-0 shadow-2xl animate-fade-in">
               <CardHeader className="bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-t-lg">
                 <CardTitle className="flex items-center text-white text-2xl">
                   <User className="mr-3 h-6 w-6" />
-                  Formulário de Inscrição
+                  Dados para Inscrição
                 </CardTitle>
                 <CardDescription className="text-blue-100">
-                  Preencha todos os dados para confirmar sua participação
+                  Informe seus dados corretamente para receber o comprovante
                 </CardDescription>
               </CardHeader>
               <CardContent className="pt-8">
@@ -731,7 +576,7 @@ function App() {
                           onChange={handleInputChange}
                           required
                           placeholder="Seu nome completo"
-                          className="mt-2 border-2 border-gray-200 focus:border-blue-500 rounded-lg"
+                          className="mt-2 border-2 border-gray-200 focus:border-blue-500 rounded-lg h-12"
                         />
                       </div>
 
@@ -739,7 +584,7 @@ function App() {
                       <div className="p-6 rounded-xl border-2 border-yellow-300 bg-yellow-50 space-y-4">
                         <p className="text-sm font-semibold text-yellow-800 flex items-center">
                           <Phone className="h-5 w-5 mr-2 flex-shrink-0" />
-                          O comprovante será enviado para este WhatsApp — digite com atenção!
+                          O comprovante será enviado para este WhatsApp:
                         </p>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           <div>
@@ -752,7 +597,7 @@ function App() {
                               required
                               placeholder="(84) 99999-9999"
                               maxLength="15"
-                              className={`mt-2 border-2 rounded-lg transition-colors ${
+                              className={`mt-2 border-2 rounded-lg transition-colors h-12 ${
                                 formData.phone && phoneError
                                   ? 'border-red-500 bg-red-50 focus:border-red-600'
                                   : formData.phone && phoneValid
@@ -771,7 +616,7 @@ function App() {
                               required
                               placeholder="(84) 99999-9999"
                               maxLength="15"
-                              className={`mt-2 border-2 rounded-lg transition-colors ${
+                              className={`mt-2 border-2 rounded-lg transition-colors h-12 ${
                                 formData.phoneConfirm && phoneError
                                   ? 'border-red-500 bg-red-50 focus:border-red-600'
                                   : formData.phoneConfirm && phoneValid
@@ -790,7 +635,7 @@ function App() {
                         {phoneValid && (
                           <p className="text-green-700 text-sm font-medium flex items-center">
                             <CheckCircle className="h-4 w-4 mr-2" />
-                            WhatsApp confirmado! O comprovante será enviado para <strong className="ml-1">{formData.phone}</strong>
+                            WhatsApp confirmado!
                           </p>
                         )}
                       </div>
@@ -806,7 +651,7 @@ function App() {
                             onChange={handleInputChange}
                             required
                             placeholder="seu@email.com"
-                            className="mt-2 border-2 border-gray-200 focus:border-blue-500 rounded-lg"
+                            className="mt-2 border-2 border-gray-200 focus:border-blue-500 rounded-lg h-12"
                           />
                         </div>
                         <div>
@@ -819,7 +664,7 @@ function App() {
                             required
                             placeholder="000.000.000-00"
                             maxLength="14"
-                            className={`mt-2 border-2 rounded-lg transition-colors ${
+                            className={`mt-2 border-2 rounded-lg transition-colors h-12 ${
                               formData.cpf && cpfError
                                 ? 'border-red-500 bg-red-50 focus:border-red-600'
                                 : formData.cpf && cpfValid
@@ -833,12 +678,6 @@ function App() {
                               {cpfError}
                             </p>
                           )}
-                          {cpfValid && !cpfError && (
-                            <p className="text-green-600 text-sm mt-2 flex items-center">
-                              <CheckCircle className="h-4 w-4 mr-1" />
-                              CPF válido
-                            </p>
-                          )}
                         </div>
                       </div>
                     </div>
@@ -848,7 +687,7 @@ function App() {
                   <div>
                     <h3 className="text-lg font-serif text-blue-900 mb-6 flex items-center">
                       <CreditCard className="mr-3 h-5 w-5 text-yellow-500" />
-                      Método de Pagamento *
+                      Escolha a Forma de Pagamento *
                     </h3>
 
                     <div className="space-y-3 mb-6">
@@ -871,7 +710,7 @@ function App() {
                           />
                           <div className="flex-1">
                             <p className="text-lg font-bold text-gray-900">PIX</p>
-                            <p className="text-sm text-gray-600">R$ 40,00 (sem taxas)</p>
+                            <p className="text-sm text-gray-600">R$ 100,00 (sem taxas)</p>
                           </div>
                         </div>
                       </div>
@@ -895,13 +734,13 @@ function App() {
                           />
                           <div className="flex-1">
                             <p className="text-lg font-bold text-gray-900">Cartão de Crédito</p>
-                            <p className="text-sm text-green-600 font-medium">Parcele em até 2x (com juros)</p>
+                            <p className="text-sm text-green-600 font-medium">Parcele em até 4x (com juros)</p>
                           </div>
                         </div>
                       </div>
                     </div>
 
-                    {/* SELETOR DE PARCELAS */}
+                    {/* SELETOR DE PARCELAS - ATÉ 4X */}
                     {formData.paymentMethod === 'credit' && (
                       <div className="mb-6">
                         <Label className="text-gray-700 font-semibold">Número de Parcelas</Label>
@@ -912,12 +751,11 @@ function App() {
                           }
                           className="w-full h-12 px-4 rounded-lg border-2 border-gray-200 bg-white text-gray-900 font-semibold mt-2 focus:border-blue-500 transition-colors"
                         >
-                          <option value={1}>
-                            1x de R$ {calculatePrice(1).valorTotal.toFixed(2).replace('.', ',')} (à vista)
-                          </option>
-                          <option value={2}>
-                            2x de R$ {calculatePrice(2).valorParcela.toFixed(2).replace('.', ',')} (com juros)
-                          </option>
+                          {[1, 2, 3, 4].map((n) => (
+                            <option key={n} value={n}>
+                              {n}x de R$ {calculatePrice(n).valorParcela.toFixed(2).replace('.', ',')} {n === 1 ? '(à vista)' : '(com juros)'}
+                            </option>
+                          ))}
                         </select>
                         <p className="text-xs text-gray-500 mt-2">
                           * Taxas de cartão aplicadas ao valor total
@@ -928,11 +766,7 @@ function App() {
                     {/* Valor Total */}
                     <div className="bg-gradient-to-r from-yellow-100 to-yellow-50 p-6 rounded-xl border-2 border-yellow-300">
                       <div className="text-center">
-                        <h4 className="text-lg font-serif text-yellow-900 mb-2">Valor Total</h4>
-                        <div className="text-sm text-gray-700 mb-3">
-                          Ingresso por participante
-                          {formData.paymentMethod === 'credit' && ' + taxas do cartão'}
-                        </div>
+                        <h4 className="text-lg font-serif text-yellow-900 mb-2">Valor Final</h4>
                         <div className="text-4xl font-bold text-yellow-900">
                           R$ {valorTotal.toFixed(2).replace('.', ',')}
                         </div>
@@ -941,9 +775,6 @@ function App() {
                             {formData.installments}x de R$ {valorParcela.toFixed(2).replace('.', ',')}
                           </div>
                         )}
-                        {formData.paymentMethod === 'credit' && (
-                          <div className="text-xs text-yellow-700 mt-2">(inclui taxas do cartão)</div>
-                        )}
                       </div>
                     </div>
                   </div>
@@ -951,7 +782,7 @@ function App() {
                   {/* Botão de Envio */}
                   <Button
                     type="submit"
-                    className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white py-6 text-lg font-bold rounded-lg shadow-lg transform hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white py-8 text-xl font-bold rounded-lg shadow-lg transform hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                     disabled={isProcessing || !phoneValid || !cpfValid}
                   >
                     {isProcessing ? (
@@ -961,8 +792,8 @@ function App() {
                       </>
                     ) : (
                       <>
-                        CONTINUAR PARA PAGAMENTO
-                        <ArrowRight className="ml-3 h-5 w-5" />
+                        FINALIZAR E IR PARA PAGAMENTO
+                        <ArrowRight className="ml-3 h-6 w-6" />
                       </>
                     )}
                   </Button>
@@ -975,7 +806,7 @@ function App() {
                   )}
 
                   <p className="text-xs text-center text-gray-600">
-                    Ao finalizar, você será redirecionado para o pagamento via Asaas
+                    Você será redirecionado para o ambiente seguro de pagamento do Asaas
                   </p>
                 </form>
               </CardContent>
@@ -984,69 +815,19 @@ function App() {
         </div>
       </section>
 
-      {/* CONTATO */}
-      <section id="contato" className="section-padding bg-white">
-        <div className="container mx-auto max-w-4xl">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-serif text-blue-900 mb-4">Entre em Contato</h2>
-            <p className="text-lg text-gray-700">Tire suas dúvidas conosco</p>
-            <div className="w-20 h-1 bg-gradient-to-r from-yellow-500 to-blue-600 mx-auto rounded-full mt-4"></div>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-8">
-            <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow">
-              <CardHeader className="bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-t-lg">
-                <div className="flex items-center space-x-3">
-                  <Phone className="h-6 w-6" />
-                  <div>
-                    <CardTitle>WhatsApp</CardTitle>
-                    <CardDescription className="text-blue-100">NEEL — Atendimento</CardDescription>
-                  </div>
-                </div>
-              </CardHeader>
-              <CardContent className="pt-6">
-                <p className="text-lg font-semibold text-gray-900">(84) 9 9133-5975</p>
-                <p className="text-lg font-semibold text-gray-900">(84) 9 8804-9371</p>
-              </CardContent>
-            </Card>
-
-            <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow">
-              <CardHeader className="bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-t-lg">
-                <div className="flex items-center space-x-3">
-                  <Mail className="h-6 w-6" />
-                  <div>
-                    <CardTitle>Instagram</CardTitle>
-                    <CardDescription className="text-blue-100">Acompanhe nossas novidades</CardDescription>
-                  </div>
-                </div>
-              </CardHeader>
-              <CardContent className="pt-6">
-                <p className="text-lg font-semibold text-gray-900">@neelsga</p>
-              </CardContent>
-            </Card>
-          </div>
-
-          <div className="mt-12 text-center p-6 bg-gradient-to-r from-blue-50 to-blue-100 rounded-xl border-2 border-blue-200">
-            <p className="text-gray-800">
-              <strong className="text-blue-900">NEEL — Centro Espírita Esperança de Luz</strong>
-              <br />
-              <span className="text-sm text-gray-700">Apoio: CRENORTE & FERN — Federação Espírita do RN</span>
-            </p>
-          </div>
-        </div>
-      </section>
-
       {/* FOOTER */}
       <footer className="bg-gradient-to-r from-blue-900 to-blue-800 text-white py-12">
-        <div className="container mx-auto px-4 text-center space-y-3">
-          <p className="text-sm">
+        <div className="container mx-auto px-4 text-center space-y-4">
+          <p className="text-lg font-serif">2º Seminário Espírita do NEEL</p>
+          <div className="flex justify-center space-x-6 py-4">
+             <a href="https://instagram.com/neelsga" className="hover:text-yellow-400 transition-colors"><Instagram className="h-6 w-6" /></a>
+             <a href="https://wa.me/5584991335975" className="hover:text-yellow-400 transition-colors"><Phone className="h-6 w-6" /></a>
+          </div>
+          <p className="text-sm opacity-80">
             © 2026 NEEL — Centro Espírita Esperança de Luz. Todos os direitos reservados.
           </p>
-          <p className="text-xs opacity-80">
-            2º Seminário Espírita do NEEL — 31 de Outubro de 2026 — Natal, RN
-          </p>
-          <p className="text-xs opacity-70 pt-2">
-            Desenvolvido com dedicação e espiritualidade
+          <p className="text-xs opacity-70">
+            31 de Outubro de 2026 — Natal, RN
           </p>
         </div>
       </footer>
