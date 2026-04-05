@@ -329,25 +329,24 @@ function App() {
 
             {/* Super-label */}
             <p className="fu" style={{fontFamily:"-apple-system,'Segoe UI',sans-serif",fontWeight:700,fontSize:'.72rem',letterSpacing:'.16em',textTransform:'uppercase',color:'var(--gold2)',marginBottom:'1.25rem',display:'flex',alignItems:'center',justifyContent:'center',gap:'.5rem'}}>
-              <Sparkles style={{width:'1rem',height:'1rem'}}/>
-              2º Seminário Espírita do NEEL
-              <Sparkles style={{width:'1rem',height:'1rem'}}/>
+
+              2º SEMINÁRIO ESPÍRITA DO NEEL
             </p>
 
             {/* Título hero */}
             <h1 className="fu2" style={{fontFamily:"'Playfair Display',Georgia,serif",fontWeight:700,fontSize:'clamp(3.2rem,10vw,6rem)',color:'#fff',lineHeight:1.08,marginBottom:'1.25rem'}}>
-              Vinde a&nbsp;Mim
+              "VINDE A&nbsp;MIN
             </h1>
 
             {/* Citação */}
             <p className="fu2" style={{fontFamily:"'Lora',Georgia,serif",fontStyle:'italic',fontWeight:400,fontSize:'clamp(1rem,3vw,1.25rem)',color:'rgba(255,255,255,.78)',marginBottom:'2.75rem',lineHeight:1.65}}>
-              "Todos os que estais cansados e oprimidos,<br/>e eu vos aliviarei."
+              Todos os que estais cansados e oprimidos,<br/>e eu vos aliviarei."
             </p>
 
             {/* Botões */}
             <div className="fu3" style={{display:'flex',flexWrap:'wrap',gap:'1rem',justifyContent:'center',marginBottom:'4rem'}}>
               <button className="btn-primary" onClick={openForm}>
-                Garantir Minha Vaga <ArrowRight style={{width:'1.1rem',height:'1.1rem'}}/>
+                Faça sua inscrição aqui <ArrowRight style={{width:'1.1rem',height:'1.1rem'}}/>
               </button>
               <button className="btn-ghost-white" onClick={()=>scroll('sobre')}>
                 Saiba Mais
@@ -378,7 +377,7 @@ function App() {
 
           {/* Cabeçalho */}
           <div style={{textAlign:'center',marginBottom:'2.75rem'}}>
-            <p className="section-tag">Centro Espírita Esperança de Luz</p>
+            <p className="section-tag">Núcleo Espírita Esperança de Luz - NEEL </p>
             <h2 className="nd-title" style={{fontSize:'clamp(1.9rem,5vw,2.75rem)'}}>Informações do Evento</h2>
             <div className="gold-line"/>
           </div>
@@ -386,13 +385,13 @@ function App() {
           {/* Card de infos */}
           <div className="nd-card" style={{padding:'2rem 2.25rem'}}>
             {[
-              {label:'Tema',         value:'Vinde a Mim — 2º Seminário Espírita do NEEL'},
-              {label:'Data',         value:'31 de Outubro de 2026 — Sábado'},
-              {label:'Horário',      value:'08h às 17h'},
-              {label:'Local',        value:'Auditório SESC Cidade Alta — Rua Coronel Bezerra, 33, Natal-RN'},
-              {label:'Palestrantes', value:'Jorge Elarrat (RO) e Rafael Siqueira (RJ)'},
-              {label:'Realização',   value:'NEEL — Centro Espírita Esperança de Luz'},
-              {label:'Apoio',        value:'CRENORTE e FERN — Federação Espírita do RN'},
+              {label:'TEMA',         value:'"Vinde a Mim - todos os que estais cansados e aprimidos, e eu vos aliviarei."'},
+              {label:'DATA',         value:'31 de Outubro de 2026 — Sábado'},
+              {label:'HORÁRIO',      value:'08h às 17h'},
+              {label:'LOCAL',        value:'Auditório SESC Cidade Alta — Rua Coronel Bezerra, 33, Natal-RN'},
+              {label:'PALESTRANTES', value:'Jorge Elarrat (RO) e Rafael Siqueira (RJ)'},
+              {label:'REALIZAÇÃO',   value:'NEEL — Centro Espírita Esperança de Luz'},
+              {label:'APOIO',        value:'CRENORTE e FERN — Federação Espírita do RN'},
             ].map(({label,value})=>(
               <div key={label} className="info-row">
                 <Sparkles style={{width:'.9rem',height:'.9rem',color:'var(--gold)',flexShrink:0,marginTop:'.2rem'}}/>
