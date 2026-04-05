@@ -187,8 +187,9 @@ function App() {
     return (valorBase / numParcelas) * TAXA_ANTECIPACAO_PARCELADO * somaMeses;
   };
 
+  // ── ALTERAÇÃO 1: quantidade:1 adicionado ao estado ──
   const [showForm, setShowForm]   = useState(false);
-  const [formData, setFormData]   = useState({ nomeParticipante:'', cpf:'', email:'', phone:'', phoneConfirm:'', paymentMethod:'pix', installments:1 });
+  const [formData, setFormData]   = useState({ nomeParticipante:'', cpf:'', email:'', phone:'', phoneConfirm:'', paymentMethod:'pix', installments:1, quantidade:1 });
   const [isProcessing, setIsProcessing] = useState(false);
   const [inscriptionSuccess, setInscriptionSuccess] = useState(false);
   const [paymentUrl, setPaymentUrl] = useState(null);
@@ -215,16 +216,20 @@ function App() {
     setTimeout(()=>document.getElementById('form-anchor')?.scrollIntoView({behavior:'smooth'}),100);
   };
 
+  // ── ALTERAÇÃO 2: calcPrice multiplica pela quantidade ──
   const PRECO_BASE = 100.0;
   const calcPrice  = (n=null) => {
-    const np = n ?? (parseInt(formData.installments)||1);
-    let t = PRECO_BASE;
+    const np  = n ?? (parseInt(formData.installments)||1);
+    const qty = formData.quantidade || 1;
+    let tUnit = PRECO_BASE;
     if (formData.paymentMethod==='credit') {
-      t = PRECO_BASE + PRECO_BASE*(np===1?.0399:.0449) + 0.49 + calcularTaxaAntecipacao(PRECO_BASE,np);
+      tUnit = PRECO_BASE + PRECO_BASE*(np===1?.0399:.0449) + 0.49 + calcularTaxaAntecipacao(PRECO_BASE,np);
     }
-    return { valorTotal:t, valorParcela:t/np };
+    const valorTotal   = tUnit * qty;
+    const valorParcela = valorTotal / np;
+    return { valorTotal, valorParcela, valorUnitario: tUnit };
   };
-  const { valorTotal, valorParcela } = calcPrice();
+  const { valorTotal, valorParcela, valorUnitario } = calcPrice();
 
   const handleChange = (e) => {
     const {name,value} = e.target;
@@ -266,6 +271,7 @@ function App() {
     return true;
   };
 
+  // ── ALTERAÇÃO 3: ticketQuantity usa formData.quantidade ──
   const handleSubmit = async (e) => {
     e.preventDefault();
     if(!validate()) return;
@@ -273,7 +279,7 @@ function App() {
     try {
       const res = await fetch('https://webhook.escolaamadeus.com/webhook/neelseminariol',{
         method:'POST', headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({nomeParticipante:formData.nomeParticipante,cpf:formData.cpf,email:formData.email,phone:formData.phone,paymentMethod:formData.paymentMethod,installments:formData.installments,ticketQuantity:1,amount:valorTotal,timestamp:new Date().toISOString(),event:'NEEL-2SeminarioEspirita'}),
+        body:JSON.stringify({nomeParticipante:formData.nomeParticipante,cpf:formData.cpf,email:formData.email,phone:formData.phone,paymentMethod:formData.paymentMethod,installments:formData.installments,ticketQuantity:formData.quantidade,amount:valorTotal,timestamp:new Date().toISOString(),event:'NEEL-2SeminarioEspirita'}),
       });
       if(res.ok){
         const d=await res.json();
@@ -402,9 +408,7 @@ function App() {
         </div>
       </section>
 
-      {/* ══ INSCRIÇÃO ════════════════════════════════════════════════════════
-           Fundo bege (sem branco), card azul com layout corrigido:
-           badge → label "Valor do Ingresso" → preço → "por participante" → botão */}
+      {/* ══ INSCRIÇÃO ════════════════════════════════════════════════════════ */}
       <section id="custos" className="nd-section" style={{background:'var(--cream)'}}>
         <div style={{maxWidth:'38rem',margin:'0 auto'}}>
 
@@ -461,12 +465,39 @@ function App() {
               <div style={{padding:'2rem'}}>
                 <form onSubmit={handleSubmit}>
 
+                  {/* Nome */}
                   <div style={{marginBottom:'1.25rem'}}>
                     <label style={{fontFamily:"-apple-system,'Segoe UI',sans-serif",fontWeight:700,fontSize:'.7rem',letterSpacing:'.1em',textTransform:'uppercase',color:'#6b7280',display:'block',marginBottom:'.5rem'}}>Nome completo *</label>
                     <input name="nomeParticipante" value={formData.nomeParticipante} onChange={handleChange}
                            required placeholder="Seu nome completo" className="nd-input" />
                   </div>
 
+                  {/* ── ALTERAÇÃO 4: Seletor de quantidade de ingressos ── */}
+                  <div style={{marginBottom:'1.25rem'}}>
+                    <label style={{fontFamily:"-apple-system,'Segoe UI',sans-serif",fontWeight:700,fontSize:'.7rem',letterSpacing:'.1em',textTransform:'uppercase',color:'#6b7280',display:'block',marginBottom:'.5rem'}}>
+                      Quantidade de Ingressos *
+                    </label>
+                    <div style={{display:'flex',alignItems:'center',gap:'.75rem'}}>
+                      <button type="button"
+                              onClick={()=>setFormData(p=>({...p,quantidade:Math.max(1,p.quantidade-1)}))}
+                              style={{width:'2.75rem',height:'2.75rem',borderRadius:'.75rem',border:'1.5px solid #e5e7eb',background:'#fff',fontSize:'1.3rem',cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center',fontWeight:700,color:'var(--navy)',flexShrink:0}}>
+                        −
+                      </button>
+                      <div style={{flex:1,height:'2.75rem',border:'1.5px solid #e5e7eb',borderRadius:'.75rem',background:'#fff',display:'flex',alignItems:'center',justifyContent:'center',fontFamily:"'Lora',serif",fontWeight:700,fontSize:'1.1rem',color:'var(--navy)'}}>
+                        {formData.quantidade}
+                      </div>
+                      <button type="button"
+                              onClick={()=>setFormData(p=>({...p,quantidade:Math.min(10,p.quantidade+1)}))}
+                              style={{width:'2.75rem',height:'2.75rem',borderRadius:'.75rem',border:'1.5px solid #e5e7eb',background:'#fff',fontSize:'1.3rem',cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center',fontWeight:700,color:'var(--navy)',flexShrink:0}}>
+                        +
+                      </button>
+                    </div>
+                    <p style={{fontFamily:"'Lora',serif",fontSize:'.78rem',color:'#9ca3af',marginTop:'.4rem'}}>
+                      R$ 100,00 por ingresso · máximo 10 por inscrição
+                    </p>
+                  </div>
+
+                  {/* WhatsApp */}
                   <div style={{background:'#fffbf0',border:'1.5px solid #f0d98a',borderRadius:'1rem',padding:'1.25rem',marginBottom:'1.25rem'}}>
                     <p style={{fontFamily:"-apple-system,'Segoe UI',sans-serif",fontWeight:700,fontSize:'.82rem',color:'#92400e',display:'flex',alignItems:'center',gap:'.5rem',marginBottom:'1rem'}}>
                       <Phone style={{width:'.9rem',height:'.9rem',color:'var(--gold)'}}/> O comprovante será enviado para este WhatsApp — digite com atenção!
@@ -547,8 +578,14 @@ function App() {
                     </div>
                   )}
 
+                  {/* Valor Total — mostra detalhamento quando qty > 1 */}
                   <div style={{background:'linear-gradient(135deg,#fffbf0,#fef3c7)',border:'1.5px solid #f0d98a',borderRadius:'1rem',padding:'1.25rem',textAlign:'center',marginBottom:'1.5rem'}}>
                     <p style={{fontFamily:"-apple-system,'Segoe UI',sans-serif",fontWeight:700,fontSize:'.68rem',letterSpacing:'.12em',textTransform:'uppercase',color:'#92400e',marginBottom:'.3rem'}}>Valor Total</p>
+                    {formData.quantidade > 1 && (
+                      <p style={{fontFamily:"'Lora',serif",fontSize:'.82rem',color:'#92400e',marginBottom:'.25rem'}}>
+                        {formData.quantidade} ingressos × R$ {valorUnitario.toFixed(2).replace('.',',')}
+                      </p>
+                    )}
                     <p style={{fontFamily:"'Playfair Display',serif",fontWeight:700,fontSize:'2.25rem',color:'var(--navy)',lineHeight:1}}>
                       R$ {valorTotal.toFixed(2).replace('.',',')}
                     </p>
