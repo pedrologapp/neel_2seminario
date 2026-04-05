@@ -518,7 +518,7 @@ function App() {
                       <label style={{fontFamily:"-apple-system,'Segoe UI',sans-serif",fontWeight:700,fontSize:'.68rem',letterSpacing:'.1em',textTransform:'uppercase',color:'#6b7280',display:'block',marginBottom:'.4rem'}}>CPF *</label>
                       <input name="cpf" value={formData.cpf} onChange={handleChange}
                              required placeholder="000.000.000-00" maxLength="14"
-                             className={`nd-input ${formData.cpf?(cpfError?'err':cpfValid?'ok',''):''}`} />
+                             className={`nd-input ${formData.cpf?(cpfError?'err':cpfValid?'ok':''):''}`} />
                       {cpfError && <p style={{color:'#dc2626',fontSize:'.75rem',marginTop:'.35rem'}}>{cpfError}</p>}
                       {cpfValid&&!cpfError && <p style={{color:'#16a34a',fontSize:'.75rem',marginTop:'.35rem'}}>✓ CPF válido</p>}
                     </div>
