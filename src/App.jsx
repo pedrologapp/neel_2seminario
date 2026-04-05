@@ -433,15 +433,16 @@ function App() {
           <div className="nd-card" style={{marginBottom:'1.5rem',overflow:'hidden'}}>
             <div style={{background:'linear-gradient(145deg,#0d1b3e 0%,#1a3570 100%)',padding:'3.5rem 2rem',textAlign:'center'}}>
 
-              <p className="price-num">R$&nbsp;100,00</p>
+             {/* Badge lote — bloco separado, sem competir com o botão */}
+              <span className="nd-tag" style={{display:'inline-block',background:'var(--gold)',color:'#fff',borderRadius:'9999px',padding:'.45rem 1.25rem',marginBottom:'2rem',letterSpacing:'.1em'}}>
+                1º Lote Disponível
+              </span>
+              
+              <p className="price-num"> Valor do ingresso: R$&nbsp;100,00</p>
               <p style={{fontFamily:"'Lora',Georgia,serif",color:'rgba(255,255,255,.55)',fontSize:'.92rem',margin:'.5rem 0 1.75rem'}}>
                 por participante
               </p>
 
-              {/* Badge lote — bloco separado, sem competir com o botão */}
-              <span className="nd-tag" style={{display:'inline-block',background:'var(--gold)',color:'#fff',borderRadius:'9999px',padding:'.45rem 1.25rem',marginBottom:'2rem',letterSpacing:'.1em'}}>
-                1º Lote Disponível
-              </span>
 
               {/* Botão — linha própria */}
               <div>
