@@ -49,31 +49,25 @@
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.4 0.15 30); /* Tom terroso inspirado no Instituto */
+  
+  /* Cores atualizadas baseadas no flyer do Seminário */
+  --primary: oklch(0.35 0.12 250); /* Azul profundo espiritual */
   --primary-foreground: oklch(0.985 0 0);
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);
   --muted: oklch(0.97 0 0);
   --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.6 0.2 120); /* Verde dos jardins */
-  --accent-foreground: oklch(0.985 0 0);
+  --accent: oklch(0.85 0.15 85); /* Dourado/Amarelo do flyer */
+  --accent-foreground: oklch(0.2 0.05 250);
+  
   --destructive: oklch(0.577 0.245 27.325);
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
   --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  
+  /* Cores utilitárias */
+  --color-success: #10b981;
+  --color-danger: #ef4444;
 }
 
 .dark {
@@ -95,19 +89,6 @@
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
   --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
 }
 
 @layer base {
@@ -115,60 +96,88 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
   }
 }
 
-/* Estilos customizados para o site do passeio */
+/* ============================================
+   TIPOGRAFIA E FONTES
+   ============================================ */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Lora:ital,wght@0,400;0,600;1,400&display=swap');
+
+.font-serif {
+  font-family: 'Playfair Display', serif;
+}
+
+p {
+  font-family: 'Lora', serif;
+}
+
+/* ============================================
+   ESTILOS ESPECÍFICOS DO SEMINÁRIO
+   ============================================ */
+
 .hero-section {
-  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('./assets/happy.JPG');
-  background-size: cover;
-  background-position: center;
-  background-attachment: no-repeat;
+  position: relative;
+  overflow: hidden;
 }
 
 .section-padding {
-  @apply py-16 px-4 md:px-8 lg:px-16;
-}
-
-.smooth-scroll {
-  scroll-behavior: smooth;
+  @apply py-16 px-4 md:py-24 md:px-8;
 }
 
 .card-hover {
-  @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+  @apply transition-all duration-300 hover:shadow-2xl hover:-translate-y-2;
 }
 
-.gradient-text {
-  background: linear-gradient(135deg, var(--primary), var(--accent));
+/* Animações */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+/* Estados de Validação */
+.input-valid {
+  @apply border-green-500 bg-green-50;
+}
+
+.input-invalid {
+  @apply border-red-500 bg-red-50;
+}
+
+/* Utilitários Visuais */
+.text-gradient-gold {
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-/* Estilos para validação de CPF */
-.border-red-500 {
-  border-color: #ef4444 !important;
+.shadow-spiritual {
+  box-shadow: 0 20px 50px rgba(30, 58, 138, 0.15);
 }
 
-.bg-red-50 {
-  background-color: #fef2f2 !important;
+/* Scroll Suave */
+html {
+  scroll-behavior: smooth;
 }
 
-.border-green-500 {
-  border-color: #22c55e !important;
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
 }
 
-.bg-green-50 {
-  background-color: #f0fdf4 !important;
+::-webkit-scrollbar-track {
+  @apply bg-muted;
 }
 
-.text-red-500 {
-  color: #ef4444;
-}
-
-.text-green-600 {
-  color: #16a34a;
+::-webkit-scrollbar-thumb {
+  @apply bg-primary/30 rounded-full hover:bg-primary/50 transition-colors;
 }
 
 
