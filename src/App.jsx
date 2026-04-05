@@ -1,378 +1,370 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import { Button } from './components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './components/ui/card';
-import { Badge } from './components/ui/badge';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from './components/ui/card';
 import { Separator } from './components/ui/separator';
 import { Input } from './components/ui/input';
 import { Label } from './components/ui/label';
 
-import heroImage from './assets/hero.jpg'; // ← imagem importada corretamente
+import heroImage from './assets/hero.jpg';
 
 import {
-  MapPin,
-  Clock,
-  Calendar,
-  Users,
-  CreditCard,
-  Phone,
-  Mail,
-  Shield,
-  Heart,
-  CheckCircle,
-  ArrowRight,
-  User,
-  X,
-  Sparkles,
-  Zap,
-  Instagram,
+  MapPin, Clock, Calendar, Users, CreditCard, Phone,
+  Shield, Heart, CheckCircle, ArrowRight, User, X,
+  Sparkles, Zap, Instagram,
 } from 'lucide-react';
-
-const FONTS_URL =
-  'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Jost:wght@300;400;500;600;700&display=swap';
 
 function App() {
 
+  /* ─── CSS injetado no <head> ──────────────────────────────────────────────
+     Usa Playfair Display (já no App.css) como display font
+     e Lora / system-sans como corpo — mesma combinação da imagem de referência */
   useEffect(() => {
-    if (!document.getElementById('neel-fonts')) {
-      const link = document.createElement('link');
-      link.id = 'neel-fonts';
-      link.rel = 'stylesheet';
-      link.href = FONTS_URL;
-      document.head.appendChild(link);
-    }
-    if (!document.getElementById('neel-styles')) {
-      const style = document.createElement('style');
-      style.id = 'neel-styles';
-      style.textContent = `
-        :root {
-          --navy:  #0d1b3e;
-          --gold:  #c8973a;
-          --gold2: #e8b44a;
-          --cream: #f5f0e8;
-        }
-        body { font-family: 'Jost', sans-serif; background: var(--cream); }
-        .neel-display { font-family: 'Cormorant Garamond', Georgia, serif; letter-spacing: -0.01em; }
-        .neel-label   { font-family: 'Jost', sans-serif; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; font-size: 0.7rem; }
-        .neel-body    { font-family: 'Jost', sans-serif; }
-        .gold-divider { width: 56px; height: 3px; background: linear-gradient(90deg, var(--gold), var(--gold2)); border-radius: 2px; margin: 0 auto; }
-        @keyframes fadeUp { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
-        .fade-up   { animation: fadeUp .7s ease both; }
-        .fade-up-2 { animation: fadeUp .7s .15s ease both; }
-        .fade-up-3 { animation: fadeUp .7s .3s ease both; }
-        .neel-card { border: none !important; box-shadow: 0 4px 24px rgba(13,27,62,.09); border-radius: 1.25rem !important; overflow: hidden; }
-        .btn-gold  { background: linear-gradient(135deg, var(--gold), var(--gold2)); color: #fff; font-family: 'Jost', sans-serif; font-weight: 700; letter-spacing: 0.04em; border: none; transition: filter .2s, transform .15s; cursor: pointer; }
-        .btn-gold:hover  { filter: brightness(1.08); transform: translateY(-2px); }
-        .btn-gold:disabled { opacity: .5; cursor: not-allowed; transform: none; filter: none; }
-        .btn-outline-hero { border: 2px solid rgba(255,255,255,.65) !important; color: #fff !important; background: transparent !important; font-family: 'Jost', sans-serif; font-weight: 500; backdrop-filter: blur(4px); transition: background .2s, border-color .2s; cursor: pointer; }
-        .btn-outline-hero:hover { background: rgba(255,255,255,.15) !important; border-color: #fff !important; }
-        .neel-input { border: 1.5px solid #e2e8f0 !important; border-radius: .75rem !important; height: 3rem !important; font-family: 'Jost', sans-serif !important; transition: border-color .2s !important; }
-        .neel-input:focus { border-color: var(--gold) !important; box-shadow: 0 0 0 3px rgba(200,151,58,.15) !important; }
-        .neel-input.valid   { border-color: #22c55e !important; background: #f0fdf4 !important; }
-        .neel-input.invalid { border-color: #ef4444 !important; background: #fef2f2 !important; }
-        .pay-opt { border: 1.5px solid #e2e8f0; border-radius: .875rem; padding: 1.1rem 1.25rem; cursor: pointer; transition: border-color .2s, box-shadow .2s, background .2s; }
-        .pay-opt:hover  { border-color: #c8973a; box-shadow: 0 2px 12px rgba(200,151,58,.12); }
-        .pay-opt.active { border-color: var(--gold); background: #fffbf0; box-shadow: 0 2px 16px rgba(200,151,58,.2); }
-        .neel-select { height: 3rem; padding: 0 1rem; border: 1.5px solid #e2e8f0; border-radius: .75rem; background: #fff; font-family: 'Jost', sans-serif; font-weight: 500; transition: border-color .2s; width: 100%; }
-        .neel-select:focus { outline: none; border-color: var(--gold); }
+    if (document.getElementById('neel-extra')) return;
+    const s = document.createElement('style');
+    s.id = 'neel-extra';
+    s.textContent = `
+      :root {
+        --navy:  #0d1b3e;
+        --gold:  #b8861e;
+        --gold2: #d4a732;
+        --cream: #f4efe6;
+        --white: #ffffff;
+      }
 
-        /* ── Tabela de infos do evento ── */
-        .info-label {
-          font-family: 'Cormorant Garamond', Georgia, serif;
-          font-weight: 700;
-          font-size: 1.05rem;
-          color: var(--navy);
-          line-height: 1.2;
-        }
-        .info-value {
-          font-family: 'Cormorant Garamond', Georgia, serif;
-          font-weight: 400;
-          font-size: 1.05rem;
-          color: #374151;
-          line-height: 1.4;
-        }
-      `;
-      document.head.appendChild(style);
-    }
+      /* ── Tipografia ── */
+      .nd-title {
+        font-family: 'Playfair Display', Georgia, serif;
+        font-weight: 700;
+        color: var(--navy);
+        line-height: 1.15;
+      }
+      .nd-subtitle {
+        font-family: 'Lora', Georgia, serif;
+        font-weight: 400;
+        color: #4b5563;
+        line-height: 1.7;
+      }
+      .nd-label {
+        font-family: 'Lora', Georgia, serif;
+        font-weight: 600;
+        font-size: .95rem;
+        color: var(--navy);
+      }
+      .nd-value {
+        font-family: 'Lora', Georgia, serif;
+        font-weight: 400;
+        font-size: .95rem;
+        color: #374151;
+      }
+      .nd-tag {
+        font-family: -apple-system, 'Segoe UI', sans-serif;
+        font-weight: 700;
+        font-size: .68rem;
+        letter-spacing: .12em;
+        text-transform: uppercase;
+      }
+
+      /* ── Botões ── */
+      .btn-primary {
+        display: inline-flex; align-items: center; justify-content: center; gap: .6rem;
+        background: var(--gold);
+        color: #fff;
+        font-family: -apple-system, 'Segoe UI', sans-serif;
+        font-weight: 700;
+        font-size: 1rem;
+        letter-spacing: .03em;
+        border: none; border-radius: 9999px;
+        padding: 1rem 2.25rem;
+        cursor: pointer;
+        transition: background .2s, transform .15s, box-shadow .2s;
+        box-shadow: 0 4px 16px rgba(184,134,30,.35);
+        text-decoration: none;
+      }
+      .btn-primary:hover {
+        background: var(--gold2);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(184,134,30,.45);
+      }
+      .btn-primary:disabled { opacity: .5; cursor: not-allowed; transform: none; box-shadow: none; }
+
+      .btn-ghost-white {
+        display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+        background: transparent;
+        color: #fff;
+        font-family: -apple-system, 'Segoe UI', sans-serif;
+        font-weight: 500;
+        font-size: 1rem;
+        border: 2px solid rgba(255,255,255,.5);
+        border-radius: 9999px;
+        padding: .95rem 2rem;
+        cursor: pointer;
+        transition: border-color .2s, background .2s;
+      }
+      .btn-ghost-white:hover { border-color: #fff; background: rgba(255,255,255,.1); }
+
+      /* ── Cards ── */
+      .nd-card {
+        background: #fff;
+        border-radius: 1.25rem;
+        border: none;
+        box-shadow: 0 2px 20px rgba(13,27,62,.08);
+        overflow: hidden;
+      }
+
+      /* ── Divider dourado ── */
+      .gold-line {
+        width: 48px; height: 3px;
+        background: linear-gradient(90deg, var(--gold), var(--gold2));
+        border-radius: 2px; margin: .75rem auto 0;
+      }
+
+      /* ── Info row ── */
+      .info-row { display: flex; gap: .75rem; align-items: flex-start; padding: .85rem 0; border-bottom: 1px solid #f0ebe0; }
+      .info-row:last-child { border-bottom: none; }
+
+      /* ── Form inputs ── */
+      .nd-input {
+        width: 100%;
+        height: 3rem;
+        padding: 0 1rem;
+        border: 1.5px solid #e5e7eb !important;
+        border-radius: .75rem !important;
+        font-family: 'Lora', serif !important;
+        font-size: .95rem !important;
+        color: #111827 !important;
+        background: #fff !important;
+        transition: border-color .2s, box-shadow .2s !important;
+        outline: none !important;
+      }
+      .nd-input:focus { border-color: var(--gold) !important; box-shadow: 0 0 0 3px rgba(184,134,30,.12) !important; }
+      .nd-input.ok  { border-color: #22c55e !important; background: #f0fdf4 !important; }
+      .nd-input.err { border-color: #ef4444 !important; background: #fef2f2 !important; }
+
+      /* ── Pay option ── */
+      .pay-row {
+        border: 1.5px solid #e5e7eb; border-radius: 1rem;
+        padding: 1rem 1.25rem; cursor: pointer;
+        transition: border-color .2s, background .2s;
+      }
+      .pay-row:hover  { border-color: var(--gold2); }
+      .pay-row.picked { border-color: var(--gold); background: #fffbf0; }
+
+      /* ── Dot radio ── */
+      .dot {
+        width: 1.1rem; height: 1.1rem;
+        border-radius: 50%; border: 2px solid #d1d5db; flex-shrink: 0;
+        transition: border-color .2s, background .2s;
+      }
+      .dot.on { border-color: var(--gold); background: var(--gold); }
+
+      /* ── Animations ── */
+      @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+      .fu  { animation: fadeUp .65s ease both; }
+      .fu2 { animation: fadeUp .65s .12s ease both; }
+      .fu3 { animation: fadeUp .65s .25s ease both; }
+
+      /* ── Section spacing ── */
+      .nd-section { padding: 5rem 1.5rem; }
+      @media(max-width:640px) { .nd-section { padding: 3.5rem 1.25rem; } }
+
+      /* ── Price number ── */
+      .price-num {
+        font-family: 'Playfair Display', Georgia, serif;
+        font-weight: 700;
+        font-size: clamp(3.5rem, 12vw, 5rem);
+        color: #fff;
+        line-height: 1;
+      }
+
+      /* ── Section header ── */
+      .section-tag {
+        font-family: -apple-system, 'Segoe UI', sans-serif;
+        font-weight: 700; font-size: .7rem;
+        letter-spacing: .14em; text-transform: uppercase;
+        color: var(--gold); margin-bottom: .5rem;
+      }
+    `;
+    document.head.appendChild(s);
   }, []);
 
-  // ============================================
-  // TAXAS DE ANTECIPAÇÃO
-  // ============================================
+  /* ─── Lógica (intacta) ──────────────────────────────────────────────────── */
   const TAXA_ANTECIPACAO_VISTA = 0.025;
   const TAXA_ANTECIPACAO_PARCELADO = 0.03;
 
   const calcularTaxaAntecipacao = (valorBase, numParcelas) => {
-    if (numParcelas === 1) {
-      return valorBase * TAXA_ANTECIPACAO_VISTA;
-    } else {
-      const somaMeses = (numParcelas * (numParcelas + 1)) / 2;
-      const valorParcela = valorBase / numParcelas;
-      return valorParcela * TAXA_ANTECIPACAO_PARCELADO * somaMeses;
-    }
+    if (numParcelas === 1) return valorBase * TAXA_ANTECIPACAO_VISTA;
+    const somaMeses = (numParcelas * (numParcelas + 1)) / 2;
+    return (valorBase / numParcelas) * TAXA_ANTECIPACAO_PARCELADO * somaMeses;
   };
 
-  const [showForm, setShowForm] = useState(false);
-  const [formData, setFormData] = useState({
-    nomeParticipante: '',
-    cpf: '',
-    email: '',
-    phone: '',
-    phoneConfirm: '',
-    paymentMethod: 'pix',
-    installments: 1,
-  });
+  const [showForm, setShowForm]   = useState(false);
+  const [formData, setFormData]   = useState({ nomeParticipante:'', cpf:'', email:'', phone:'', phoneConfirm:'', paymentMethod:'pix', installments:1 });
   const [isProcessing, setIsProcessing] = useState(false);
   const [inscriptionSuccess, setInscriptionSuccess] = useState(false);
   const [paymentUrl, setPaymentUrl] = useState(null);
-  const [cpfError, setCpfError] = useState('');
-  const [cpfValid, setCpfValid] = useState(false);
-  const [phoneError, setPhoneError] = useState('');
-  const [phoneValid, setPhoneValid] = useState(false);
+  const [cpfError,  setCpfError]   = useState('');
+  const [cpfValid,  setCpfValid]   = useState(false);
+  const [phoneError,setPhoneError] = useState('');
+  const [phoneValid,setPhoneValid] = useState(false);
 
   const validarCPF = (cpf) => {
-    cpf = cpf.replace(/[^\d]/g, '');
-    if (cpf.length !== 11) return false;
-    if (/^(\d)\1{10}$/.test(cpf)) return false;
-    let soma = 0; let resto;
-    for (let i = 1; i <= 9; i++) soma += parseInt(cpf.substring(i-1,i)) * (11-i);
-    resto = (soma * 10) % 11;
-    if (resto === 10 || resto === 11) resto = 0;
-    if (resto !== parseInt(cpf.substring(9,10))) return false;
-    soma = 0;
-    for (let i = 1; i <= 10; i++) soma += parseInt(cpf.substring(i-1,i)) * (12-i);
-    resto = (soma * 10) % 11;
-    if (resto === 10 || resto === 11) resto = 0;
-    return resto === parseInt(cpf.substring(10,11));
+    cpf = cpf.replace(/[^\d]/g,'');
+    if (cpf.length!==11||/^(\d)\1{10}$/.test(cpf)) return false;
+    let s=0,r; for(let i=1;i<=9;i++) s+=parseInt(cpf[i-1])*(11-i);
+    r=(s*10)%11; if(r===10||r===11) r=0; if(r!==parseInt(cpf[9])) return false;
+    s=0; for(let i=1;i<=10;i++) s+=parseInt(cpf[i-1])*(12-i);
+    r=(s*10)%11; if(r===10||r===11) r=0; return r===parseInt(cpf[10]);
   };
 
-  const formatarTelefone = (value) => value
-    .replace(/\D/g,'')
-    .replace(/^(\d{2})(\d)/,'($1) $2')
-    .replace(/(\d{5})(\d)/,'$1-$2')
-    .replace(/(-\d{4})\d+?$/,'$1');
+  const fmtTel = (v) => v.replace(/\D/g,'').replace(/^(\d{2})(\d)/,'($1) $2').replace(/(\d{5})(\d)/,'$1-$2').replace(/(-\d{4})\d+?$/,'$1');
+  const tdigs  = (v) => (v||'').replace(/\D/g,'');
+  const scroll = (id) => document.getElementById(id)?.scrollIntoView({behavior:'smooth'});
 
-  const telDigits = (v) => (v || '').replace(/\D/g,'');
-
-  const scrollToSection = (sectionId) =>
-    document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
-
-  const showInscricaoForm = () => {
+  const openForm = () => {
     setShowForm(true);
-    setTimeout(() => document.getElementById('formulario-inscricao')
-      ?.scrollIntoView({ behavior: 'smooth' }), 100);
+    setTimeout(()=>document.getElementById('form-anchor')?.scrollIntoView({behavior:'smooth'}),100);
   };
 
   const PRECO_BASE = 100.0;
-
-  const calculatePrice = (parcelas = null) => {
-    const numParcelas = parcelas ?? (parseInt(formData.installments) || 1);
-    let valorTotal = PRECO_BASE;
-    if (formData.paymentMethod === 'credit') {
-      const taxaPercentual = numParcelas === 1 ? 0.0399 : 0.0449;
-      const taxaFixa = 0.49;
-      const taxaCartao = PRECO_BASE * taxaPercentual;
-      const taxaAntecipacao = calcularTaxaAntecipacao(PRECO_BASE, numParcelas);
-      valorTotal = PRECO_BASE + taxaCartao + taxaFixa + taxaAntecipacao;
+  const calcPrice  = (n=null) => {
+    const np = n ?? (parseInt(formData.installments)||1);
+    let t = PRECO_BASE;
+    if (formData.paymentMethod==='credit') {
+      t = PRECO_BASE + PRECO_BASE*(np===1?.0399:.0449) + 0.49 + calcularTaxaAntecipacao(PRECO_BASE,np);
     }
-    return { valorTotal, valorParcela: valorTotal / numParcelas };
+    return { valorTotal:t, valorParcela:t/np };
   };
+  const { valorTotal, valorParcela } = calcPrice();
 
-  const { valorTotal, valorParcela } = calculatePrice();
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    if (name === 'cpf') {
-      const cpfValue = value.replace(/\D/g,'')
-        .replace(/(\d{3})(\d)/,'$1.$2')
-        .replace(/(\d{3})(\d)/,'$1.$2')
-        .replace(/(\d{3})(\d{1,2})$/,'$1-$2');
-      setFormData(p => ({ ...p, [name]: cpfValue }));
-      const raw = cpfValue.replace(/[^\d]/g,'');
-      if (!raw)             { setCpfError(''); setCpfValid(false); }
-      else if (raw.length < 11) { setCpfError('CPF deve ter 11 dígitos'); setCpfValid(false); }
-      else if (validarCPF(raw)) { setCpfError(''); setCpfValid(true); }
-      else                      { setCpfError('CPF inválido. Verifique os números digitados.'); setCpfValid(false); }
-    } else if (name === 'phone') {
-      const formatted = formatarTelefone(value);
-      setFormData(p => ({ ...p, phone: formatted }));
-      const digits = telDigits(formatted);
-      if (!digits) { setPhoneError(''); setPhoneValid(false); return; }
-      if (digits.length < 11) { setPhoneError('Telefone deve ter 11 dígitos com DDD'); setPhoneValid(false); return; }
-      const confirmDigits = telDigits(formData.phoneConfirm);
-      if (confirmDigits && confirmDigits !== digits) { setPhoneError('Os telefones não coincidem'); setPhoneValid(false); }
-      else if (confirmDigits && confirmDigits === digits) { setPhoneError(''); setPhoneValid(true); }
-      else { setPhoneError(''); setPhoneValid(false); }
-    } else if (name === 'phoneConfirm') {
-      const formatted = formatarTelefone(value);
-      setFormData(p => ({ ...p, phoneConfirm: formatted }));
-      const digits = telDigits(formatted);
-      const originalDigits = telDigits(formData.phone);
-      if (!digits) { setPhoneError(''); setPhoneValid(false); return; }
-      if (digits !== originalDigits) { setPhoneError('Os telefones não coincidem'); setPhoneValid(false); }
-      else if (digits.length === 11) { setPhoneError(''); setPhoneValid(true); }
+  const handleChange = (e) => {
+    const {name,value} = e.target;
+    if (name==='cpf') {
+      const v = value.replace(/\D/g,'').replace(/(\d{3})(\d)/,'$1.$2').replace(/(\d{3})(\d)/,'$1.$2').replace(/(\d{3})(\d{1,2})$/,'$1-$2');
+      setFormData(p=>({...p,cpf:v}));
+      const r=v.replace(/\D/g,'');
+      if(!r){setCpfError('');setCpfValid(false);}
+      else if(r.length<11){setCpfError('CPF deve ter 11 dígitos');setCpfValid(false);}
+      else if(validarCPF(r)){setCpfError('');setCpfValid(true);}
+      else{setCpfError('CPF inválido');setCpfValid(false);}
+    } else if (name==='phone') {
+      const f=fmtTel(value); setFormData(p=>({...p,phone:f}));
+      const d=tdigs(f);
+      if(!d){setPhoneError('');setPhoneValid(false);return;}
+      if(d.length<11){setPhoneError('WhatsApp deve ter 11 dígitos com DDD');setPhoneValid(false);return;}
+      const cd=tdigs(formData.phoneConfirm);
+      if(cd&&cd!==d){setPhoneError('Os números não coincidem');setPhoneValid(false);}
+      else if(cd&&cd===d){setPhoneError('');setPhoneValid(true);}
+      else{setPhoneError('');setPhoneValid(false);}
+    } else if (name==='phoneConfirm') {
+      const f=fmtTel(value); setFormData(p=>({...p,phoneConfirm:f}));
+      const d=tdigs(f),od=tdigs(formData.phone);
+      if(!d){setPhoneError('');setPhoneValid(false);return;}
+      if(d!==od){setPhoneError('Os números não coincidem');setPhoneValid(false);}
+      else if(d.length===11){setPhoneError('');setPhoneValid(true);}
     } else {
-      setFormData(p => ({ ...p, [name]: value }));
+      setFormData(p=>({...p,[name]:value}));
     }
   };
 
-  const validateForm = () => {
-    if (!formData.nomeParticipante.trim()) { alert('Por favor, preencha seu nome completo.'); return false; }
-    const raw = formData.cpf.replace(/[^\d]/g,'');
-    if (!raw || raw.length !== 11) { alert('Por favor, preencha um CPF válido.'); return false; }
-    if (!validarCPF(raw)) { alert('CPF inválido. Verifique os números digitados.'); return false; }
-    if (telDigits(formData.phone).length < 11) { alert('Por favor, preencha um WhatsApp válido com DDD.'); return false; }
-    if (telDigits(formData.phone) !== telDigits(formData.phoneConfirm)) { alert('Os telefones não coincidem.'); return false; }
+  const validate = () => {
+    if(!formData.nomeParticipante.trim()){alert('Preencha seu nome completo.');return false;}
+    const r=formData.cpf.replace(/\D/g,'');
+    if(!r||r.length!==11){alert('CPF inválido.');return false;}
+    if(!validarCPF(r)){alert('CPF inválido.');return false;}
+    if(tdigs(formData.phone).length<11){alert('WhatsApp inválido.');return false;}
+    if(tdigs(formData.phone)!==tdigs(formData.phoneConfirm)){alert('Os números de WhatsApp não coincidem.');return false;}
     return true;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!validateForm()) return;
+    if(!validate()) return;
     setIsProcessing(true);
     try {
-      const response = await fetch('https://SEU-WEBHOOK-AQUI/inscricoes-neel', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          nomeParticipante: formData.nomeParticipante,
-          cpf: formData.cpf,
-          email: formData.email,
-          phone: formData.phone,
-          paymentMethod: formData.paymentMethod,
-          installments: formData.installments,
-          ticketQuantity: 1,
-          amount: valorTotal,
-          timestamp: new Date().toISOString(),
-          event: 'NEEL-2SeminarioEspirita',
-        }),
+      const res = await fetch('https://SEU-WEBHOOK-AQUI/inscricoes-neel',{
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({nomeParticipante:formData.nomeParticipante,cpf:formData.cpf,email:formData.email,phone:formData.phone,paymentMethod:formData.paymentMethod,installments:formData.installments,ticketQuantity:1,amount:valorTotal,timestamp:new Date().toISOString(),event:'NEEL-2SeminarioEspirita'}),
       });
-      if (response.ok) {
-        const responseData = await response.json();
-        if (responseData.success === false) { alert(responseData.message || 'Erro ao processar dados.'); return; }
-        if (responseData.paymentUrl) {
-          setPaymentUrl(responseData.paymentUrl);
-          setInscriptionSuccess(true);
-          window.location.href = responseData.paymentUrl;
-        } else {
-          alert('Erro: Link de pagamento não encontrado. Entre em contato conosco.');
-        }
-      } else {
-        const errorData = await response.json();
-        alert(errorData.message || 'Erro ao enviar dados para o servidor');
-      }
-    } catch (error) {
-      console.error('Erro:', error);
-      alert('Erro ao processar inscrição. Tente novamente.');
-    } finally {
-      setIsProcessing(false);
-    }
+      if(res.ok){
+        const d=await res.json();
+        if(d.success===false){alert(d.message||'Erro.');return;}
+        if(d.paymentUrl){setPaymentUrl(d.paymentUrl);setInscriptionSuccess(true);window.location.href=d.paymentUrl;}
+        else alert('Link de pagamento não encontrado.');
+      } else { const e2=await res.json(); alert(e2.message||'Erro no servidor.'); }
+    } catch(err){ console.error(err); alert('Erro de conexão. Tente novamente.'); }
+    finally { setIsProcessing(false); }
   };
 
-  // ── Tela de sucesso ──────────────────────────────────────────────────────────
-  if (inscriptionSuccess) {
-    return (
-      <div className="min-h-screen flex items-center justify-center p-4 neel-body"
-           style={{ background: 'var(--cream)' }}>
-        <Card className="neel-card w-full max-w-md">
-          <div className="text-center py-10 px-8 rounded-t-xl"
-               style={{ background: 'linear-gradient(135deg, var(--navy), #1a3a7a)' }}>
-            <div className="mx-auto mb-4 p-3 rounded-full w-fit" style={{ background: 'rgba(255,255,255,.15)' }}>
-              <CheckCircle className="h-8 w-8 text-white" />
-            </div>
-            <h2 className="neel-display text-white" style={{ fontSize: '1.8rem' }}>Inscrição Registrada!</h2>
-            <p style={{ color: 'rgba(255,255,255,.6)', marginTop: '.25rem', fontSize: '.9rem' }}>
-              Finalize o pagamento para confirmar sua participação
-            </p>
-          </div>
-          <CardContent className="text-center space-y-4 pt-8 px-8 pb-8">
-            <p className="text-sm text-gray-500">
-              Dados registrados com sucesso. Clique abaixo para ir ao pagamento.
-            </p>
-            {paymentUrl && (
-              <a href={paymentUrl}
-                 className="btn-gold block w-full py-4 px-6 rounded-xl text-center text-lg font-bold"
-                 style={{ textDecoration: 'none' }}>
-                💳 Ir para o Pagamento
-              </a>
-            )}
-            {paymentUrl && (
-              <p className="text-xs text-gray-400 break-all select-all p-2 bg-gray-50 rounded-lg cursor-text">
-                {paymentUrl}
-              </p>
-            )}
-            <Button variant="outline" className="w-full rounded-xl" onClick={() => window.location.reload()}>
-              Voltar ao Início
-            </Button>
-          </CardContent>
-        </Card>
+  /* ─── Tela de sucesso ───────────────────────────────────────────────────── */
+  if (inscriptionSuccess) return (
+    <div style={{minHeight:'100vh',background:'var(--cream)',display:'flex',alignItems:'center',justifyContent:'center',padding:'1.5rem'}}>
+      <div className="nd-card" style={{width:'100%',maxWidth:'26rem',padding:'2.5rem',textAlign:'center'}}>
+        <div style={{width:'3.5rem',height:'3.5rem',borderRadius:'50%',background:'#dcfce7',display:'flex',alignItems:'center',justifyContent:'center',margin:'0 auto 1rem'}}>
+          <CheckCircle style={{color:'#16a34a',width:'1.75rem',height:'1.75rem'}}/>
+        </div>
+        <h2 className="nd-title" style={{fontSize:'1.6rem',marginBottom:'.5rem'}}>Inscrição Registrada!</h2>
+        <p className="nd-subtitle" style={{fontSize:'.9rem',marginBottom:'1.5rem'}}>Finalize o pagamento para confirmar sua participação.</p>
+        {paymentUrl && <a href={paymentUrl} className="btn-primary" style={{width:'100%',marginBottom:'1rem'}}>💳 Ir para o Pagamento</a>}
+        {paymentUrl && <p style={{fontSize:'.72rem',color:'#9ca3af',wordBreak:'break-all',background:'#f9fafb',padding:'.75rem',borderRadius:'.5rem'}}>{paymentUrl}</p>}
+        <button onClick={()=>window.location.reload()} style={{marginTop:'1rem',width:'100%',padding:'.75rem',border:'1.5px solid #e5e7eb',borderRadius:'9999px',background:'#fff',cursor:'pointer',fontFamily:'Lora,serif',fontWeight:600,color:'#374151'}}>Voltar ao Início</button>
       </div>
-    );
-  }
+    </div>
+  );
 
-  // ── Render principal ─────────────────────────────────────────────────────────
+  /* ─── Render ────────────────────────────────────────────────────────────── */
   return (
-    <div className="min-h-screen neel-body" style={{ background: 'var(--cream)' }}>
+    <div style={{background:'var(--cream)',minHeight:'100vh'}}>
 
-      {/* ══ HERO ════════════════════════════════════════════════════════════════ */}
-      <section className="relative overflow-hidden" style={{ minHeight: '100svh' }}>
-        <div className="absolute inset-0"
-             style={{
-               backgroundImage: `url(${heroImage})`,
-               backgroundSize: 'cover',
-               backgroundPosition: 'center 15%',
-               backgroundRepeat: 'no-repeat',
-             }} />
-        <div className="absolute inset-0"
-             style={{ background: 'linear-gradient(to bottom, rgba(8,18,40,.3) 0%, rgba(8,18,40,.52) 50%, rgba(8,18,40,.82) 100%)' }} />
+      {/* ══ HERO ═════════════════════════════════════════════════════════════ */}
+      <section style={{position:'relative',minHeight:'100svh',overflow:'hidden'}}>
+        {/* Imagem de fundo */}
+        <div style={{position:'absolute',inset:0,backgroundImage:`url(${heroImage})`,backgroundSize:'cover',backgroundPosition:'center 15%'}}/>
+        {/* Overlay */}
+        <div style={{position:'absolute',inset:0,background:'linear-gradient(to bottom,rgba(8,18,42,.25) 0%,rgba(8,18,42,.55) 55%,rgba(8,18,42,.88) 100%)'}}/>
 
-        <div className="relative z-10 flex flex-col items-center justify-center px-4 py-24"
-             style={{ minHeight: '100svh' }}>
-          <div className="max-w-2xl text-center">
-            <div className="flex items-center justify-center gap-2 mb-5 fade-up">
-              <Sparkles className="h-4 w-4" style={{ color: 'var(--gold2)' }} />
-              <span style={{ color: 'var(--gold2)', fontFamily: "'Jost', sans-serif", fontWeight: 600,
-                             letterSpacing: '.12em', textTransform: 'uppercase', fontSize: '.72rem' }}>
-                2º Seminário Espírita do NEEL
-              </span>
-              <Sparkles className="h-4 w-4" style={{ color: 'var(--gold2)' }} />
-            </div>
+        {/* Conteúdo */}
+        <div style={{position:'relative',zIndex:10,minHeight:'100svh',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',padding:'6rem 1.5rem 3rem'}}>
+          <div style={{maxWidth:'42rem',textAlign:'center'}}>
 
-            <h1 className="neel-display fade-up-2"
-                style={{ fontSize: 'clamp(3rem,10vw,6rem)', color: '#fff',
-                         lineHeight: 1.05, fontWeight: 600, marginBottom: '1.25rem' }}>
-              Vinde a Mim
+            {/* Super-label */}
+            <p className="fu" style={{fontFamily:"-apple-system,'Segoe UI',sans-serif",fontWeight:700,fontSize:'.72rem',letterSpacing:'.16em',textTransform:'uppercase',color:'var(--gold2)',marginBottom:'1.25rem',display:'flex',alignItems:'center',justifyContent:'center',gap:'.5rem'}}>
+              <Sparkles style={{width:'1rem',height:'1rem'}}/>
+              2º Seminário Espírita do NEEL
+              <Sparkles style={{width:'1rem',height:'1rem'}}/>
+            </p>
+
+            {/* Título hero */}
+            <h1 className="fu2" style={{fontFamily:"'Playfair Display',Georgia,serif",fontWeight:700,fontSize:'clamp(3.2rem,10vw,6rem)',color:'#fff',lineHeight:1.08,marginBottom:'1.25rem'}}>
+              Vinde a&nbsp;Mim
             </h1>
 
-            <p className="fade-up-2"
-               style={{ fontFamily: "'Cormorant Garamond', serif", fontStyle: 'italic',
-                        fontSize: 'clamp(1rem,3vw,1.3rem)', color: 'rgba(255,255,255,.82)',
-                        marginBottom: '2.5rem', lineHeight: 1.6 }}>
-              "Todos os que estais cansados e oprimidos, e eu vos aliviarei."
+            {/* Citação */}
+            <p className="fu2" style={{fontFamily:"'Lora',Georgia,serif",fontStyle:'italic',fontWeight:400,fontSize:'clamp(1rem,3vw,1.25rem)',color:'rgba(255,255,255,.78)',marginBottom:'2.75rem',lineHeight:1.65}}>
+              "Todos os que estais cansados e oprimidos,<br/>e eu vos aliviarei."
             </p>
 
-            <div className="fade-up-3 flex flex-col sm:flex-row items-center justify-center gap-3 mb-14">
-              <button className="btn-gold w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-4 rounded-full text-base"
-                      onClick={showInscricaoForm}>
-                Garantir Minha Vaga
-                <ArrowRight className="h-5 w-5" />
+            {/* Botões */}
+            <div className="fu3" style={{display:'flex',flexWrap:'wrap',gap:'1rem',justifyContent:'center',marginBottom:'4rem'}}>
+              <button className="btn-primary" onClick={openForm}>
+                Garantir Minha Vaga <ArrowRight style={{width:'1.1rem',height:'1.1rem'}}/>
               </button>
-              <button className="btn-outline-hero w-full sm:w-auto px-8 py-4 rounded-full text-base"
-                      onClick={() => scrollToSection('sobre')}>
+              <button className="btn-ghost-white" onClick={()=>scroll('sobre')}>
                 Saiba Mais
               </button>
             </div>
 
-            <div className="fade-up-3 grid grid-cols-3 gap-4 text-white text-center">
+            {/* Badges de data/local */}
+            <div className="fu3" style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:'1rem',color:'#fff'}}>
               {[
-                { icon: <Calendar className="h-5 w-5" />, top: '31 de Outubro', sub: '2026' },
-                { icon: <Clock     className="h-5 w-5" />, top: '08h às 17h',   sub: 'Dia inteiro' },
-                { icon: <MapPin    className="h-5 w-5" />, top: 'Cidade Alta',  sub: 'Natal, RN' },
-              ].map(({ icon, top, sub }) => (
-                <div key={top} className="flex flex-col items-center gap-1">
-                  <span style={{ color: 'var(--gold2)' }}>{icon}</span>
-                  <span style={{ fontWeight: 600, fontSize: '.9rem' }}>{top}</span>
-                  <span style={{ opacity: .65, fontSize: '.75rem' }}>{sub}</span>
+                {icon:<Calendar style={{width:'1.25rem',height:'1.25rem'}}/>, top:'31 de Outubro', sub:'2026'},
+                {icon:<Clock    style={{width:'1.25rem',height:'1.25rem'}}/>, top:'08h às 17h',    sub:'Dia inteiro'},
+                {icon:<MapPin   style={{width:'1.25rem',height:'1.25rem'}}/>, top:'Cidade Alta',   sub:'Natal, RN'},
+              ].map(({icon,top,sub})=>(
+                <div key={top} style={{display:'flex',flexDirection:'column',alignItems:'center',gap:'.35rem'}}>
+                  <span style={{color:'var(--gold2)'}}>{icon}</span>
+                  <span style={{fontFamily:"-apple-system,'Segoe UI',sans-serif",fontWeight:700,fontSize:'.88rem'}}>{top}</span>
+                  <span style={{opacity:.6,fontSize:'.75rem',fontFamily:"'Lora',serif"}}>{sub}</span>
                 </div>
               ))}
             </div>
@@ -380,325 +372,263 @@ function App() {
         </div>
       </section>
 
-      {/* ══ INFORMAÇÕES DO EVENTO ════════════════════════════════════════════════
-           Fundo bege (var(--cream)), título em caixa alta,
-           label em Cormorant Bold e valor em Cormorant Regular              */}
-      <section id="sobre" className="py-20 px-4" style={{ background: 'var(--cream)' }}>
-        <div className="container mx-auto max-w-3xl">
+      {/* ══ INFORMAÇÕES DO EVENTO ════════════════════════════════════════════ */}
+      <section id="sobre" className="nd-section" style={{background:'var(--cream)'}}>
+        <div style={{maxWidth:'46rem',margin:'0 auto'}}>
 
-          <div className="text-center mb-12">
-            <h2 className="neel-display"
-                style={{ fontSize: 'clamp(1.8rem,5vw,2.8rem)', color: 'var(--navy)',
-                         marginBottom: '.75rem', fontWeight: 700, letterSpacing: '.04em',
-                         textTransform: 'uppercase' }}>
-              Informações do Evento
-            </h2>
-            <div className="gold-divider" />
+          {/* Cabeçalho */}
+          <div style={{textAlign:'center',marginBottom:'2.75rem'}}>
+            <p className="section-tag">Centro Espírita Esperança de Luz</p>
+            <h2 className="nd-title" style={{fontSize:'clamp(1.9rem,5vw,2.75rem)'}}>Informações do Evento</h2>
+            <div className="gold-line"/>
           </div>
 
-          <Card className="neel-card mb-10" style={{ background: '#fff' }}>
-            <CardContent className="p-8 md:p-10">
-              {/* Tabela de infos — label negrito + valor normal, mesma fonte */}
-              <div className="space-y-6">
+          {/* Card de infos */}
+          <div className="nd-card" style={{padding:'2rem 2.25rem'}}>
+            {[
+              {label:'Tema',         value:'Vinde a Mim — 2º Seminário Espírita do NEEL'},
+              {label:'Data',         value:'31 de Outubro de 2026 — Sábado'},
+              {label:'Horário',      value:'08h às 17h'},
+              {label:'Local',        value:'Auditório SESC Cidade Alta — Rua Coronel Bezerra, 33, Natal-RN'},
+              {label:'Palestrantes', value:'Jorge Elarrat (RO) e Rafael Siqueira (RJ)'},
+              {label:'Realização',   value:'NEEL — Centro Espírita Esperança de Luz'},
+              {label:'Apoio',        value:'CRENORTE e FERN — Federação Espírita do RN'},
+            ].map(({label,value})=>(
+              <div key={label} className="info-row">
+                <Sparkles style={{width:'.9rem',height:'.9rem',color:'var(--gold)',flexShrink:0,marginTop:'.2rem'}}/>
+                <p style={{margin:0}}>
+                  <span className="nd-label">{label}:&nbsp;</span>
+                  <span className="nd-value">{value}</span>
+                </p>
+              </div>
+            ))}
+
+            {/* Contatos */}
+            <div style={{marginTop:'1.75rem',paddingTop:'1.75rem',borderTop:'1px solid #ede8df'}}>
+              <p className="nd-label" style={{marginBottom:'.75rem',display:'flex',alignItems:'center',gap:'.4rem'}}>
+                <Phone style={{width:'.9rem',height:'.9rem',color:'var(--gold)'}}/> Dúvidas? Fale Conosco:
+              </p>
+              <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(11rem,1fr))',gap:'.75rem'}}>
                 {[
-                  { label: 'Tema',         value: 'Vinde a Mim — 2º Seminário Espírita do NEEL' },
-                  { label: 'Data',         value: '31 de Outubro de 2026 (Sábado)' },
-                  { label: 'Horário',      value: '08h às 17h' },
-                  { label: 'Local',        value: 'Auditório SESC Cidade Alta — Rua Coronel Bezerra, 33, Natal-RN' },
-                  { label: 'Palestrantes', value: 'Jorge Elarrat (RO) e Rafael Siqueira (RJ)' },
-                  { label: 'Realização',   value: 'NEEL — Centro Espírita Esperança de Luz' },
-                  { label: 'Apoio',        value: 'CRENORTE e FERN — Federação Espírita do RN' },
-                ].map(({ label, value }) => (
-                  <div key={label} className="flex items-start gap-3">
-                    <span style={{ color: 'var(--gold)', marginTop: '3px', flexShrink: 0 }}>
-                      <Sparkles className="h-4 w-4" />
-                    </span>
-                    <p>
-                      {/* Label: Cormorant Garamond Bold */}
-                      <span className="info-label">{label}:&nbsp;</span>
-                      {/* Valor: Cormorant Garamond Regular */}
-                      <span className="info-value">{value}</span>
-                    </p>
-                  </div>
+                  {href:'https://wa.me/5584991335975',icon:<Phone style={{width:'1rem',height:'1rem',color:'#16a34a'}}/>,text:'(84) 9 9133-5975'},
+                  {href:'https://wa.me/5584988049371',icon:<Phone style={{width:'1rem',height:'1rem',color:'#16a34a'}}/>,text:'(84) 9 8804-9371'},
+                  {href:'https://instagram.com/neelsga',icon:<Instagram style={{width:'1rem',height:'1rem',color:'#e1306c'}}/>,text:'@neelsga'},
+                ].map(({href,icon,text})=>(
+                  <a key={text} href={href} style={{display:'flex',alignItems:'center',gap:'.6rem',padding:'.75rem 1rem',borderRadius:'.75rem',background:'var(--cream)',border:'1.5px solid #ede8df',color:'var(--navy)',fontFamily:"'Lora',serif",fontWeight:600,fontSize:'.88rem',textDecoration:'none',transition:'box-shadow .2s'}}
+                     onMouseOver={e=>e.currentTarget.style.boxShadow='0 2px 12px rgba(0,0,0,.1)'}
+                     onMouseOut={e=>e.currentTarget.style.boxShadow='none'}>
+                    {icon}{text}
+                  </a>
                 ))}
               </div>
-
-              {/* Contatos */}
-              <div style={{ borderTop: '1px solid #ede8df', marginTop: '2rem', paddingTop: '2rem' }}>
-                <p style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700,
-                            fontSize: '1.05rem', color: 'var(--navy)', marginBottom: '1rem' }}>
-                  <Phone className="inline h-4 w-4 mr-1" style={{ color: 'var(--gold)' }} />
-                  Dúvidas? Fale Conosco:
-                </p>
-                <div className="grid sm:grid-cols-2 gap-3">
-                  {[
-                    { href: 'https://wa.me/5584991335975', icon: <Phone className="h-4 w-4" style={{ color: '#22c55e' }} />, text: '(84) 9 9133-5975' },
-                    { href: 'https://wa.me/5584988049371', icon: <Phone className="h-4 w-4" style={{ color: '#22c55e' }} />, text: '(84) 9 8804-9371' },
-                    { href: 'https://instagram.com/neelsga', icon: <Instagram className="h-4 w-4" style={{ color: '#e1306c' }} />, text: '@neelsga', full: true },
-                  ].map(({ href, icon, text, full }) => (
-                    <a key={text} href={href}
-                       className={`flex items-center gap-2 p-3 rounded-xl no-underline transition-shadow hover:shadow-md ${full ? 'sm:col-span-2' : ''}`}
-                       style={{ background: 'var(--cream)', border: '1.5px solid #ede8df',
-                                color: 'var(--navy)', fontWeight: 600, fontSize: '.9rem',
-                                fontFamily: "'Jost', sans-serif" }}>
-                      {icon} {text}
-                    </a>
-                  ))}
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* ══ INSCRIÇÃO ════════════════════════════════════════════════════════════
-           Card azul contém: valor + "1º LOTE DISPONÍVEL" + botão.
-           Sem seção de incluso/formas de pagamento separada.               */}
-      <section id="custos" className="py-20 px-4" style={{ background: '#fff' }}>
-        <div className="container mx-auto max-w-3xl">
+      {/* ══ INSCRIÇÃO ════════════════════════════════════════════════════════ */}
+      <section id="custos" className="nd-section" style={{background:'#fff'}}>
+        <div style={{maxWidth:'38rem',margin:'0 auto'}}>
 
-          {/* Card principal — tudo dentro do azul */}
-          <Card className="neel-card mb-8">
+          {/* Card azul — preço + lote + botão */}
+          <div className="nd-card" style={{marginBottom:'1.5rem',overflow:'hidden'}}>
+            <div style={{background:'linear-gradient(145deg,#0d1b3e 0%,#1a3570 100%)',padding:'3.5rem 2rem',textAlign:'center'}}>
 
-            {/* Bloco azul com valor, lote e botão */}
-            <div className="py-14 px-8 text-center"
-                 style={{ background: 'linear-gradient(135deg, #0d1b3e 0%, #1a3a7a 100%)' }}>
-
-              {/* Valor */}
-              <p className="neel-display"
-                 style={{ fontSize: 'clamp(3.5rem,12vw,5.5rem)', color: '#fff',
-                          fontWeight: 700, lineHeight: 1, marginBottom: '.5rem' }}>
-                R$ 100,00
-              </p>
-              <p style={{ color: 'rgba(255,255,255,.55)', fontSize: '.95rem',
-                          fontFamily: "'Jost', sans-serif", marginBottom: '1.5rem' }}>
+              <p className="price-num">R$&nbsp;100,00</p>
+              <p style={{fontFamily:"'Lora',Georgia,serif",color:'rgba(255,255,255,.55)',fontSize:'.92rem',margin:'.5rem 0 1.75rem'}}>
                 por participante
               </p>
 
-              {/* Badge 1º LOTE */}
-              <div className="inline-block px-5 py-2 rounded-full mb-8"
-                   style={{ background: 'var(--gold)', color: '#fff',
-                            fontFamily: "'Jost', sans-serif", fontWeight: 700,
-                            fontSize: '.75rem', letterSpacing: '.1em', textTransform: 'uppercase' }}>
+              {/* Badge lote — bloco separado, sem competir com o botão */}
+              <span className="nd-tag" style={{display:'inline-block',background:'var(--gold)',color:'#fff',borderRadius:'9999px',padding:'.45rem 1.25rem',marginBottom:'2rem',letterSpacing:'.1em'}}>
                 1º Lote Disponível
-              </div>
+              </span>
 
-              {/* Botão de inscrição */}
-              {!showForm ? (
-                <div>
-                  <button className="btn-gold w-full sm:w-auto flex items-center justify-center gap-3
-                                     mx-auto px-10 py-5 rounded-full text-lg"
-                          onClick={showInscricaoForm}>
-                    Fazer Minha Inscrição
-                    <ArrowRight className="h-5 w-5" />
+              {/* Botão — linha própria */}
+              <div>
+                {!showForm ? (
+                  <button className="btn-primary" style={{width:'100%',maxWidth:'22rem',fontSize:'1.05rem',padding:'1.1rem 2rem'}} onClick={openForm}>
+                    Fazer Minha Inscrição <ArrowRight style={{width:'1.1rem',height:'1.1rem'}}/>
                   </button>
-                </div>
-              ) : (
-                <Button variant="outline"
-                        className="rounded-full px-8 border-white/40 text-white hover:bg-white/10"
-                        onClick={() => setShowForm(false)}>
-                  <X className="mr-2 h-4 w-4" /> Fechar Formulário
-                </Button>
-              )}
+                ) : (
+                  <button onClick={()=>setShowForm(false)}
+                          style={{display:'inline-flex',alignItems:'center',gap:'.5rem',padding:'.9rem 2rem',borderRadius:'9999px',border:'2px solid rgba(255,255,255,.4)',background:'transparent',color:'#fff',cursor:'pointer',fontFamily:"'Lora',serif",fontWeight:600}}>
+                    <X style={{width:'1rem',height:'1rem'}}/> Fechar Formulário
+                  </button>
+                )}
+              </div>
             </div>
-          </Card>
+          </div>
 
-          {/* ── FORMULÁRIO ────────────────────────────────────────────────────── */}
+          {/* ── FORMULÁRIO ─────────────────────────────────────────────────── */}
           {showForm && (
-            <Card id="formulario-inscricao" className="neel-card">
-              <div className="px-8 pt-8 pb-6"
-                   style={{ background: 'linear-gradient(135deg, var(--navy), #1a3a7a)' }}>
-                <h3 className="neel-display text-white flex items-center gap-3" style={{ fontSize: '1.5rem' }}>
-                  <User className="h-5 w-5" style={{ color: 'var(--gold2)' }} />
-                  Dados para Inscrição
+            <div id="form-anchor" className="nd-card">
+
+              {/* Header do form */}
+              <div style={{background:'linear-gradient(135deg,#0d1b3e,#1a3570)',padding:'1.75rem 2rem'}}>
+                <h3 style={{fontFamily:"'Playfair Display',serif",fontWeight:700,fontSize:'1.35rem',color:'#fff',display:'flex',alignItems:'center',gap:'.6rem',margin:0}}>
+                  <User style={{width:'1.1rem',height:'1.1rem',color:'var(--gold2)'}}/> Dados para Inscrição
                 </h3>
-                <p style={{ color: 'rgba(255,255,255,.6)', fontSize: '.88rem', marginTop: '.25rem' }}>
-                  Informe seus dados corretamente para receber o comprovante
+                <p style={{fontFamily:"'Lora',serif",color:'rgba(255,255,255,.55)',fontSize:'.85rem',marginTop:'.25rem'}}>
+                  Informe seus dados para receber o comprovante
                 </p>
               </div>
 
-              <CardContent className="p-8">
-                <form onSubmit={handleSubmit} className="space-y-8">
+              <div style={{padding:'2rem'}}>
+                <form onSubmit={handleSubmit}>
 
-                  {/* Dados */}
-                  <div>
-                    <p className="neel-display mb-5 flex items-center gap-2"
-                       style={{ fontSize: '1.15rem', color: 'var(--navy)' }}>
-                      <User className="h-4 w-4" style={{ color: 'var(--gold)' }} />
-                      Dados do Participante
+                  {/* Nome */}
+                  <div style={{marginBottom:'1.25rem'}}>
+                    <label style={{fontFamily:"-apple-system,'Segoe UI',sans-serif",fontWeight:700,fontSize:'.7rem',letterSpacing:'.1em',textTransform:'uppercase',color:'#6b7280',display:'block',marginBottom:'.5rem'}}>Nome completo *</label>
+                    <input name="nomeParticipante" value={formData.nomeParticipante} onChange={handleChange}
+                           required placeholder="Seu nome completo" className="nd-input" />
+                  </div>
+
+                  {/* WhatsApp */}
+                  <div style={{background:'#fffbf0',border:'1.5px solid #f0d98a',borderRadius:'1rem',padding:'1.25rem',marginBottom:'1.25rem'}}>
+                    <p style={{fontFamily:"-apple-system,'Segoe UI',sans-serif",fontWeight:700,fontSize:'.82rem',color:'#92400e',display:'flex',alignItems:'center',gap:'.5rem',marginBottom:'1rem'}}>
+                      <Phone style={{width:'.9rem',height:'.9rem',color:'var(--gold)'}}/> O comprovante será enviado para este WhatsApp — digite com atenção!
                     </p>
-                    <div className="space-y-4">
+                    <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'1rem'}}>
                       <div>
-                        <Label className="neel-label mb-1.5 block" style={{ color: '#6b7280', fontSize: '.7rem' }}>
-                          Nome completo *
-                        </Label>
-                        <Input id="nomeParticipante" name="nomeParticipante"
-                               value={formData.nomeParticipante} onChange={handleInputChange}
-                               required placeholder="Seu nome completo" className="neel-input" />
+                        <label style={{fontFamily:"-apple-system,'Segoe UI',sans-serif",fontWeight:700,fontSize:'.68rem',letterSpacing:'.1em',textTransform:'uppercase',color:'#6b7280',display:'block',marginBottom:'.4rem'}}>WhatsApp *</label>
+                        <input name="phone" value={formData.phone} onChange={handleChange}
+                               required placeholder="(84) 99999-9999" maxLength="15"
+                               className={`nd-input ${formData.phone?(phoneError?'err':phoneValid?'ok':''):''}`} />
                       </div>
+                      <div>
+                        <label style={{fontFamily:"-apple-system,'Segoe UI',sans-serif",fontWeight:700,fontSize:'.68rem',letterSpacing:'.1em',textTransform:'uppercase',color:'#6b7280',display:'block',marginBottom:'.4rem'}}>Confirme *</label>
+                        <input name="phoneConfirm" value={formData.phoneConfirm} onChange={handleChange}
+                               required placeholder="(84) 99999-9999" maxLength="15"
+                               className={`nd-input ${formData.phoneConfirm?(phoneError?'err':phoneValid?'ok':''):''}`} />
+                      </div>
+                    </div>
+                    {phoneError && <p style={{color:'#dc2626',fontSize:'.8rem',marginTop:'.5rem',display:'flex',alignItems:'center',gap:'.3rem'}}><X style={{width:'.8rem',height:'.8rem'}}/>{phoneError}</p>}
+                    {phoneValid && <p style={{color:'#16a34a',fontSize:'.8rem',marginTop:'.5rem',display:'flex',alignItems:'center',gap:'.3rem'}}><CheckCircle style={{width:'.8rem',height:'.8rem'}}/>WhatsApp confirmado!</p>}
+                  </div>
 
-                      {/* WhatsApp */}
-                      <div className="p-5 rounded-xl space-y-4"
-                           style={{ background: '#fffbf0', border: '1.5px solid #f0e0b0' }}>
-                        <p className="flex items-center gap-2 text-sm font-semibold"
-                           style={{ color: '#92400e' }}>
-                          <Phone className="h-4 w-4" style={{ color: 'var(--gold)' }} />
-                          O comprovante será enviado para este WhatsApp — digite com atenção!
-                        </p>
-                        <div className="grid sm:grid-cols-2 gap-4">
-                          <div>
-                            <Label className="neel-label mb-1.5 block" style={{ color: '#6b7280', fontSize: '.7rem' }}>WhatsApp *</Label>
-                            <Input id="phone" name="phone" value={formData.phone}
-                                   onChange={handleInputChange} required placeholder="(84) 99999-9999"
-                                   maxLength="15"
-                                   className={`neel-input ${formData.phone ? (phoneError ? 'invalid' : phoneValid ? 'valid' : '') : ''}`} />
-                          </div>
-                          <div>
-                            <Label className="neel-label mb-1.5 block" style={{ color: '#6b7280', fontSize: '.7rem' }}>Confirme o WhatsApp *</Label>
-                            <Input id="phoneConfirm" name="phoneConfirm" value={formData.phoneConfirm}
-                                   onChange={handleInputChange} required placeholder="(84) 99999-9999"
-                                   maxLength="15"
-                                   className={`neel-input ${formData.phoneConfirm ? (phoneError ? 'invalid' : phoneValid ? 'valid' : '') : ''}`} />
-                          </div>
-                        </div>
-                        {phoneError && <p className="text-red-600 text-sm flex items-center gap-1"><X className="h-3 w-3" />{phoneError}</p>}
-                        {phoneValid && <p className="text-green-700 text-sm flex items-center gap-1"><CheckCircle className="h-3 w-3" />WhatsApp confirmado!</p>}
-                      </div>
-
-                      <div className="grid sm:grid-cols-2 gap-4">
-                        <div>
-                          <Label className="neel-label mb-1.5 block" style={{ color: '#6b7280', fontSize: '.7rem' }}>E-mail *</Label>
-                          <Input id="email" name="email" type="email" value={formData.email}
-                                 onChange={handleInputChange} required placeholder="seu@email.com"
-                                 className="neel-input" />
-                        </div>
-                        <div>
-                          <Label className="neel-label mb-1.5 block" style={{ color: '#6b7280', fontSize: '.7rem' }}>CPF *</Label>
-                          <Input id="cpf" name="cpf" value={formData.cpf}
-                                 onChange={handleInputChange} required placeholder="000.000.000-00"
-                                 maxLength="14"
-                                 className={`neel-input ${formData.cpf ? (cpfError ? 'invalid' : cpfValid ? 'valid' : '') : ''}`} />
-                          {cpfError && <p className="text-red-500 text-xs mt-1.5 flex items-center gap-1"><X className="h-3 w-3" />{cpfError}</p>}
-                          {cpfValid && !cpfError && <p className="text-green-600 text-xs mt-1.5 flex items-center gap-1"><CheckCircle className="h-3 w-3" />CPF válido</p>}
-                        </div>
-                      </div>
+                  {/* Email + CPF */}
+                  <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'1rem',marginBottom:'1.75rem'}}>
+                    <div>
+                      <label style={{fontFamily:"-apple-system,'Segoe UI',sans-serif",fontWeight:700,fontSize:'.68rem',letterSpacing:'.1em',textTransform:'uppercase',color:'#6b7280',display:'block',marginBottom:'.4rem'}}>E-mail *</label>
+                      <input name="email" type="email" value={formData.email} onChange={handleChange}
+                             required placeholder="seu@email.com" className="nd-input" />
+                    </div>
+                    <div>
+                      <label style={{fontFamily:"-apple-system,'Segoe UI',sans-serif",fontWeight:700,fontSize:'.68rem',letterSpacing:'.1em',textTransform:'uppercase',color:'#6b7280',display:'block',marginBottom:'.4rem'}}>CPF *</label>
+                      <input name="cpf" value={formData.cpf} onChange={handleChange}
+                             required placeholder="000.000.000-00" maxLength="14"
+                             className={`nd-input ${formData.cpf?(cpfError?'err':cpfValid?'ok',''):''}`} />
+                      {cpfError && <p style={{color:'#dc2626',fontSize:'.75rem',marginTop:'.35rem'}}>{cpfError}</p>}
+                      {cpfValid&&!cpfError && <p style={{color:'#16a34a',fontSize:'.75rem',marginTop:'.35rem'}}>✓ CPF válido</p>}
                     </div>
                   </div>
 
                   {/* Pagamento */}
-                  <div>
-                    <p className="neel-display mb-5 flex items-center gap-2"
-                       style={{ fontSize: '1.15rem', color: 'var(--navy)' }}>
-                      <CreditCard className="h-4 w-4" style={{ color: 'var(--gold)' }} />
-                      Forma de Pagamento *
-                    </p>
-                    <div className="space-y-3 mb-6">
-                      <div className={`pay-opt ${formData.paymentMethod === 'pix' ? 'active' : ''}`}
-                           onClick={() => setFormData(p => ({ ...p, paymentMethod: 'pix', installments: 1 }))}>
-                        <div className="flex items-center gap-4">
-                          <div className="w-5 h-5 rounded-full border-2 flex-shrink-0 transition-all"
-                               style={{ borderColor: formData.paymentMethod === 'pix' ? 'var(--gold)' : '#d1d5db',
-                                        background: formData.paymentMethod === 'pix' ? 'var(--gold)' : 'transparent' }} />
-                          <div>
-                            <p className="font-bold" style={{ color: 'var(--navy)', fontFamily: "'Jost', sans-serif" }}>PIX</p>
-                            <p className="text-sm" style={{ color: '#6b7280' }}>R$ 100,00 — sem taxas</p>
-                          </div>
-                        </div>
-                      </div>
-                      <div className={`pay-opt ${formData.paymentMethod === 'credit' ? 'active' : ''}`}
-                           onClick={() => setFormData(p => ({ ...p, paymentMethod: 'credit', installments: 1 }))}>
-                        <div className="flex items-center gap-4">
-                          <div className="w-5 h-5 rounded-full border-2 flex-shrink-0 transition-all"
-                               style={{ borderColor: formData.paymentMethod === 'credit' ? 'var(--gold)' : '#d1d5db',
-                                        background: formData.paymentMethod === 'credit' ? 'var(--gold)' : 'transparent' }} />
-                          <div>
-                            <p className="font-bold" style={{ color: 'var(--navy)', fontFamily: "'Jost', sans-serif" }}>Cartão de Crédito</p>
-                            <p className="text-sm" style={{ color: '#22c55e', fontWeight: 600 }}>Parcele em até 4× (com juros)</p>
-                          </div>
+                  <p style={{fontFamily:"'Playfair Display',serif",fontWeight:700,fontSize:'1.1rem',color:'var(--navy)',marginBottom:'1rem',display:'flex',alignItems:'center',gap:'.5rem'}}>
+                    <CreditCard style={{width:'1rem',height:'1rem',color:'var(--gold)'}}/> Forma de Pagamento
+                  </p>
+                  <div style={{display:'flex',flexDirection:'column',gap:'.75rem',marginBottom:'1.25rem'}}>
+                    {/* PIX */}
+                    <div className={`pay-row ${formData.paymentMethod==='pix'?'picked':''}`}
+                         onClick={()=>setFormData(p=>({...p,paymentMethod:'pix',installments:1}))}>
+                      <div style={{display:'flex',alignItems:'center',gap:.75+'rem'}}>
+                        <div className={`dot ${formData.paymentMethod==='pix'?'on':''}`}/>
+                        <div>
+                          <p style={{fontFamily:"-apple-system,'Segoe UI',sans-serif",fontWeight:700,fontSize:'.95rem',color:'var(--navy)',margin:0}}>PIX</p>
+                          <p style={{fontFamily:"'Lora',serif",fontSize:'.82rem',color:'#6b7280',margin:0}}>R$ 100,00 — sem taxas</p>
                         </div>
                       </div>
                     </div>
-
-                    {formData.paymentMethod === 'credit' && (
-                      <div className="mb-6">
-                        <Label className="neel-label mb-2 block" style={{ color: '#6b7280', fontSize: '.7rem' }}>Número de Parcelas</Label>
-                        <select className="neel-select"
-                                value={formData.installments}
-                                onChange={e => setFormData(p => ({ ...p, installments: parseInt(e.target.value) }))}>
-                          {[1,2,3,4].map(n => (
-                            <option key={n} value={n}>
-                              {n}× de R$ {calculatePrice(n).valorParcela.toFixed(2).replace('.',',')} {n===1 ? '(à vista)' : '(com juros)'}
-                            </option>
-                          ))}
-                        </select>
-                        <p className="text-xs mt-1.5" style={{ color: '#9ca3af' }}>* Taxas de cartão aplicadas ao valor total</p>
+                    {/* Cartão */}
+                    <div className={`pay-row ${formData.paymentMethod==='credit'?'picked':''}`}
+                         onClick={()=>setFormData(p=>({...p,paymentMethod:'credit',installments:1}))}>
+                      <div style={{display:'flex',alignItems:'center',gap:.75+'rem'}}>
+                        <div className={`dot ${formData.paymentMethod==='credit'?'on':''}`}/>
+                        <div>
+                          <p style={{fontFamily:"-apple-system,'Segoe UI',sans-serif",fontWeight:700,fontSize:'.95rem',color:'var(--navy)',margin:0}}>Cartão de Crédito</p>
+                          <p style={{fontFamily:"'Lora',serif",fontSize:'.82rem',color:'#16a34a',fontWeight:600,margin:0}}>Parcele em até 4× (com juros)</p>
+                        </div>
                       </div>
-                    )}
-
-                    {/* Total */}
-                    <div className="rounded-2xl p-6 text-center"
-                         style={{ background: 'linear-gradient(135deg, #fffbf0, #fef3c7)', border: '1.5px solid #f0e0b0' }}>
-                      <p className="neel-label mb-2" style={{ color: '#92400e', fontSize: '.68rem' }}>Valor Final</p>
-                      <p className="neel-display" style={{ fontSize: '2.5rem', color: 'var(--navy)', fontWeight: 700 }}>
-                        R$ {valorTotal.toFixed(2).replace('.',',')}
-                      </p>
-                      {formData.paymentMethod === 'credit' && formData.installments > 1 && (
-                        <p className="text-sm font-semibold mt-1" style={{ color: '#92400e' }}>
-                          {formData.installments}× de R$ {valorParcela.toFixed(2).replace('.',',')}
-                        </p>
-                      )}
                     </div>
                   </div>
 
-                  {/* Submit */}
-                  <button type="submit"
-                          className="btn-gold w-full flex items-center justify-center gap-3 py-5 rounded-xl text-lg"
-                          disabled={isProcessing || !phoneValid || !cpfValid}>
-                    {isProcessing ? (
-                      <><div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white" /> Processando...</>
-                    ) : (
-                      <>FINALIZAR E IR PARA PAGAMENTO <ArrowRight className="h-5 w-5" /></>
+                  {/* Parcelas */}
+                  {formData.paymentMethod==='credit' && (
+                    <div style={{marginBottom:'1.25rem'}}>
+                      <label style={{fontFamily:"-apple-system,'Segoe UI',sans-serif",fontWeight:700,fontSize:'.68rem',letterSpacing:'.1em',textTransform:'uppercase',color:'#6b7280',display:'block',marginBottom:'.4rem'}}>Parcelas</label>
+                      <select value={formData.installments}
+                              onChange={e=>setFormData(p=>({...p,installments:parseInt(e.target.value)}))}
+                              style={{width:'100%',height:'3rem',padding:'0 1rem',border:'1.5px solid #e5e7eb',borderRadius:'.75rem',fontFamily:"'Lora',serif",fontSize:'.92rem',background:'#fff',outline:'none'}}>
+                        {[1,2,3,4].map(n=>(
+                          <option key={n} value={n}>
+                            {n}× de R$ {calcPrice(n).valorParcela.toFixed(2).replace('.',',')} {n===1?'(à vista)':'(com juros)'}
+                          </option>
+                        ))}
+                      </select>
+                      <p style={{fontFamily:"'Lora',serif",fontSize:'.72rem',color:'#9ca3af',marginTop:'.35rem'}}>* Taxas do cartão incluídas</p>
+                    </div>
+                  )}
+
+                  {/* Total */}
+                  <div style={{background:'linear-gradient(135deg,#fffbf0,#fef3c7)',border:'1.5px solid #f0d98a',borderRadius:'1rem',padding:'1.25rem',textAlign:'center',marginBottom:'1.5rem'}}>
+                    <p style={{fontFamily:"-apple-system,'Segoe UI',sans-serif",fontWeight:700,fontSize:'.68rem',letterSpacing:'.12em',textTransform:'uppercase',color:'#92400e',marginBottom:'.3rem'}}>Valor Total</p>
+                    <p style={{fontFamily:"'Playfair Display',serif",fontWeight:700,fontSize:'2.25rem',color:'var(--navy)',lineHeight:1}}>
+                      R$ {valorTotal.toFixed(2).replace('.',',')}
+                    </p>
+                    {formData.paymentMethod==='credit'&&formData.installments>1 && (
+                      <p style={{fontFamily:"'Lora',serif",fontSize:'.85rem',color:'#92400e',marginTop:'.35rem',fontWeight:600}}>
+                        {formData.installments}× de R$ {valorParcela.toFixed(2).replace('.',',')}
+                      </p>
                     )}
+                  </div>
+
+                  {/* Submit */}
+                  <button type="submit" className="btn-primary"
+                          style={{width:'100%',padding:'1.1rem',fontSize:'1rem',borderRadius:'.875rem'}}
+                          disabled={isProcessing||!phoneValid||!cpfValid}>
+                    {isProcessing
+                      ? <><div style={{width:'1.1rem',height:'1.1rem',border:'2px solid rgba(255,255,255,.4)',borderTopColor:'#fff',borderRadius:'50%',animation:'spin .7s linear infinite'}}/> Processando...</>
+                      : <>Finalizar e Ir para Pagamento <ArrowRight style={{width:'1.1rem',height:'1.1rem'}}/></>
+                    }
                   </button>
 
-                  {!phoneValid && formData.phone && (
-                    <p className="text-xs text-center text-red-500">
-                      ⚠️ Confirme o WhatsApp corretamente para habilitar o botão
+                  {!phoneValid&&formData.phone && (
+                    <p style={{textAlign:'center',fontSize:'.78rem',color:'#dc2626',marginTop:'.75rem'}}>
+                      ⚠️ Confirme o WhatsApp para habilitar o botão
                     </p>
                   )}
-                  <p className="text-xs text-center" style={{ color: '#9ca3af' }}>
-                    Você será redirecionado para o ambiente seguro de pagamento do Asaas
+                  <p style={{textAlign:'center',fontFamily:"'Lora',serif",fontSize:'.75rem',color:'#9ca3af',marginTop:'.75rem'}}>
+                    Você será redirecionado para o pagamento seguro via Asaas
                   </p>
                 </form>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           )}
         </div>
       </section>
 
-      {/* ══ FOOTER ════════════════════════════════════════════════════════════════ */}
-      <footer className="py-12 text-center px-4" style={{ background: 'var(--navy)' }}>
-        <p className="neel-display text-white mb-3" style={{ fontSize: '1.2rem' }}>
+      {/* ══ FOOTER ═══════════════════════════════════════════════════════════ */}
+      <footer style={{background:'var(--navy)',padding:'3rem 1.5rem',textAlign:'center'}}>
+        <p style={{fontFamily:"'Playfair Display',serif",fontWeight:700,fontSize:'1.15rem',color:'#fff',marginBottom:'.75rem'}}>
           2º Seminário Espírita do NEEL
         </p>
-        <div className="flex justify-center gap-5 mb-4">
-          <a href="https://instagram.com/neelsga"
-             style={{ color: 'rgba(255,255,255,.5)', transition: 'color .2s' }}
-             onMouseOver={e => e.currentTarget.style.color = 'var(--gold2)'}
-             onMouseOut={e  => e.currentTarget.style.color = 'rgba(255,255,255,.5)'}>
-            <Instagram className="h-5 w-5" />
-          </a>
-          <a href="https://wa.me/5584991335975"
-             style={{ color: 'rgba(255,255,255,.5)', transition: 'color .2s' }}
-             onMouseOver={e => e.currentTarget.style.color = 'var(--gold2)'}
-             onMouseOut={e  => e.currentTarget.style.color = 'rgba(255,255,255,.5)'}>
-            <Phone className="h-5 w-5" />
-          </a>
+        <div style={{display:'flex',justifyContent:'center',gap:'1.25rem',marginBottom:'1rem'}}>
+          {[
+            {href:'https://instagram.com/neelsga',icon:<Instagram style={{width:'1.2rem',height:'1.2rem'}}/>},
+            {href:'https://wa.me/5584991335975',  icon:<Phone    style={{width:'1.2rem',height:'1.2rem'}}/>},
+          ].map(({href,icon})=>(
+            <a key={href} href={href} style={{color:'rgba(255,255,255,.4)',transition:'color .2s'}}
+               onMouseOver={e=>e.currentTarget.style.color='var(--gold2)'}
+               onMouseOut={e=>e.currentTarget.style.color='rgba(255,255,255,.4)'}>
+              {icon}
+            </a>
+          ))}
         </div>
-        <p style={{ color: 'rgba(255,255,255,.4)', fontSize: '.8rem' }}>
+        <p style={{fontFamily:"'Lora',serif",fontSize:'.78rem',color:'rgba(255,255,255,.35)'}}>
           © 2026 NEEL — Centro Espírita Esperança de Luz. Todos os direitos reservados.
         </p>
-        <p style={{ color: 'rgba(255,255,255,.3)', fontSize: '.72rem', marginTop: '.25rem' }}>
+        <p style={{fontFamily:"'Lora',serif",fontSize:'.7rem',color:'rgba(255,255,255,.25)',marginTop:'.25rem'}}>
           31 de Outubro de 2026 — Natal, RN
         </p>
       </footer>
