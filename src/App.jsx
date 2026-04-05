@@ -388,7 +388,7 @@ function App() {
                 {[
                   {href:'https://wa.me/5584991335975',icon:<Phone style={{width:'1rem',height:'1rem',color:'#16a34a'}}/>,text:'(84) 9 9133-5975'},
                   {href:'https://wa.me/5584988049371',icon:<Phone style={{width:'1rem',height:'1rem',color:'#16a34a'}}/>,text:'(84) 9 8804-9371'},
-                  {href:'https://instagram.com/neel.sga',icon:<Instagram style={{width:'1rem',height:'1rem',color:'#e1306c'}}/>,text:'@neelsga'},
+                  {href:'https://instagram.com/neel.sga',icon:<Instagram style={{width:'1rem',height:'1rem',color:'#e1306c'}}/>,text:'@neel.sga'},
                 ].map(({href,icon,text})=>(
                   <a key={text} href={href} style={{display:'flex',alignItems:'center',gap:'.6rem',padding:'.75rem 1rem',borderRadius:'.75rem',background:'var(--cream)',border:'1.5px solid #ede8df',color:'var(--navy)',fontFamily:"'Lora',serif",fontWeight:600,fontSize:'.88rem',textDecoration:'none',transition:'box-shadow .2s'}}
                      onMouseOver={e=>e.currentTarget.style.boxShadow='0 2px 12px rgba(0,0,0,.1)'}
