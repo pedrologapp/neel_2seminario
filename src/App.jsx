@@ -335,7 +335,7 @@ function App() {
 
             {/* Título hero */}
             <h1 className="fu2" style={{fontFamily:"'Playfair Display',Georgia,serif",fontWeight:700,fontSize:'clamp(3.2rem,10vw,6rem)',color:'#fff',lineHeight:1.08,marginBottom:'1.25rem'}}>
-              "VINDE A&nbsp;MIN
+              "Vinde a&nbsp;min
             </h1>
 
             {/* Citação */}
