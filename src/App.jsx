@@ -23,6 +23,8 @@ import {
   User,
   X,
   Star,
+  Sparkles,
+  Zap,
 } from 'lucide-react';
 
 function App() {
@@ -280,16 +282,16 @@ function App() {
 
   if (inscriptionSuccess) {
     return (
-      <div className="min-h-screen bg-green-50 flex items-center justify-center p-4">
-        <Card className="w-full max-w-md">
-          <CardHeader className="text-center">
-            <div className="mx-auto mb-4 p-3 bg-green-100 rounded-full w-fit">
-              <CheckCircle className="h-8 w-8 text-green-600" />
+      <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white flex items-center justify-center p-4">
+        <Card className="w-full max-w-md shadow-2xl border-0">
+          <CardHeader className="text-center bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-t-lg">
+            <div className="mx-auto mb-4 p-3 bg-white/20 rounded-full w-fit">
+              <CheckCircle className="h-8 w-8 text-white" />
             </div>
-            <CardTitle className="text-green-600">Inscrição Registrada!</CardTitle>
-            <CardDescription>Finalize o pagamento para confirmar a sua participação</CardDescription>
+            <CardTitle className="text-white text-2xl">Inscrição Registrada!</CardTitle>
+            <CardDescription className="text-blue-100">Finalize o pagamento para confirmar sua participação</CardDescription>
           </CardHeader>
-          <CardContent className="text-center space-y-4">
+          <CardContent className="text-center space-y-4 pt-8">
             <p className="text-sm text-muted-foreground">
               Os dados foram registrados com sucesso. Clique no botão abaixo para ir para a página de pagamento.
             </p>
@@ -297,26 +299,12 @@ function App() {
             {paymentUrl && (
               <a
                 href={paymentUrl}
-                className="block w-full bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-6 rounded-lg text-center text-lg transition-colors"
+                className="block w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-4 px-6 rounded-lg text-center text-lg transition-all transform hover:scale-105 shadow-lg"
                 style={{ textDecoration: 'none' }}
               >
-                💳 IR PARA O PAGAMENTO
+                Ir para Pagamento
               </a>
             )}
-
-            <p className="text-xs text-gray-500">
-              Se o botão não abrir, copie e cole o link abaixo no seu navegador:
-            </p>
-
-            {paymentUrl && (
-              <div className="p-3 bg-gray-100 rounded border text-xs text-gray-700 break-all select-all cursor-text text-left">
-                {paymentUrl}
-              </div>
-            )}
-
-            <Button onClick={() => window.location.reload()} variant="outline" className="w-full mt-2">
-              Voltar ao Início
-            </Button>
           </CardContent>
         </Card>
       </div>
@@ -324,196 +312,245 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen smooth-scroll">
+    <div className="min-h-screen bg-white">
+      {/* HERO SECTION */}
+      <section className="hero-section relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/40 to-black/50 z-10"></div>
+        <div className="absolute inset-0 bg-[url('./assets/hero.jpg')] bg-cover bg-center"></div>
+        
+        <div className="relative z-20 min-h-screen flex flex-col items-center justify-center px-4 py-20">
+          <div className="max-w-2xl text-center space-y-6 animate-fade-in">
+            <div className="flex items-center justify-center space-x-2 mb-4">
+              <Sparkles className="h-5 w-5 text-yellow-300" />
+              <span className="text-yellow-300 text-sm font-semibold tracking-widest">2º SEMINÁRIO ESPÍRITA</span>
+              <Sparkles className="h-5 w-5 text-yellow-300" />
+            </div>
+            
+            <h1 className="text-5xl md:text-7xl font-serif text-white leading-tight drop-shadow-lg">
+              Vinde a Mim
+            </h1>
+            
+            <p className="text-xl md:text-2xl text-gray-100 font-light italic drop-shadow-md">
+              "Todos os que estais cansados e oprimidos, e eu vos aliviarei."
+            </p>
 
-      {/* HEADER */}
-      <header className="fixed top-0 w-full bg-white/95 backdrop-blur-sm z-50 border-b">
-        <nav className="container mx-auto px-4 py-4">
-          <div className="flex justify-between items-center">
-            <h1 className="text-xl font-bold text-blue-900">NEEL — Centro Espírita Esperança de Luz</h1>
-            <div className="hidden md:flex space-x-6">
-              <button onClick={() => scrollToSection('sobre')} className="text-sm hover:text-primary transition-colors">Sobre</button>
-              <button onClick={() => scrollToSection('itinerario')} className="text-sm hover:text-primary transition-colors">Informações</button>
-              <button onClick={() => scrollToSection('custos')} className="text-sm hover:text-primary transition-colors">Inscrição</button>
-              <button onClick={() => scrollToSection('documentacao')} className="text-sm hover:text-primary transition-colors">Importante</button>
-              <button onClick={() => scrollToSection('contato')} className="text-sm hover:text-primary transition-colors">Contato</button>
+            <div className="pt-8 space-y-4">
+              <Button
+                size="lg"
+                className="bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-white font-bold px-8 py-6 text-lg rounded-full shadow-2xl transform hover:scale-105 transition-all"
+                onClick={showInscricaoForm}
+              >
+                Garantir Minha Vaga
+                <ArrowRight className="ml-3 h-5 w-5" />
+              </Button>
+              
+              <Button
+                variant="outline"
+                size="lg"
+                className="border-2 border-white text-white hover:bg-white/10 font-semibold px-8 py-6 text-lg rounded-full"
+                onClick={() => scrollToSection('sobre')}
+              >
+                Saiba Mais
+              </Button>
             </div>
-          </div>
-        </nav>
-      </header>
 
-      {/* HERO */}
-      <section className="hero-section min-h-screen flex items-center justify-center text-white relative">
-        <div className="text-center z-10 max-w-4xl mx-auto px-4">
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-fade-in">
-            Vinde a Mim
-          </h1>
-          <p className="text-xl md:text-2xl mb-4 opacity-90">
-            2º Seminário Espírita do NEEL
-          </p>
-          <p className="text-base md:text-lg mb-8 opacity-80">
-            "Todos os que estais cansados e oprimidos, e eu vos aliviarei."
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button
-              size="lg"
-              variant="outline"
-              className="border-white text-white hover:bg-white hover:text-primary px-8 py-3 bg-white text-primary"
-              onClick={() => scrollToSection('sobre')}
-            >
-              Saiba Mais
-            </Button>
-          </div>
-          <div className="mt-12 flex flex-wrap justify-center items-center gap-6 text-sm">
-            <div className="flex items-center">
-              <Calendar className="h-5 w-5 mr-2" />
-              <span>31 de Outubro de 2026 (Sábado)</span>
-            </div>
-            <div className="flex items-center">
-              <MapPin className="h-5 w-5 mr-2" />
-              Auditório SESC Cidade Alta — Natal, RN
-            </div>
-            <div className="flex items-center">
-              <Clock className="h-5 w-5 mr-2" />
-              08h às 17h
+            <div className="pt-12 grid grid-cols-3 gap-4 md:gap-8 text-white text-center">
+              <div className="space-y-2">
+                <Calendar className="h-6 w-6 mx-auto text-yellow-300" />
+                <p className="text-sm font-semibold">31 de Outubro</p>
+                <p className="text-xs opacity-80">2026</p>
+              </div>
+              <div className="space-y-2">
+                <Clock className="h-6 w-6 mx-auto text-yellow-300" />
+                <p className="text-sm font-semibold">08h às 17h</p>
+                <p className="text-xs opacity-80">Dia inteiro</p>
+              </div>
+              <div className="space-y-2">
+                <MapPin className="h-6 w-6 mx-auto text-yellow-300" />
+                <p className="text-sm font-semibold">Cidade Alta</p>
+                <p className="text-xs opacity-80">Natal, RN</p>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* SOBRE */}
-      <section id="sobre" className="section-padding bg-white">
-        <div className="container mx-auto max-w-6xl">
+      {/* SOBRE O EVENTO */}
+      <section id="sobre" className="section-padding bg-gradient-to-b from-white to-blue-50">
+        <div className="container mx-auto max-w-4xl">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4 gradient-text">Sobre o Evento</h2>
-            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-              O 2º Seminário Espírita do NEEL é um encontro de estudo, reflexão e fraternidade,
-              voltado ao aprofundamento da <strong>Doutrina Espírita</strong> e ao fortalecimento dos laços
-              de <strong>amor, caridade e esperança</strong> entre os irmãos de fé.
-            </p>
+            <h2 className="text-4xl md:text-5xl font-serif text-blue-900 mb-4">Sobre o Evento</h2>
+            <div className="w-20 h-1 bg-gradient-to-r from-yellow-500 to-blue-600 mx-auto rounded-full"></div>
           </div>
 
           <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <h3 className="text-2xl font-semibold mb-6">Um Dia de Estudo e Fraternidade</h3>
-              <div className="space-y-4">
-                <div className="flex items-start space-x-3">
-                  <CheckCircle className="h-6 w-6 text-accent mt-1 flex-shrink-0" />
-                  <p>Palestras com <strong>Jorge Elarrat (RO)</strong> e <strong>Rafael Siqueira (FJ)</strong>, convidados de destaque no movimento espírita nacional</p>
+            <div className="space-y-6">
+              <p className="text-lg text-gray-700 leading-relaxed">
+                O <strong>2º Seminário Espírita do NEEL</strong> é um encontro de espiritualidade, reflexão e acolhimento. Reunimos pessoas que buscam compreender melhor os ensinamentos espíritas e encontrar paz interior.
+              </p>
+              <p className="text-lg text-gray-700 leading-relaxed">
+                Com palestrantes renomados e uma atmosfera de harmonia, este seminário promove o crescimento espiritual e o fortalecimento da fé.
+              </p>
+              <div className="space-y-3 pt-4">
+                <div className="flex items-start space-x-4">
+                  <Zap className="h-6 w-6 text-yellow-500 flex-shrink-0 mt-1" />
+                  <div>
+                    <h4 className="font-semibold text-blue-900">Palestras Inspiradoras</h4>
+                    <p className="text-sm text-gray-600">Ensinamentos profundos com especialistas renomados</p>
+                  </div>
                 </div>
-                <div className="flex items-start space-x-3">
-                  <CheckCircle className="h-6 w-6 text-accent mt-1 flex-shrink-0" />
-                  <p>Programação completa das <strong>08h às 17h</strong>, com momentos de estudo, reflexão e confraternização</p>
+                <div className="flex items-start space-x-4">
+                  <Heart className="h-6 w-6 text-yellow-500 flex-shrink-0 mt-1" />
+                  <div>
+                    <h4 className="font-semibold text-blue-900">Comunidade Acolhedora</h4>
+                    <p className="text-sm text-gray-600">Encontro com pessoas que compartilham seus valores</p>
+                  </div>
                 </div>
-                <div className="flex items-start space-x-3">
-                  <CheckCircle className="h-6 w-6 text-accent mt-1 flex-shrink-0" />
-                  <p>Realizado no <strong>Auditório SESC Cidade Alta</strong>, espaço amplo e acolhedor em Natal-RN</p>
-                </div>
-                <div className="flex items-start space-x-3">
-                  <CheckCircle className="h-6 w-6 text-accent mt-1 flex-shrink-0" />
-                  <p>Apoio da <strong>CRENORTE</strong> e da <strong>FERN — Federação Espírita do RN</strong></p>
-                </div>
-                <div className="flex items-start space-x-3">
-                  <CheckCircle className="h-6 w-6 text-accent mt-1 flex-shrink-0" />
-                  <p>Realização do <strong>NEEL — Centro Espírita Esperança de Luz</strong></p>
+                <div className="flex items-start space-x-4">
+                  <Star className="h-6 w-6 text-yellow-500 flex-shrink-0 mt-1" />
+                  <div>
+                    <h4 className="font-semibold text-blue-900">Experiência Transformadora</h4>
+                    <p className="text-sm text-gray-600">Momentos de reflexão que marcam vidas</p>
+                  </div>
                 </div>
               </div>
             </div>
-            <div className="flex flex-col gap-6">
-              <Card className="border-l-4 border-l-blue-400">
-                <CardHeader>
-                  <CardTitle className="text-lg flex items-center gap-2">
-                    <Star className="h-5 w-5 text-yellow-500" />
-                    Jorge Elarrat
-                  </CardTitle>
-                  <CardDescription>Palestrante convidado — RO</CardDescription>
-                </CardHeader>
-              </Card>
-              <Card className="border-l-4 border-l-blue-400">
-                <CardHeader>
-                  <CardTitle className="text-lg flex items-center gap-2">
-                    <Star className="h-5 w-5 text-yellow-500" />
-                    Rafael Siqueira
-                  </CardTitle>
-                  <CardDescription>Palestrante convidado — FJ</CardDescription>
-                </CardHeader>
-              </Card>
+
+            <div className="bg-gradient-to-br from-blue-100 to-blue-50 rounded-2xl p-8 border-2 border-blue-200">
+              <h3 className="text-2xl font-serif text-blue-900 mb-6">O Que Você Receberá</h3>
+              <ul className="space-y-4">
+                <li className="flex items-center space-x-3">
+                  <CheckCircle className="h-5 w-5 text-yellow-500 flex-shrink-0" />
+                  <span className="text-gray-700">Acesso às palestras do dia inteiro</span>
+                </li>
+                <li className="flex items-center space-x-3">
+                  <CheckCircle className="h-5 w-5 text-yellow-500 flex-shrink-0" />
+                  <span className="text-gray-700">Material de apoio exclusivo</span>
+                </li>
+                <li className="flex items-center space-x-3">
+                  <CheckCircle className="h-5 w-5 text-yellow-500 flex-shrink-0" />
+                  <span className="text-gray-700">Coffee break durante o evento</span>
+                </li>
+                <li className="flex items-center space-x-3">
+                  <CheckCircle className="h-5 w-5 text-yellow-500 flex-shrink-0" />
+                  <span className="text-gray-700">Certificado de participação</span>
+                </li>
+                <li className="flex items-center space-x-3">
+                  <CheckCircle className="h-5 w-5 text-yellow-500 flex-shrink-0" />
+                  <span className="text-gray-700">Conexão com a comunidade espírita</span>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
       </section>
 
-      {/* INFORMAÇÕES */}
-      <section id="itinerario" className="section-padding bg-muted/30">
-        <div className="container mx-auto max-w-6xl">
+      {/* PALESTRANTES */}
+      <section id="palestrantes" className="section-padding bg-white">
+        <div className="container mx-auto max-w-4xl">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4">Informações do Evento</h2>
-            <p className="text-lg text-muted-foreground">
-              Confira todos os detalhes do 2º Seminário Espírita do NEEL
-            </p>
+            <h2 className="text-4xl md:text-5xl font-serif text-blue-900 mb-4">Palestrantes</h2>
+            <div className="w-20 h-1 bg-gradient-to-r from-yellow-500 to-blue-600 mx-auto rounded-full"></div>
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <Card className="card-hover">
-              <CardHeader className="text-center">
-                <div className="mx-auto mb-4 p-3 bg-primary/10 rounded-full w-fit">
-                  <Clock className="h-8 w-8 text-primary" />
+
+          <div className="grid md:grid-cols-2 gap-8">
+            <div className="group">
+              <div className="relative overflow-hidden rounded-2xl mb-6 h-64 bg-gradient-to-br from-blue-200 to-blue-100 flex items-center justify-center shadow-lg">
+                <div className="text-center">
+                  <Users className="h-20 w-20 text-blue-400 mx-auto mb-2" />
+                  <p className="text-blue-600 font-semibold">Foto do Palestrante</p>
                 </div>
-                <CardTitle>Data e Horário</CardTitle>
-                <CardDescription>31 de Outubro de 2026</CardDescription>
+              </div>
+              <h3 className="text-2xl font-serif text-blue-900 mb-2">Jorge Elarrat</h3>
+              <p className="text-sm text-yellow-600 font-semibold mb-3">Rondônia (RO)</p>
+              <p className="text-gray-700 leading-relaxed">
+                Especialista em espiritismo com vasta experiência em palestras e orientação espiritual. Traz ensinamentos profundos e práticos para o dia a dia.
+              </p>
+            </div>
+
+            <div className="group">
+              <div className="relative overflow-hidden rounded-2xl mb-6 h-64 bg-gradient-to-br from-blue-200 to-blue-100 flex items-center justify-center shadow-lg">
+                <div className="text-center">
+                  <Users className="h-20 w-20 text-blue-400 mx-auto mb-2" />
+                  <p className="text-blue-600 font-semibold">Foto do Palestrante</p>
+                </div>
+              </div>
+              <h3 className="text-2xl font-serif text-blue-900 mb-2">Rafael Siqueira</h3>
+              <p className="text-sm text-yellow-600 font-semibold mb-3">Rio de Janeiro (RJ)</p>
+              <p className="text-gray-700 leading-relaxed">
+                Conferencista renomado no movimento espírita. Suas palestras tocam o coração e inspiram transformação espiritual genuína.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* INFORMAÇÕES PRÁTICAS */}
+      <section id="praticas" className="section-padding bg-gradient-to-b from-blue-50 to-white">
+        <div className="container mx-auto max-w-4xl">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-serif text-blue-900 mb-4">Informações Práticas</h2>
+            <div className="w-20 h-1 bg-gradient-to-r from-yellow-500 to-blue-600 mx-auto rounded-full"></div>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow">
+              <CardHeader className="bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-t-lg">
+                <div className="flex items-center space-x-3">
+                  <MapPin className="h-6 w-6" />
+                  <CardTitle>Local</CardTitle>
+                </div>
               </CardHeader>
-              <CardContent>
-                <p className="text-sm text-center font-semibold text-blue-600">
-                  08h às 17h
-                </p>
-                <p className="text-xs text-center text-muted-foreground mt-2">
-                  Sábado
+              <CardContent className="pt-6">
+                <p className="font-semibold text-gray-900 mb-2">Auditório SESC Cidade Alta</p>
+                <p className="text-sm text-gray-600">
+                  Rua Coronel Bozerra, 33<br />
+                  Cidade Alta, Natal - RN
                 </p>
               </CardContent>
             </Card>
 
-            <Card className="card-hover">
-              <CardHeader className="text-center">
-                <div className="mx-auto mb-4 p-3 bg-accent/10 rounded-full w-fit">
-                  <MapPin className="h-8 w-8 text-accent" />
+            <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow">
+              <CardHeader className="bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-t-lg">
+                <div className="flex items-center space-x-3">
+                  <Calendar className="h-6 w-6" />
+                  <CardTitle>Data e Hora</CardTitle>
                 </div>
-                <CardTitle>Local</CardTitle>
               </CardHeader>
-              <CardContent>
-                <p className="text-sm text-center font-semibold">
-                  Auditório SESC Cidade Alta
-                </p>
-                <p className="text-xs text-center text-muted-foreground mt-1">
-                  Rua Coronel Bezerra, 33<br />Cidade Alta, Natal — RN
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="card-hover">
-              <CardHeader className="text-center">
-                <div className="mx-auto mb-4 p-3 bg-yellow-100 rounded-full w-fit">
-                  <Users className="h-8 w-8 text-yellow-600" />
-                </div>
-                <CardTitle>Palestrantes</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-center">
-                  <strong>Jorge Elarrat</strong> (RO)<br />
-                  <strong>Rafael Siqueira</strong> (FJ)
+              <CardContent className="pt-6">
+                <p className="font-semibold text-gray-900 mb-2">31 de Outubro de 2026</p>
+                <p className="text-sm text-gray-600">
+                  Início: 08h00<br />
+                  Término: 17h00
                 </p>
               </CardContent>
             </Card>
 
-            <Card className="card-hover">
-              <CardHeader className="text-center">
-                <div className="mx-auto mb-4 p-3 bg-pink-100 rounded-full w-fit">
-                  <Heart className="h-8 w-8 text-pink-600" />
+            <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow">
+              <CardHeader className="bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-t-lg">
+                <div className="flex items-center space-x-3">
+                  <Users className="h-6 w-6" />
+                  <CardTitle>Público</CardTitle>
                 </div>
-                <CardTitle>Apoio</CardTitle>
               </CardHeader>
-              <CardContent>
-                <p className="text-sm text-center">
-                  CRENORTE<br />
-                  FERN — Federação Espírita do RN
+              <CardContent className="pt-6">
+                <p className="text-sm text-gray-600">
+                  Aberto para todas as pessoas interessadas em espiritismo e crescimento espiritual. Não é necessário ser espírita para participar.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow">
+              <CardHeader className="bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-t-lg">
+                <div className="flex items-center space-x-3">
+                  <Heart className="h-6 w-6" />
+                  <CardTitle>Apoio</CardTitle>
+                </div>
+              </CardHeader>
+              <CardContent className="pt-6">
+                <p className="text-sm text-gray-600">
+                  <strong>CRENORTE</strong><br />
+                  <strong>FERN</strong> — Federação Espírita do RN
                 </p>
               </CardContent>
             </Card>
@@ -525,156 +562,168 @@ function App() {
       <section id="documentacao" className="section-padding bg-white">
         <div className="container mx-auto max-w-4xl">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4">IMPORTANTE — LEIA</h2>
+            <h2 className="text-4xl md:text-5xl font-serif text-blue-900 mb-4">Importante — Leia</h2>
+            <div className="w-20 h-1 bg-gradient-to-r from-yellow-500 to-blue-600 mx-auto rounded-full"></div>
           </div>
 
-          <div className="mt-8 p-6 bg-accent/10 rounded-lg border border-accent/20">
-            <div className="space-y-4">
-              <div className="flex items-start space-x-3">
-                <div className="w-2 h-2 bg-accent rounded-full mt-2 flex-shrink-0"></div>
-                <p className="text-sm">
-                  O evento acontecerá no dia <strong>31/10/2026 (sábado)</strong>,
-                  das <strong>08h às 17h</strong>, no Auditório SESC Cidade Alta.
-                </p>
+          <div className="space-y-4">
+            <div className="p-6 bg-gradient-to-r from-blue-50 to-blue-100 rounded-xl border-l-4 border-blue-600">
+              <div className="flex items-start space-x-4">
+                <Calendar className="h-6 w-6 text-blue-600 flex-shrink-0 mt-1" />
+                <div>
+                  <p className="text-gray-800">
+                    O evento acontecerá no dia <strong>31 de outubro de 2026 (sábado)</strong>, das <strong>08h às 17h</strong>, no Auditório SESC Cidade Alta.
+                  </p>
+                </div>
               </div>
-              <div className="flex items-start space-x-3">
-                <div className="w-2 h-2 bg-accent rounded-full mt-2 flex-shrink-0"></div>
-                <p className="text-sm">
-                  O ingresso é <strong>individual e intransferível</strong>. Apresente o comprovante de pagamento no dia do evento.
-                </p>
+            </div>
+
+            <div className="p-6 bg-gradient-to-r from-blue-50 to-blue-100 rounded-xl border-l-4 border-blue-600">
+              <div className="flex items-start space-x-4">
+                <Shield className="h-6 w-6 text-blue-600 flex-shrink-0 mt-1" />
+                <div>
+                  <p className="text-gray-800">
+                    O ingresso é <strong>individual e intransferível</strong>. Apresente o comprovante de pagamento no dia do evento.
+                  </p>
+                </div>
               </div>
-              <div className="flex items-start space-x-3">
-                <div className="w-2 h-2 bg-accent rounded-full mt-2 flex-shrink-0"></div>
-                <p className="text-sm">
-                  O comprovante de pagamento e as informações de acesso serão enviados para o <strong>WhatsApp informado no cadastro</strong>.
-                </p>
+            </div>
+
+            <div className="p-6 bg-gradient-to-r from-blue-50 to-blue-100 rounded-xl border-l-4 border-blue-600">
+              <div className="flex items-start space-x-4">
+                <Phone className="h-6 w-6 text-blue-600 flex-shrink-0 mt-1" />
+                <div>
+                  <p className="text-gray-800">
+                    O comprovante de pagamento e as informações de acesso serão enviados para o <strong>WhatsApp informado no cadastro</strong>.
+                  </p>
+                </div>
               </div>
-              <div className="flex items-start space-x-3">
-                <div className="w-2 h-2 bg-accent rounded-full mt-2 flex-shrink-0"></div>
-                <p className="text-sm">
-                  Dúvidas? Entre em contato pelos canais disponíveis na seção <strong>Contato</strong> desta página.
-                </p>
-              </div>
-              <div className="flex items-start space-x-3">
-                <div className="w-2 h-2 bg-red-500 rounded-full mt-2 flex-shrink-0"></div>
-                <p className="text-sm text-red-700 font-semibold">
-                  ⚠️ Após o pagamento, não será permitido o reembolso.
-                </p>
+            </div>
+
+            <div className="p-6 bg-gradient-to-r from-red-50 to-red-100 rounded-xl border-l-4 border-red-600">
+              <div className="flex items-start space-x-4">
+                <X className="h-6 w-6 text-red-600 flex-shrink-0 mt-1" />
+                <div>
+                  <p className="text-red-800 font-semibold">
+                    Após o pagamento, não será permitido o reembolso.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* VALOR DO INGRESSO E FORMULÁRIO */}
-      <section id="custos" className="section-padding bg-muted/30">
+      {/* INGRESSO E FORMULÁRIO */}
+      <section id="custos" className="section-padding bg-gradient-to-b from-white to-blue-50">
         <div className="container mx-auto max-w-4xl">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4">Ingresso</h2>
-            <p className="text-lg text-muted-foreground">
+            <h2 className="text-4xl md:text-5xl font-serif text-blue-900 mb-4">Ingresso</h2>
+            <p className="text-lg text-gray-700">
               Garanta sua vaga no 2º Seminário Espírita do NEEL
             </p>
+            <div className="w-20 h-1 bg-gradient-to-r from-yellow-500 to-blue-600 mx-auto rounded-full mt-4"></div>
           </div>
 
-          <Card className="mb-8">
-            <CardHeader className="text-center">
-              <CardTitle className="text-3xl text-primary">R$ 40,00</CardTitle>
-              <CardDescription>por participante</CardDescription>
+          <Card className="mb-8 border-0 shadow-xl">
+            <CardHeader className="bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-t-lg text-center">
+              <CardTitle className="text-5xl font-serif">R$ 40,00</CardTitle>
+              <CardDescription className="text-blue-100 text-lg">por participante</CardDescription>
             </CardHeader>
-            <CardContent>
-              <div className="grid md:grid-cols-2 gap-6">
+            <CardContent className="pt-8">
+              <div className="grid md:grid-cols-2 gap-8 mb-8">
                 <div>
-                  <h4 className="font-semibold mb-3 text-accent">O ingresso inclui:</h4>
-                  <ul className="space-y-2 text-sm">
-                    <li className="flex items-center">
-                      <CheckCircle className="h-4 w-4 text-accent mr-2" />
-                      Acesso às palestras do dia inteiro
+                  <h4 className="font-serif text-xl text-blue-900 mb-4">O ingresso inclui:</h4>
+                  <ul className="space-y-3">
+                    <li className="flex items-center space-x-3">
+                      <CheckCircle className="h-5 w-5 text-yellow-500 flex-shrink-0" />
+                      <span className="text-gray-700">Acesso às palestras do dia inteiro</span>
                     </li>
-                    <li className="flex items-center">
-                      <CheckCircle className="h-4 w-4 text-accent mr-2" />
-                      Material de apoio
+                    <li className="flex items-center space-x-3">
+                      <CheckCircle className="h-5 w-5 text-yellow-500 flex-shrink-0" />
+                      <span className="text-gray-700">Material de apoio exclusivo</span>
                     </li>
-                    <li className="flex items-center">
-                      <CheckCircle className="h-4 w-4 text-accent mr-2" />
-                      Coffee break
+                    <li className="flex items-center space-x-3">
+                      <CheckCircle className="h-5 w-5 text-yellow-500 flex-shrink-0" />
+                      <span className="text-gray-700">Coffee break</span>
+                    </li>
+                    <li className="flex items-center space-x-3">
+                      <CheckCircle className="h-5 w-5 text-yellow-500 flex-shrink-0" />
+                      <span className="text-gray-700">Certificado de participação</span>
                     </li>
                   </ul>
                 </div>
-                <div>
-                  <h4 className="font-semibold mb-3 text-destructive">Informações importantes:</h4>
-                  <ul className="space-y-2 text-sm">
-                    <li className="flex items-start">
-                      <Shield className="h-4 w-4 text-destructive mr-2 mt-0.5" />
-                      <span>Ingresso individual e intransferível</span>
+
+                <div className="bg-gradient-to-br from-red-50 to-red-100 rounded-xl p-6 border-2 border-red-200">
+                  <h4 className="font-serif text-xl text-red-900 mb-4">Informações Importantes</h4>
+                  <ul className="space-y-3">
+                    <li className="flex items-start space-x-3">
+                      <Shield className="h-5 w-5 text-red-600 flex-shrink-0 mt-0.5" />
+                      <span className="text-gray-700 text-sm">Ingresso individual e intransferível</span>
                     </li>
-                    <li className="flex items-start">
-                      <Shield className="h-4 w-4 text-destructive mr-2 mt-0.5" />
-                      <span>Pagamento via PIX (sem taxas) ou cartão de crédito em até 2x (com juros)</span>
+                    <li className="flex items-start space-x-3">
+                      <CreditCard className="h-5 w-5 text-red-600 flex-shrink-0 mt-0.5" />
+                      <span className="text-gray-700 text-sm">PIX (sem taxas) ou Cartão em até 2x (com juros)</span>
                     </li>
-                    <li className="flex items-start">
-                      <Shield className="h-4 w-4 text-destructive mr-2 mt-0.5" />
-                      Após o pagamento, não será permitido o reembolso.
+                    <li className="flex items-start space-x-3">
+                      <X className="h-5 w-5 text-red-600 flex-shrink-0 mt-0.5" />
+                      <span className="text-gray-700 text-sm">Sem reembolso após pagamento</span>
                     </li>
                   </ul>
                 </div>
               </div>
 
-              <Separator className="my-6" />
+              <Separator className="my-8" />
 
               <div className="text-center">
                 {!showForm ? (
                   <Button
                     size="lg"
-                    className="bg-orange-600 hover:bg-orange-700 px-8 py-3"
+                    className="bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-white font-bold px-8 py-6 text-lg rounded-full shadow-lg transform hover:scale-105 transition-all"
                     onClick={showInscricaoForm}
                   >
-                    Garantir minha vaga
-                    <ArrowRight className="ml-2 h-5 w-5" />
+                    Garantir Minha Vaga
+                    <ArrowRight className="ml-3 h-5 w-5" />
                   </Button>
                 ) : (
                   <Button
                     size="lg"
                     variant="outline"
-                    className="px-8 py-3"
+                    className="border-2 border-gray-300 px-8 py-6 text-lg rounded-full font-semibold"
                     onClick={() => setShowForm(false)}
                   >
-                    <X className="mr-2 h-4 w-4" />
+                    <X className="mr-2 h-5 w-5" />
                     Fechar Formulário
                   </Button>
                 )}
-                <p className="text-xs text-muted-foreground mt-2">
-                  {!showForm
-                    ? 'Preencha seus dados e escolha a forma de pagamento'
-                    : 'Clique acima para fechar o formulário'}
-                </p>
               </div>
             </CardContent>
           </Card>
 
           {/* FORMULÁRIO */}
           {showForm && (
-            <Card id="formulario-inscricao" className="border-orange-200 bg-orange-50/30">
-              <CardHeader>
-                <CardTitle className="flex items-center text-orange-800">
-                  <User className="mr-2 h-5 w-5" />
+            <Card id="formulario-inscricao" className="border-0 shadow-2xl">
+              <CardHeader className="bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-t-lg">
+                <CardTitle className="flex items-center text-white text-2xl">
+                  <User className="mr-3 h-6 w-6" />
                   Formulário de Inscrição
                 </CardTitle>
-                <CardDescription>
-                  Preencha todos os dados para confirmar sua participação no seminário
+                <CardDescription className="text-blue-100">
+                  Preencha todos os dados para confirmar sua participação
                 </CardDescription>
               </CardHeader>
-              <CardContent>
-                <form onSubmit={handleSubmit} className="space-y-6">
+              <CardContent className="pt-8">
+                <form onSubmit={handleSubmit} className="space-y-8">
 
                   {/* Dados do Participante */}
                   <div>
-                    <h3 className="text-lg font-semibold mb-4 flex items-center">
-                      <Mail className="mr-2 h-5 w-5" />
+                    <h3 className="text-lg font-serif text-blue-900 mb-6 flex items-center">
+                      <User className="mr-3 h-5 w-5 text-yellow-500" />
                       Dados do Participante
                     </h3>
                     <div className="space-y-4">
                       <div>
-                        <Label htmlFor="nomeParticipante">Nome completo *</Label>
+                        <Label htmlFor="nomeParticipante" className="text-gray-700 font-semibold">Nome completo *</Label>
                         <Input
                           id="nomeParticipante"
                           name="nomeParticipante"
@@ -682,18 +731,19 @@ function App() {
                           onChange={handleInputChange}
                           required
                           placeholder="Seu nome completo"
+                          className="mt-2 border-2 border-gray-200 focus:border-blue-500 rounded-lg"
                         />
                       </div>
 
                       {/* TELEFONE COM CONFIRMAÇÃO */}
-                      <div className="p-4 rounded-lg border-2 border-blue-200 bg-blue-50 space-y-3">
-                        <p className="text-sm font-semibold text-blue-800 flex items-center">
-                          <Phone className="h-4 w-4 mr-2 flex-shrink-0" />
-                          📲 O comprovante de pagamento será enviado para este WhatsApp — digite com atenção!
+                      <div className="p-6 rounded-xl border-2 border-yellow-300 bg-yellow-50 space-y-4">
+                        <p className="text-sm font-semibold text-yellow-800 flex items-center">
+                          <Phone className="h-5 w-5 mr-2 flex-shrink-0" />
+                          O comprovante será enviado para este WhatsApp — digite com atenção!
                         </p>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           <div>
-                            <Label htmlFor="phone">WhatsApp *</Label>
+                            <Label htmlFor="phone" className="text-gray-700 font-semibold">WhatsApp *</Label>
                             <Input
                               id="phone"
                               name="phone"
@@ -702,17 +752,17 @@ function App() {
                               required
                               placeholder="(84) 99999-9999"
                               maxLength="15"
-                              className={
+                              className={`mt-2 border-2 rounded-lg transition-colors ${
                                 formData.phone && phoneError
-                                  ? 'border-red-500 bg-red-50'
+                                  ? 'border-red-500 bg-red-50 focus:border-red-600'
                                   : formData.phone && phoneValid
-                                  ? 'border-green-500 bg-green-50'
-                                  : ''
-                              }
+                                  ? 'border-green-500 bg-green-50 focus:border-green-600'
+                                  : 'border-gray-200 focus:border-blue-500'
+                              }`}
                             />
                           </div>
                           <div>
-                            <Label htmlFor="phoneConfirm">Confirme o WhatsApp *</Label>
+                            <Label htmlFor="phoneConfirm" className="text-gray-700 font-semibold">Confirme o WhatsApp *</Label>
                             <Input
                               id="phoneConfirm"
                               name="phoneConfirm"
@@ -721,32 +771,33 @@ function App() {
                               required
                               placeholder="(84) 99999-9999"
                               maxLength="15"
-                              className={
+                              className={`mt-2 border-2 rounded-lg transition-colors ${
                                 formData.phoneConfirm && phoneError
-                                  ? 'border-red-500 bg-red-50'
+                                  ? 'border-red-500 bg-red-50 focus:border-red-600'
                                   : formData.phoneConfirm && phoneValid
-                                  ? 'border-green-500 bg-green-50'
-                                  : ''
-                              }
+                                  ? 'border-green-500 bg-green-50 focus:border-green-600'
+                                  : 'border-gray-200 focus:border-blue-500'
+                              }`}
                             />
                           </div>
                         </div>
                         {phoneError && (
-                          <p className="text-red-600 text-sm font-medium flex items-center">
-                            <span className="mr-1">⚠️</span> {phoneError}
+                          <p className="text-red-700 text-sm font-medium flex items-center">
+                            <X className="h-4 w-4 mr-2" />
+                            {phoneError}
                           </p>
                         )}
                         {phoneValid && (
                           <p className="text-green-700 text-sm font-medium flex items-center">
-                            ✅ WhatsApp confirmado! O comprovante será enviado para{' '}
-                            <strong className="ml-1">{formData.phone}</strong>
+                            <CheckCircle className="h-4 w-4 mr-2" />
+                            WhatsApp confirmado! O comprovante será enviado para <strong className="ml-1">{formData.phone}</strong>
                           </p>
                         )}
                       </div>
 
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                          <Label htmlFor="email">E-mail *</Label>
+                          <Label htmlFor="email" className="text-gray-700 font-semibold">E-mail *</Label>
                           <Input
                             id="email"
                             name="email"
@@ -755,10 +806,11 @@ function App() {
                             onChange={handleInputChange}
                             required
                             placeholder="seu@email.com"
+                            className="mt-2 border-2 border-gray-200 focus:border-blue-500 rounded-lg"
                           />
                         </div>
                         <div>
-                          <Label htmlFor="cpf">CPF *</Label>
+                          <Label htmlFor="cpf" className="text-gray-700 font-semibold">CPF *</Label>
                           <Input
                             id="cpf"
                             name="cpf"
@@ -767,23 +819,23 @@ function App() {
                             required
                             placeholder="000.000.000-00"
                             maxLength="14"
-                            className={`${
+                            className={`mt-2 border-2 rounded-lg transition-colors ${
                               formData.cpf && cpfError
-                                ? 'border-red-500 bg-red-50'
+                                ? 'border-red-500 bg-red-50 focus:border-red-600'
                                 : formData.cpf && cpfValid
-                                ? 'border-green-500 bg-green-50'
-                                : ''
+                                ? 'border-green-500 bg-green-50 focus:border-green-600'
+                                : 'border-gray-200 focus:border-blue-500'
                             }`}
                           />
                           {cpfError && (
-                            <p className="text-red-500 text-sm mt-1 flex items-center">
-                              <span className="mr-1">⚠️</span>
+                            <p className="text-red-600 text-sm mt-2 flex items-center">
+                              <X className="h-4 w-4 mr-1" />
                               {cpfError}
                             </p>
                           )}
                           {cpfValid && !cpfError && (
-                            <p className="text-green-600 text-sm mt-1 flex items-center">
-                              <span className="mr-1">✅</span>
+                            <p className="text-green-600 text-sm mt-2 flex items-center">
+                              <CheckCircle className="h-4 w-4 mr-1" />
                               CPF válido
                             </p>
                           )}
@@ -794,75 +846,71 @@ function App() {
 
                   {/* Método de Pagamento */}
                   <div>
-                    <h3 className="text-lg font-semibold mb-4">Método de Pagamento *</h3>
+                    <h3 className="text-lg font-serif text-blue-900 mb-6 flex items-center">
+                      <CreditCard className="mr-3 h-5 w-5 text-yellow-500" />
+                      Método de Pagamento *
+                    </h3>
 
                     <div className="space-y-3 mb-6">
                       {/* PIX */}
                       <div
-                        className={`p-4 rounded-lg border-2 cursor-pointer transition-all ${
+                        className={`p-5 rounded-xl border-2 cursor-pointer transition-all transform hover:scale-102 ${
                           formData.paymentMethod === 'pix'
-                            ? 'border-orange-400 bg-orange-50'
-                            : 'border-gray-200 hover:border-gray-300'
+                            ? 'border-yellow-500 bg-yellow-50 shadow-lg'
+                            : 'border-gray-200 hover:border-gray-300 bg-white'
                         }`}
                         onClick={() => setFormData((prev) => ({ ...prev, paymentMethod: 'pix', installments: 1 }))}
                       >
                         <div className="flex items-center">
                           <div
-                            className={`w-4 h-4 rounded-full border-2 mr-3 ${
+                            className={`w-5 h-5 rounded-full border-2 mr-4 transition-all ${
                               formData.paymentMethod === 'pix'
-                                ? 'border-orange-400 bg-orange-400'
+                                ? 'border-yellow-500 bg-yellow-500'
                                 : 'border-gray-300'
                             }`}
                           />
-                          <div className="flex items-center space-x-2">
-                            <span className="text-lg font-bold">PIX</span>
-                            <span className="text-sm">
-                              R$ 40,00 (sem taxas)
-                            </span>
+                          <div className="flex-1">
+                            <p className="text-lg font-bold text-gray-900">PIX</p>
+                            <p className="text-sm text-gray-600">R$ 40,00 (sem taxas)</p>
                           </div>
                         </div>
                       </div>
 
                       {/* CARTÃO */}
                       <div
-                        className={`p-4 rounded-lg border-2 cursor-pointer transition-all ${
+                        className={`p-5 rounded-xl border-2 cursor-pointer transition-all transform hover:scale-102 ${
                           formData.paymentMethod === 'credit'
-                            ? 'border-orange-400 bg-orange-50'
-                            : 'border-gray-200 hover:border-gray-300'
+                            ? 'border-yellow-500 bg-yellow-50 shadow-lg'
+                            : 'border-gray-200 hover:border-gray-300 bg-white'
                         }`}
                         onClick={() => setFormData((prev) => ({ ...prev, paymentMethod: 'credit', installments: 1 }))}
                       >
                         <div className="flex items-center">
                           <div
-                            className={`w-4 h-4 rounded-full border-2 mr-3 ${
+                            className={`w-5 h-5 rounded-full border-2 mr-4 transition-all ${
                               formData.paymentMethod === 'credit'
-                                ? 'border-orange-400 bg-orange-400'
+                                ? 'border-yellow-500 bg-yellow-500'
                                 : 'border-gray-300'
                             }`}
                           />
-                          <div>
-                            <div className="flex items-center space-x-2">
-                              <span className="text-sm">💳</span>
-                              <span className="text-sm font-medium">Cartão de Crédito</span>
-                            </div>
-                            <div className="text-xs text-green-600 ml-6 font-medium">
-                              Parcele em até 2x (com juros)
-                            </div>
+                          <div className="flex-1">
+                            <p className="text-lg font-bold text-gray-900">Cartão de Crédito</p>
+                            <p className="text-sm text-green-600 font-medium">Parcele em até 2x (com juros)</p>
                           </div>
                         </div>
                       </div>
                     </div>
 
-                    {/* SELETOR DE PARCELAS — aparece só no cartão */}
+                    {/* SELETOR DE PARCELAS */}
                     {formData.paymentMethod === 'credit' && (
                       <div className="mb-6">
-                        <Label className="text-sm font-medium">Número de Parcelas</Label>
+                        <Label className="text-gray-700 font-semibold">Número de Parcelas</Label>
                         <select
                           value={formData.installments}
                           onChange={(e) =>
                             setFormData((prev) => ({ ...prev, installments: parseInt(e.target.value) }))
                           }
-                          className="w-full h-10 px-3 rounded-md border border-input bg-background text-sm mt-2"
+                          className="w-full h-12 px-4 rounded-lg border-2 border-gray-200 bg-white text-gray-900 font-semibold mt-2 focus:border-blue-500 transition-colors"
                         >
                           <option value={1}>
                             1x de R$ {calculatePrice(1).valorTotal.toFixed(2).replace('.', ',')} (à vista)
@@ -871,30 +919,30 @@ function App() {
                             2x de R$ {calculatePrice(2).valorParcela.toFixed(2).replace('.', ',')} (com juros)
                           </option>
                         </select>
-                        <p className="text-xs text-gray-500 mt-1">
+                        <p className="text-xs text-gray-500 mt-2">
                           * Taxas de cartão aplicadas ao valor total
                         </p>
                       </div>
                     )}
 
                     {/* Valor Total */}
-                    <div className="bg-orange-100 p-4 rounded-lg border border-orange-200">
+                    <div className="bg-gradient-to-r from-yellow-100 to-yellow-50 p-6 rounded-xl border-2 border-yellow-300">
                       <div className="text-center">
-                        <h4 className="text-lg font-bold text-orange-800 mb-1">Valor Total</h4>
-                        <div className="text-sm text-gray-600 mb-1">
+                        <h4 className="text-lg font-serif text-yellow-900 mb-2">Valor Total</h4>
+                        <div className="text-sm text-gray-700 mb-3">
                           Ingresso por participante
                           {formData.paymentMethod === 'credit' && ' + taxas do cartão'}
                         </div>
-                        <div className="text-2xl font-bold text-orange-900">
+                        <div className="text-4xl font-bold text-yellow-900">
                           R$ {valorTotal.toFixed(2).replace('.', ',')}
                         </div>
                         {formData.paymentMethod === 'credit' && formData.installments > 1 && (
-                          <div className="text-sm text-orange-700 mt-1">
+                          <div className="text-sm text-yellow-800 mt-3 font-semibold">
                             {formData.installments}x de R$ {valorParcela.toFixed(2).replace('.', ',')}
                           </div>
                         )}
                         {formData.paymentMethod === 'credit' && (
-                          <div className="text-xs text-orange-600 mt-1">(inclui taxas do cartão)</div>
+                          <div className="text-xs text-yellow-700 mt-2">(inclui taxas do cartão)</div>
                         )}
                       </div>
                     </div>
@@ -903,22 +951,26 @@ function App() {
                   {/* Botão de Envio */}
                   <Button
                     type="submit"
-                    className="w-full bg-orange-600 hover:bg-orange-700 text-white py-6 text-lg font-bold"
+                    className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white py-6 text-lg font-bold rounded-lg shadow-lg transform hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                     disabled={isProcessing || !phoneValid || !cpfValid}
                   >
                     {isProcessing ? (
                       <>
-                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-3"></div>
                         Processando...
                       </>
                     ) : (
-                      'CONTINUAR PARA PAGAMENTO'
+                      <>
+                        CONTINUAR PARA PAGAMENTO
+                        <ArrowRight className="ml-3 h-5 w-5" />
+                      </>
                     )}
                   </Button>
 
                   {!phoneValid && formData.phone && (
-                    <p className="text-xs text-center text-red-500">
-                      ⚠️ Confirme o WhatsApp corretamente para habilitar o botão
+                    <p className="text-xs text-center text-red-600 font-medium">
+                      <X className="h-4 w-4 inline mr-1" />
+                      Confirme o WhatsApp corretamente para habilitar o botão
                     </p>
                   )}
 
@@ -936,61 +988,65 @@ function App() {
       <section id="contato" className="section-padding bg-white">
         <div className="container mx-auto max-w-4xl">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4">Entre em Contato</h2>
-            <p className="text-lg text-muted-foreground">Tire suas dúvidas conosco</p>
+            <h2 className="text-4xl md:text-5xl font-serif text-blue-900 mb-4">Entre em Contato</h2>
+            <p className="text-lg text-gray-700">Tire suas dúvidas conosco</p>
+            <div className="w-20 h-1 bg-gradient-to-r from-yellow-500 to-blue-600 mx-auto rounded-full mt-4"></div>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8">
-            <Card className="card-hover">
-              <CardHeader>
+            <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow">
+              <CardHeader className="bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-t-lg">
                 <div className="flex items-center space-x-3">
-                  <Phone className="h-8 w-8 text-primary" />
+                  <Phone className="h-6 w-6" />
                   <div>
                     <CardTitle>WhatsApp</CardTitle>
-                    <CardDescription>NEEL — Atendimento</CardDescription>
+                    <CardDescription className="text-blue-100">NEEL — Atendimento</CardDescription>
                   </div>
                 </div>
               </CardHeader>
-              <CardContent>
-                <p className="text-lg font-semibold">(84) 9 9133-5975</p>
-                <p className="text-lg font-semibold">(84) 9 8804-9371</p>
+              <CardContent className="pt-6">
+                <p className="text-lg font-semibold text-gray-900">(84) 9 9133-5975</p>
+                <p className="text-lg font-semibold text-gray-900">(84) 9 8804-9371</p>
               </CardContent>
             </Card>
 
-            <Card className="card-hover">
-              <CardHeader>
+            <Card className="border-0 shadow-lg hover:shadow-xl transition-shadow">
+              <CardHeader className="bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-t-lg">
                 <div className="flex items-center space-x-3">
-                  <Mail className="h-8 w-8 text-primary" />
+                  <Mail className="h-6 w-6" />
                   <div>
                     <CardTitle>Instagram</CardTitle>
-                    <CardDescription>Acompanhe nossas novidades</CardDescription>
+                    <CardDescription className="text-blue-100">Acompanhe nossas novidades</CardDescription>
                   </div>
                 </div>
               </CardHeader>
-              <CardContent>
-                <p className="text-lg font-semibold">@neelsga</p>
+              <CardContent className="pt-6">
+                <p className="text-lg font-semibold text-gray-900">@neelsga</p>
               </CardContent>
             </Card>
           </div>
 
-          <div className="mt-8 text-center">
-            <p className="text-sm text-muted-foreground">
-              <strong>NEEL — Centro Espírita Esperança de Luz</strong>
+          <div className="mt-12 text-center p-6 bg-gradient-to-r from-blue-50 to-blue-100 rounded-xl border-2 border-blue-200">
+            <p className="text-gray-800">
+              <strong className="text-blue-900">NEEL — Centro Espírita Esperança de Luz</strong>
               <br />
-              Apoio: CRENORTE &amp; FERN — Federação Espírita do RN
+              <span className="text-sm text-gray-700">Apoio: CRENORTE & FERN — Federação Espírita do RN</span>
             </p>
           </div>
         </div>
       </section>
 
       {/* FOOTER */}
-      <footer className="bg-blue-900 text-white py-8">
-        <div className="container mx-auto px-4 text-center">
+      <footer className="bg-gradient-to-r from-blue-900 to-blue-800 text-white py-12">
+        <div className="container mx-auto px-4 text-center space-y-3">
           <p className="text-sm">
             © 2026 NEEL — Centro Espírita Esperança de Luz. Todos os direitos reservados.
           </p>
-          <p className="text-xs mt-2 opacity-80">
+          <p className="text-xs opacity-80">
             2º Seminário Espírita do NEEL — 31 de Outubro de 2026 — Natal, RN
+          </p>
+          <p className="text-xs opacity-70 pt-2">
+            Desenvolvido com dedicação e espiritualidade
           </p>
         </div>
       </footer>
