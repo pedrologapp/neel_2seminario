@@ -7,13 +7,14 @@ import { Separator } from './components/ui/separator';
 import { Input } from './components/ui/input';
 import { Label } from './components/ui/label';
 
+import heroImage from './assets/hero.jpg'; // ← imagem importada corretamente
+
 import {
   MapPin,
   Clock,
   Calendar,
   Users,
   CreditCard,
-  FileText,
   Phone,
   Mail,
   Shield,
@@ -22,29 +23,24 @@ import {
   ArrowRight,
   User,
   X,
-  Star,
   Sparkles,
   Zap,
   Instagram,
 } from 'lucide-react';
 
-// ── Fontes Google carregadas programaticamente (funciona no Vercel) ────────────
 const FONTS_URL =
   'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Jost:wght@300;400;500;600;700&display=swap';
 
 function App() {
 
-  // Injeta o link de fontes no <head> uma única vez
   useEffect(() => {
     if (!document.getElementById('neel-fonts')) {
       const link = document.createElement('link');
-      link.id   = 'neel-fonts';
-      link.rel  = 'stylesheet';
+      link.id = 'neel-fonts';
+      link.rel = 'stylesheet';
       link.href = FONTS_URL;
       document.head.appendChild(link);
     }
-
-    // Injeta CSS global de tipografia e variáveis
     if (!document.getElementById('neel-styles')) {
       const style = document.createElement('style');
       style.id = 'neel-styles';
@@ -53,107 +49,48 @@ function App() {
           --navy:  #0d1b3e;
           --gold:  #c8973a;
           --gold2: #e8b44a;
-          --cream: #faf7f2;
+          --cream: #f5f0e8;
         }
         body { font-family: 'Jost', sans-serif; background: var(--cream); }
-
-        .neel-display {
-          font-family: 'Cormorant Garamond', Georgia, serif;
-          letter-spacing: -0.01em;
-        }
-        .neel-label {
-          font-family: 'Jost', sans-serif;
-          font-weight: 600;
-          letter-spacing: 0.12em;
-          text-transform: uppercase;
-          font-size: 0.7rem;
-        }
-        .neel-body { font-family: 'Jost', sans-serif; }
-
-        /* Divisor dourado */
-        .gold-divider {
-          width: 56px; height: 3px;
-          background: linear-gradient(90deg, var(--gold), var(--gold2));
-          border-radius: 2px;
-          margin: 0 auto;
-        }
-
-        /* Animação de entrada */
-        @keyframes fadeUp {
-          from { opacity: 0; transform: translateY(24px); }
-          to   { opacity: 1; transform: translateY(0); }
-        }
-        .fade-up { animation: fadeUp .7s ease both; }
+        .neel-display { font-family: 'Cormorant Garamond', Georgia, serif; letter-spacing: -0.01em; }
+        .neel-label   { font-family: 'Jost', sans-serif; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; font-size: 0.7rem; }
+        .neel-body    { font-family: 'Jost', sans-serif; }
+        .gold-divider { width: 56px; height: 3px; background: linear-gradient(90deg, var(--gold), var(--gold2)); border-radius: 2px; margin: 0 auto; }
+        @keyframes fadeUp { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
+        .fade-up   { animation: fadeUp .7s ease both; }
         .fade-up-2 { animation: fadeUp .7s .15s ease both; }
         .fade-up-3 { animation: fadeUp .7s .3s ease both; }
-
-        /* Card refinado */
-        .neel-card {
-          border: none !important;
-          box-shadow: 0 4px 24px rgba(13,27,62,.08);
-          border-radius: 1.25rem !important;
-          overflow: hidden;
-        }
-
-        /* Botão primário */
-        .btn-gold {
-          background: linear-gradient(135deg, var(--gold), var(--gold2));
-          color: #fff;
-          font-family: 'Jost', sans-serif;
-          font-weight: 700;
-          letter-spacing: 0.04em;
-          border: none;
-          transition: filter .2s, transform .15s;
-        }
-        .btn-gold:hover { filter: brightness(1.08); transform: translateY(-2px); }
-
-        /* Botão outline hero */
-        .btn-outline-hero {
-          border: 2px solid rgba(255,255,255,.65) !important;
-          color: #fff !important;
-          background: transparent !important;
-          font-family: 'Jost', sans-serif;
-          font-weight: 500;
-          backdrop-filter: blur(4px);
-          transition: background .2s, border-color .2s;
-        }
-        .btn-outline-hero:hover {
-          background: rgba(255,255,255,.15) !important;
-          border-color: #fff !important;
-        }
-
-        /* Input refinado */
-        .neel-input {
-          border: 1.5px solid #e2e8f0 !important;
-          border-radius: .75rem !important;
-          height: 3rem !important;
-          font-family: 'Jost', sans-serif !important;
-          transition: border-color .2s !important;
-        }
+        .neel-card { border: none !important; box-shadow: 0 4px 24px rgba(13,27,62,.09); border-radius: 1.25rem !important; overflow: hidden; }
+        .btn-gold  { background: linear-gradient(135deg, var(--gold), var(--gold2)); color: #fff; font-family: 'Jost', sans-serif; font-weight: 700; letter-spacing: 0.04em; border: none; transition: filter .2s, transform .15s; cursor: pointer; }
+        .btn-gold:hover  { filter: brightness(1.08); transform: translateY(-2px); }
+        .btn-gold:disabled { opacity: .5; cursor: not-allowed; transform: none; filter: none; }
+        .btn-outline-hero { border: 2px solid rgba(255,255,255,.65) !important; color: #fff !important; background: transparent !important; font-family: 'Jost', sans-serif; font-weight: 500; backdrop-filter: blur(4px); transition: background .2s, border-color .2s; cursor: pointer; }
+        .btn-outline-hero:hover { background: rgba(255,255,255,.15) !important; border-color: #fff !important; }
+        .neel-input { border: 1.5px solid #e2e8f0 !important; border-radius: .75rem !important; height: 3rem !important; font-family: 'Jost', sans-serif !important; transition: border-color .2s !important; }
         .neel-input:focus { border-color: var(--gold) !important; box-shadow: 0 0 0 3px rgba(200,151,58,.15) !important; }
         .neel-input.valid   { border-color: #22c55e !important; background: #f0fdf4 !important; }
         .neel-input.invalid { border-color: #ef4444 !important; background: #fef2f2 !important; }
-
-        /* Opção de pagamento */
-        .pay-opt {
-          border: 1.5px solid #e2e8f0;
-          border-radius: .875rem;
-          padding: 1.1rem 1.25rem;
-          cursor: pointer;
-          transition: border-color .2s, box-shadow .2s, background .2s;
-        }
+        .pay-opt { border: 1.5px solid #e2e8f0; border-radius: .875rem; padding: 1.1rem 1.25rem; cursor: pointer; transition: border-color .2s, box-shadow .2s, background .2s; }
         .pay-opt:hover  { border-color: #c8973a; box-shadow: 0 2px 12px rgba(200,151,58,.12); }
         .pay-opt.active { border-color: var(--gold); background: #fffbf0; box-shadow: 0 2px 16px rgba(200,151,58,.2); }
-
-        /* Select de parcelas */
-        .neel-select {
-          height: 3rem; padding: 0 1rem;
-          border: 1.5px solid #e2e8f0; border-radius: .75rem;
-          background: #fff; font-family: 'Jost', sans-serif; font-weight: 500;
-          transition: border-color .2s;
-          width: 100%;
-        }
+        .neel-select { height: 3rem; padding: 0 1rem; border: 1.5px solid #e2e8f0; border-radius: .75rem; background: #fff; font-family: 'Jost', sans-serif; font-weight: 500; transition: border-color .2s; width: 100%; }
         .neel-select:focus { outline: none; border-color: var(--gold); }
+
+        /* ── Tabela de infos do evento ── */
+        .info-label {
+          font-family: 'Cormorant Garamond', Georgia, serif;
+          font-weight: 700;
+          font-size: 1.05rem;
+          color: var(--navy);
+          line-height: 1.2;
+        }
+        .info-value {
+          font-family: 'Cormorant Garamond', Georgia, serif;
+          font-weight: 400;
+          font-size: 1.05rem;
+          color: #374151;
+          line-height: 1.4;
+        }
       `;
       document.head.appendChild(style);
     }
@@ -175,7 +112,6 @@ function App() {
     }
   };
 
-  // Estados para o formulário
   const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState({
     nomeParticipante: '',
@@ -189,7 +125,6 @@ function App() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [inscriptionSuccess, setInscriptionSuccess] = useState(false);
   const [paymentUrl, setPaymentUrl] = useState(null);
-
   const [cpfError, setCpfError] = useState('');
   const [cpfValid, setCpfValid] = useState(false);
   const [phoneError, setPhoneError] = useState('');
@@ -247,7 +182,6 @@ function App() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-
     if (name === 'cpf') {
       const cpfValue = value.replace(/\D/g,'')
         .replace(/(\d{3})(\d)/,'$1.$2')
@@ -341,21 +275,23 @@ function App() {
       <div className="min-h-screen flex items-center justify-center p-4 neel-body"
            style={{ background: 'var(--cream)' }}>
         <Card className="neel-card w-full max-w-md">
-          <CardHeader className="text-center py-10 rounded-t-xl"
-                      style={{ background: 'linear-gradient(135deg, var(--navy), #1a3a7a)' }}>
+          <div className="text-center py-10 px-8 rounded-t-xl"
+               style={{ background: 'linear-gradient(135deg, var(--navy), #1a3a7a)' }}>
             <div className="mx-auto mb-4 p-3 rounded-full w-fit" style={{ background: 'rgba(255,255,255,.15)' }}>
               <CheckCircle className="h-8 w-8 text-white" />
             </div>
-            <CardTitle className="neel-display text-white text-2xl">Inscrição Registrada!</CardTitle>
-            <CardDescription className="text-blue-200 mt-1">Finalize o pagamento para confirmar sua participação</CardDescription>
-          </CardHeader>
+            <h2 className="neel-display text-white" style={{ fontSize: '1.8rem' }}>Inscrição Registrada!</h2>
+            <p style={{ color: 'rgba(255,255,255,.6)', marginTop: '.25rem', fontSize: '.9rem' }}>
+              Finalize o pagamento para confirmar sua participação
+            </p>
+          </div>
           <CardContent className="text-center space-y-4 pt-8 px-8 pb-8">
             <p className="text-sm text-gray-500">
               Dados registrados com sucesso. Clique abaixo para ir ao pagamento.
             </p>
             {paymentUrl && (
               <a href={paymentUrl}
-                 className="btn-gold block w-full py-4 px-6 rounded-xl text-center text-lg font-bold no-underline"
+                 className="btn-gold block w-full py-4 px-6 rounded-xl text-center text-lg font-bold"
                  style={{ textDecoration: 'none' }}>
                 💳 Ir para o Pagamento
               </a>
@@ -380,57 +316,43 @@ function App() {
 
       {/* ══ HERO ════════════════════════════════════════════════════════════════ */}
       <section className="relative overflow-hidden" style={{ minHeight: '100svh' }}>
-
-        {/* ▸ CORREÇÃO DESKTOP: backgroundPosition 'center 15%' mostra o rosto/torso
-              do Jesus tanto em tela larga quanto no mobile. Não use bg-center puro
-              com imagens retrato — ele centraliza verticalmente e corta o rosto.   */}
         <div className="absolute inset-0"
              style={{
-               backgroundImage: "url('./assets/hero.jpg')",
+               backgroundImage: `url(${heroImage})`,
                backgroundSize: 'cover',
-               backgroundPosition: 'center 15%',   // ← a correção está aqui
+               backgroundPosition: 'center 15%',
                backgroundRepeat: 'no-repeat',
              }} />
-
-        {/* Overlay em degradê — mais escuro embaixo para o texto flutuar bem */}
         <div className="absolute inset-0"
-             style={{
-               background: 'linear-gradient(to bottom, rgba(8,18,40,.3) 0%, rgba(8,18,40,.52) 50%, rgba(8,18,40,.82) 100%)',
-             }} />
+             style={{ background: 'linear-gradient(to bottom, rgba(8,18,40,.3) 0%, rgba(8,18,40,.52) 50%, rgba(8,18,40,.82) 100%)' }} />
 
-        {/* Conteúdo */}
         <div className="relative z-10 flex flex-col items-center justify-center px-4 py-24"
              style={{ minHeight: '100svh' }}>
           <div className="max-w-2xl text-center">
-
-            {/* Badge superior */}
             <div className="flex items-center justify-center gap-2 mb-5 fade-up">
               <Sparkles className="h-4 w-4" style={{ color: 'var(--gold2)' }} />
-              <span className="neel-label" style={{ color: 'var(--gold2)', fontSize: '.72rem' }}>
+              <span style={{ color: 'var(--gold2)', fontFamily: "'Jost', sans-serif", fontWeight: 600,
+                             letterSpacing: '.12em', textTransform: 'uppercase', fontSize: '.72rem' }}>
                 2º Seminário Espírita do NEEL
               </span>
               <Sparkles className="h-4 w-4" style={{ color: 'var(--gold2)' }} />
             </div>
 
-            {/* Título principal */}
             <h1 className="neel-display fade-up-2"
-                style={{ fontSize: 'clamp(3rem, 10vw, 6rem)', color: '#fff',
+                style={{ fontSize: 'clamp(3rem,10vw,6rem)', color: '#fff',
                          lineHeight: 1.05, fontWeight: 600, marginBottom: '1.25rem' }}>
               Vinde a Mim
             </h1>
 
-            {/* Citação */}
             <p className="fade-up-2"
                style={{ fontFamily: "'Cormorant Garamond', serif", fontStyle: 'italic',
-                        fontSize: 'clamp(1rem, 3vw, 1.3rem)', color: 'rgba(255,255,255,.82)',
+                        fontSize: 'clamp(1rem,3vw,1.3rem)', color: 'rgba(255,255,255,.82)',
                         marginBottom: '2.5rem', lineHeight: 1.6 }}>
               "Todos os que estais cansados e oprimidos, e eu vos aliviarei."
             </p>
 
-            {/* CTAs */}
             <div className="fade-up-3 flex flex-col sm:flex-row items-center justify-center gap-3 mb-14">
-              <button className="btn-gold w-full sm:w-auto flex items-center justify-center gap-2
-                                  px-8 py-4 rounded-full text-base"
+              <button className="btn-gold w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-4 rounded-full text-base"
                       onClick={showInscricaoForm}>
                 Garantir Minha Vaga
                 <ArrowRight className="h-5 w-5" />
@@ -441,7 +363,6 @@ function App() {
               </button>
             </div>
 
-            {/* Infos rápidas */}
             <div className="fade-up-3 grid grid-cols-3 gap-4 text-white text-center">
               {[
                 { icon: <Calendar className="h-5 w-5" />, top: '31 de Outubro', sub: '2026' },
@@ -459,41 +380,53 @@ function App() {
         </div>
       </section>
 
-      {/* ══ RESUMO DO EVENTO ═════════════════════════════════════════════════════ */}
-      <section id="sobre" className="py-20 px-4" style={{ background: '#fff' }}>
+      {/* ══ INFORMAÇÕES DO EVENTO ════════════════════════════════════════════════
+           Fundo bege (var(--cream)), título em caixa alta,
+           label em Cormorant Bold e valor em Cormorant Regular              */}
+      <section id="sobre" className="py-20 px-4" style={{ background: 'var(--cream)' }}>
         <div className="container mx-auto max-w-3xl">
 
           <div className="text-center mb-12">
-            <h2 className="neel-display" style={{ fontSize: 'clamp(2rem,5vw,3rem)', color: 'var(--navy)', marginBottom: '.75rem' }}>
-              Resumo do Evento
+            <h2 className="neel-display"
+                style={{ fontSize: 'clamp(1.8rem,5vw,2.8rem)', color: 'var(--navy)',
+                         marginBottom: '.75rem', fontWeight: 700, letterSpacing: '.04em',
+                         textTransform: 'uppercase' }}>
+              Informações do Evento
             </h2>
             <div className="gold-divider" />
           </div>
 
-          <Card className="neel-card mb-10">
+          <Card className="neel-card mb-10" style={{ background: '#fff' }}>
             <CardContent className="p-8 md:p-10">
-              <div className="space-y-7">
+              {/* Tabela de infos — label negrito + valor normal, mesma fonte */}
+              <div className="space-y-6">
                 {[
-                  { icon: <Sparkles className="h-5 w-5" />, label: 'Tema',        text: 'Vinde a Mim — 2º Seminário Espírita do NEEL' },
-                  { icon: <MapPin   className="h-5 w-5" />, label: 'Local',       text: 'Auditório SESC Cidade Alta, Natal-RN' },
-                  { icon: <Users    className="h-5 w-5" />, label: 'Palestrantes',text: 'Jorge Elarrat (RO) e Rafael Siqueira (RJ)' },
-                  { icon: <Heart    className="h-5 w-5" />, label: 'Realização',  text: 'NEEL — Centro Espírita Esperança de Luz' },
-                  { icon: <Shield   className="h-5 w-5" />, label: 'Apoio',       text: 'CRENORTE e FERN' },
-                ].map(({ icon, label, text }) => (
-                  <div key={label} className="flex items-start gap-4">
-                    <span className="mt-1 flex-shrink-0" style={{ color: 'var(--gold)' }}>{icon}</span>
-                    <div>
-                      <p className="neel-label mb-0.5" style={{ color: '#9ca3af' }}>{label}</p>
-                      <p className="neel-display" style={{ fontSize: '1.2rem', color: 'var(--navy)', lineHeight: 1.35 }}>
-                        {text}
-                      </p>
-                    </div>
+                  { label: 'Tema',         value: 'Vinde a Mim — 2º Seminário Espírita do NEEL' },
+                  { label: 'Data',         value: '31 de Outubro de 2026 (Sábado)' },
+                  { label: 'Horário',      value: '08h às 17h' },
+                  { label: 'Local',        value: 'Auditório SESC Cidade Alta — Rua Coronel Bezerra, 33, Natal-RN' },
+                  { label: 'Palestrantes', value: 'Jorge Elarrat (RO) e Rafael Siqueira (RJ)' },
+                  { label: 'Realização',   value: 'NEEL — Centro Espírita Esperança de Luz' },
+                  { label: 'Apoio',        value: 'CRENORTE e FERN — Federação Espírita do RN' },
+                ].map(({ label, value }) => (
+                  <div key={label} className="flex items-start gap-3">
+                    <span style={{ color: 'var(--gold)', marginTop: '3px', flexShrink: 0 }}>
+                      <Sparkles className="h-4 w-4" />
+                    </span>
+                    <p>
+                      {/* Label: Cormorant Garamond Bold */}
+                      <span className="info-label">{label}:&nbsp;</span>
+                      {/* Valor: Cormorant Garamond Regular */}
+                      <span className="info-value">{value}</span>
+                    </p>
                   </div>
                 ))}
               </div>
 
-              <div style={{ borderTop: '1px solid #f0ebe0', marginTop: '2rem', paddingTop: '2rem' }}>
-                <p className="neel-label mb-4" style={{ color: '#9ca3af' }}>
+              {/* Contatos */}
+              <div style={{ borderTop: '1px solid #ede8df', marginTop: '2rem', paddingTop: '2rem' }}>
+                <p style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700,
+                            fontSize: '1.05rem', color: 'var(--navy)', marginBottom: '1rem' }}>
                   <Phone className="inline h-4 w-4 mr-1" style={{ color: 'var(--gold)' }} />
                   Dúvidas? Fale Conosco:
                 </p>
@@ -505,7 +438,9 @@ function App() {
                   ].map(({ href, icon, text, full }) => (
                     <a key={text} href={href}
                        className={`flex items-center gap-2 p-3 rounded-xl no-underline transition-shadow hover:shadow-md ${full ? 'sm:col-span-2' : ''}`}
-                       style={{ background: '#faf7f2', border: '1.5px solid #f0ebe0', color: 'var(--navy)', fontWeight: 600, fontSize: '.9rem' }}>
+                       style={{ background: 'var(--cream)', border: '1.5px solid #ede8df',
+                                color: 'var(--navy)', fontWeight: 600, fontSize: '.9rem',
+                                fontFamily: "'Jost', sans-serif" }}>
                       {icon} {text}
                     </a>
                   ))}
@@ -516,85 +451,62 @@ function App() {
         </div>
       </section>
 
-      {/* ══ INSCRIÇÃO ════════════════════════════════════════════════════════════ */}
-      <section id="custos" className="py-20 px-4" style={{ background: 'var(--cream)' }}>
+      {/* ══ INSCRIÇÃO ════════════════════════════════════════════════════════════
+           Card azul contém: valor + "1º LOTE DISPONÍVEL" + botão.
+           Sem seção de incluso/formas de pagamento separada.               */}
+      <section id="custos" className="py-20 px-4" style={{ background: '#fff' }}>
         <div className="container mx-auto max-w-3xl">
 
-          <div className="text-center mb-14">
-            <span className="inline-block px-4 py-1.5 rounded-full text-xs font-bold mb-4"
-                  style={{ background: 'var(--gold)', color: '#fff', letterSpacing: '.1em', textTransform: 'uppercase' }}>
-              1º Lote Disponível
-            </span>
-            <h2 className="neel-display" style={{ fontSize: 'clamp(2rem,5vw,3rem)', color: 'var(--navy)', marginBottom: '.75rem' }}>
-              Inscrição
-            </h2>
-            <p style={{ color: '#6b7280', fontSize: '1rem' }}>Garanta sua vaga no valor promocional de lançamento</p>
-            <div className="gold-divider mt-4" />
-          </div>
-
-          {/* Card de valor */}
+          {/* Card principal — tudo dentro do azul */}
           <Card className="neel-card mb-8">
-            <div className="py-10 text-center rounded-t-xl"
-                 style={{ background: 'linear-gradient(135deg, var(--navy) 0%, #1a3a7a 100%)' }}>
-              <p className="neel-label mb-2" style={{ color: 'rgba(255,255,255,.55)' }}>Valor do Investimento</p>
-              <p className="neel-display" style={{ fontSize: 'clamp(3rem,10vw,4.5rem)', color: '#fff', fontWeight: 700, lineHeight: 1 }}>
+
+            {/* Bloco azul com valor, lote e botão */}
+            <div className="py-14 px-8 text-center"
+                 style={{ background: 'linear-gradient(135deg, #0d1b3e 0%, #1a3a7a 100%)' }}>
+
+              {/* Valor */}
+              <p className="neel-display"
+                 style={{ fontSize: 'clamp(3.5rem,12vw,5.5rem)', color: '#fff',
+                          fontWeight: 700, lineHeight: 1, marginBottom: '.5rem' }}>
                 R$ 100,00
               </p>
-              <p style={{ color: 'rgba(255,255,255,.55)', marginTop: '.5rem', fontSize: '.95rem' }}>por participante</p>
-            </div>
+              <p style={{ color: 'rgba(255,255,255,.55)', fontSize: '.95rem',
+                          fontFamily: "'Jost', sans-serif", marginBottom: '1.5rem' }}>
+                por participante
+              </p>
 
-            <CardContent className="p-8 md:p-10">
-              <div className="grid md:grid-cols-2 gap-8 mb-8">
-                <div>
-                  <p className="neel-display mb-4" style={{ fontSize: '1.2rem', color: 'var(--navy)' }}>O que está incluso:</p>
-                  <ul className="space-y-3">
-                    {['Acesso total às palestras', 'Material de apoio exclusivo', 'Coffee break completo', 'Certificado digital'].map(item => (
-                      <li key={item} className="flex items-center gap-3" style={{ fontSize: '.95rem', color: '#374151' }}>
-                        <CheckCircle className="h-5 w-5 flex-shrink-0" style={{ color: 'var(--gold)' }} />
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="rounded-2xl p-6" style={{ background: '#fffbf0', border: '1.5px solid #f0e0b0' }}>
-                  <p className="neel-display mb-4" style={{ fontSize: '1.2rem', color: 'var(--navy)' }}>Formas de pagamento:</p>
-                  <ul className="space-y-3">
-                    <li className="flex items-start gap-3" style={{ fontSize: '.9rem', color: '#374151' }}>
-                      <Zap className="h-5 w-5 flex-shrink-0 mt-0.5" style={{ color: 'var(--gold)' }} />
-                      <span><strong>PIX</strong> — sem taxas, confirmação imediata</span>
-                    </li>
-                    <li className="flex items-start gap-3" style={{ fontSize: '.9rem', color: '#374151' }}>
-                      <CreditCard className="h-5 w-5 flex-shrink-0 mt-0.5" style={{ color: 'var(--gold)' }} />
-                      <span><strong>Cartão</strong> — parcele em até 4× (com juros)</span>
-                    </li>
-                    <li className="flex items-start gap-3" style={{ fontSize: '.9rem', color: '#374151' }}>
-                      <Shield className="h-5 w-5 flex-shrink-0 mt-0.5" style={{ color: 'var(--gold)' }} />
-                      <span>Transação 100% segura via Asaas</span>
-                    </li>
-                  </ul>
-                </div>
+              {/* Badge 1º LOTE */}
+              <div className="inline-block px-5 py-2 rounded-full mb-8"
+                   style={{ background: 'var(--gold)', color: '#fff',
+                            fontFamily: "'Jost', sans-serif", fontWeight: 700,
+                            fontSize: '.75rem', letterSpacing: '.1em', textTransform: 'uppercase' }}>
+                1º Lote Disponível
               </div>
 
-              <div style={{ borderTop: '1px solid #f0ebe0', paddingTop: '2rem', textAlign: 'center' }}>
-                {!showForm ? (
-                  <button className="btn-gold inline-flex items-center gap-3 px-10 py-5 rounded-full text-lg"
+              {/* Botão de inscrição */}
+              {!showForm ? (
+                <div>
+                  <button className="btn-gold w-full sm:w-auto flex items-center justify-center gap-3
+                                     mx-auto px-10 py-5 rounded-full text-lg"
                           onClick={showInscricaoForm}>
-                    Fazer Minha Inscrição Agora
+                    Fazer Minha Inscrição
                     <ArrowRight className="h-5 w-5" />
                   </button>
-                ) : (
-                  <Button variant="outline" className="rounded-full px-8" onClick={() => setShowForm(false)}>
-                    <X className="mr-2 h-4 w-4" /> Fechar Formulário
-                  </Button>
-                )}
-              </div>
-            </CardContent>
+                </div>
+              ) : (
+                <Button variant="outline"
+                        className="rounded-full px-8 border-white/40 text-white hover:bg-white/10"
+                        onClick={() => setShowForm(false)}>
+                  <X className="mr-2 h-4 w-4" /> Fechar Formulário
+                </Button>
+              )}
+            </div>
           </Card>
 
           {/* ── FORMULÁRIO ────────────────────────────────────────────────────── */}
           {showForm && (
             <Card id="formulario-inscricao" className="neel-card">
-              <div className="px-8 pt-8 pb-6 rounded-t-xl"
+              <div className="px-8 pt-8 pb-6"
                    style={{ background: 'linear-gradient(135deg, var(--navy), #1a3a7a)' }}>
                 <h3 className="neel-display text-white flex items-center gap-3" style={{ fontSize: '1.5rem' }}>
                   <User className="h-5 w-5" style={{ color: 'var(--gold2)' }} />
@@ -681,7 +593,6 @@ function App() {
                       Forma de Pagamento *
                     </p>
                     <div className="space-y-3 mb-6">
-                      {/* PIX */}
                       <div className={`pay-opt ${formData.paymentMethod === 'pix' ? 'active' : ''}`}
                            onClick={() => setFormData(p => ({ ...p, paymentMethod: 'pix', installments: 1 }))}>
                         <div className="flex items-center gap-4">
@@ -694,7 +605,6 @@ function App() {
                           </div>
                         </div>
                       </div>
-                      {/* Cartão */}
                       <div className={`pay-opt ${formData.paymentMethod === 'credit' ? 'active' : ''}`}
                            onClick={() => setFormData(p => ({ ...p, paymentMethod: 'credit', installments: 1 }))}>
                         <div className="flex items-center gap-4">
@@ -742,7 +652,7 @@ function App() {
 
                   {/* Submit */}
                   <button type="submit"
-                          className="btn-gold w-full flex items-center justify-center gap-3 py-5 rounded-xl text-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                          className="btn-gold w-full flex items-center justify-center gap-3 py-5 rounded-xl text-lg"
                           disabled={isProcessing || !phoneValid || !cpfValid}>
                     {isProcessing ? (
                       <><div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white" /> Processando...</>
@@ -772,14 +682,16 @@ function App() {
           2º Seminário Espírita do NEEL
         </p>
         <div className="flex justify-center gap-5 mb-4">
-          <a href="https://instagram.com/neelsga" style={{ color: 'rgba(255,255,255,.5)', transition: 'color .2s' }}
-             onMouseOver={e=>e.currentTarget.style.color='var(--gold2)'}
-             onMouseOut={e=>e.currentTarget.style.color='rgba(255,255,255,.5)'}>
+          <a href="https://instagram.com/neelsga"
+             style={{ color: 'rgba(255,255,255,.5)', transition: 'color .2s' }}
+             onMouseOver={e => e.currentTarget.style.color = 'var(--gold2)'}
+             onMouseOut={e  => e.currentTarget.style.color = 'rgba(255,255,255,.5)'}>
             <Instagram className="h-5 w-5" />
           </a>
-          <a href="https://wa.me/5584991335975" style={{ color: 'rgba(255,255,255,.5)', transition: 'color .2s' }}
-             onMouseOver={e=>e.currentTarget.style.color='var(--gold2)'}
-             onMouseOut={e=>e.currentTarget.style.color='rgba(255,255,255,.5)'}>
+          <a href="https://wa.me/5584991335975"
+             style={{ color: 'rgba(255,255,255,.5)', transition: 'color .2s' }}
+             onMouseOver={e => e.currentTarget.style.color = 'var(--gold2)'}
+             onMouseOut={e  => e.currentTarget.style.color = 'rgba(255,255,255,.5)'}>
             <Phone className="h-5 w-5" />
           </a>
         </div>
