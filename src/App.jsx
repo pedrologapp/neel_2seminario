@@ -312,18 +312,17 @@ function App() {
           <div style={{maxWidth:'42rem',textAlign:'center'}}>
 
             <p className="fu" style={{fontFamily:"-apple-system,'Segoe UI',sans-serif",fontWeight:700,fontSize:'.72rem',letterSpacing:'.16em',textTransform:'uppercase',color:'var(--gold2)',marginBottom:'1.25rem',display:'flex',alignItems:'center',justifyContent:'center',gap:'.5rem'}}>
-              <Sparkles style={{width:'1rem',height:'1rem'}}/>
+   
               2º Seminário Espírita do NEEL
-              <Sparkles style={{width:'1rem',height:'1rem'}}/>
+
             </p>
 
             {/* ── Título corrigido (era "min") ── */}
             <h1 className="fu2" style={{fontFamily:"'Playfair Display',Georgia,serif",fontWeight:700,fontSize:'clamp(3.2rem,10vw,6rem)',color:'#fff',lineHeight:1.08,marginBottom:'1.25rem'}}>
-              Vinde a Mim
+              "Vinde a mim
             </h1>
-
             <p className="fu2" style={{fontFamily:"'Lora',Georgia,serif",fontStyle:'italic',fontWeight:400,fontSize:'clamp(1rem,3vw,1.25rem)',color:'rgba(255,255,255,.78)',marginBottom:'2.75rem',lineHeight:1.65}}>
-              "Todos os que estais cansados e oprimidos,<br/>e eu vos aliviarei."
+              Todos os que estais cansados e oprimidos,<br/>e eu vos aliviarei."
             </p>
 
             <div className="fu3" style={{display:'flex',flexWrap:'wrap',gap:'1rem',justifyContent:'center',marginBottom:'4rem'}}>
@@ -339,7 +338,7 @@ function App() {
               {[
                 {icon:<Calendar style={{width:'1.25rem',height:'1.25rem'}}/>, top:'31 de Outubro', sub:'2026'},
                 {icon:<Clock    style={{width:'1.25rem',height:'1.25rem'}}/>, top:'08h às 17h',    sub:'Dia inteiro'},
-                {icon:<MapPin   style={{width:'1.25rem',height:'1.25rem'}}/>, top:'Cidade Alta',   sub:'Natal, RN'},
+                {icon:<MapPin   style={{width:'1.25rem',height:'1.25rem'}}/>, top:'Auditório SESC Cidade Alta',   sub:'Rua Coronel Bezerra, 33, Cidade Alta, Natal - RN'},
               ].map(({icon,top,sub})=>(
                 <div key={top} style={{display:'flex',flexDirection:'column',alignItems:'center',gap:'.35rem'}}>
                   <span style={{color:'var(--gold2)'}}>{icon}</span>
@@ -364,13 +363,13 @@ function App() {
 
           <div className="nd-card" style={{padding:'2rem 2.25rem'}}>
             {[
-              {label:'Tema',         value:'"Vinde a Mim — todos os que estais cansados e oprimidos, e eu vos aliviarei."'},
-              {label:'Data',         value:'31 de Outubro de 2026 — Sábado'},
-              {label:'Horário',      value:'08h às 17h'},
-              {label:'Local',        value:'Auditório SESC Cidade Alta — Rua Coronel Bezerra, 33, Natal-RN'},
-              {label:'Palestrantes', value:'Jorge Elarrat (RO) e Rafael Siqueira (RJ)'},
-              {label:'Realização',   value:'NEEL — Centro Espírita Esperança de Luz'},
-              {label:'Apoio',        value:'CRENORTE e FERN — Federação Espírita do RN'},
+              {label:'TEMA',         value:'"Vinde a Mim — todos os que estais cansados e oprimidos, e eu vos aliviarei."'},
+              {label:'DATA',         value:'31 de Outubro de 2026 — Sábado'},
+              {label:'HORÁRIO',      value:'08h às 17h'},
+              {label:'LOCAL',        value:'Auditório SESC Cidade Alta — Rua Coronel Bezerra, 33, Natal-RN'},
+              {label:'PALESTRANTES', value:'Jorge Elarrat (RO) e Rafael Siqueira (RJ)'},
+              {label:'REALIZAÇÃO',   value:'NEEL — Centro Espírita Esperança de Luz'},
+              {label:'APOIO',        value:'CRENORTE e FERN — Federação Espírita do RN'},
             ].map(({label,value})=>(
               <div key={label} className="info-row">
                 <Sparkles style={{width:'.9rem',height:'.9rem',color:'var(--gold)',flexShrink:0,marginTop:'.2rem'}}/>
@@ -389,7 +388,7 @@ function App() {
                 {[
                   {href:'https://wa.me/5584991335975',icon:<Phone style={{width:'1rem',height:'1rem',color:'#16a34a'}}/>,text:'(84) 9 9133-5975'},
                   {href:'https://wa.me/5584988049371',icon:<Phone style={{width:'1rem',height:'1rem',color:'#16a34a'}}/>,text:'(84) 9 8804-9371'},
-                  {href:'https://instagram.com/neelsga',icon:<Instagram style={{width:'1rem',height:'1rem',color:'#e1306c'}}/>,text:'@neelsga'},
+                  {href:'https://instagram.com/neel.sga',icon:<Instagram style={{width:'1rem',height:'1rem',color:'#e1306c'}}/>,text:'@neelsga'},
                 ].map(({href,icon,text})=>(
                   <a key={text} href={href} style={{display:'flex',alignItems:'center',gap:'.6rem',padding:'.75rem 1rem',borderRadius:'.75rem',background:'var(--cream)',border:'1.5px solid #ede8df',color:'var(--navy)',fontFamily:"'Lora',serif",fontWeight:600,fontSize:'.88rem',textDecoration:'none',transition:'box-shadow .2s'}}
                      onMouseOver={e=>e.currentTarget.style.boxShadow='0 2px 12px rgba(0,0,0,.1)'}
