@@ -16,9 +16,6 @@ import {
 
 function App() {
 
-  /* ─── CSS injetado no <head> ──────────────────────────────────────────────
-     Usa Playfair Display (já no App.css) como display font
-     e Lora / system-sans como corpo — mesma combinação da imagem de referência */
   useEffect(() => {
     if (document.getElementById('neel-extra')) return;
     const s = document.createElement('style');
@@ -32,7 +29,6 @@ function App() {
         --white: #ffffff;
       }
 
-      /* ── Tipografia ── */
       .nd-title {
         font-family: 'Playfair Display', Georgia, serif;
         font-weight: 700;
@@ -65,7 +61,6 @@ function App() {
         text-transform: uppercase;
       }
 
-      /* ── Botões ── */
       .btn-primary {
         display: inline-flex; align-items: center; justify-content: center; gap: .6rem;
         background: var(--gold);
@@ -103,7 +98,6 @@ function App() {
       }
       .btn-ghost-white:hover { border-color: #fff; background: rgba(255,255,255,.1); }
 
-      /* ── Cards ── */
       .nd-card {
         background: #fff;
         border-radius: 1.25rem;
@@ -112,18 +106,15 @@ function App() {
         overflow: hidden;
       }
 
-      /* ── Divider dourado ── */
       .gold-line {
         width: 48px; height: 3px;
         background: linear-gradient(90deg, var(--gold), var(--gold2));
         border-radius: 2px; margin: .75rem auto 0;
       }
 
-      /* ── Info row ── */
       .info-row { display: flex; gap: .75rem; align-items: flex-start; padding: .85rem 0; border-bottom: 1px solid #f0ebe0; }
       .info-row:last-child { border-bottom: none; }
 
-      /* ── Form inputs ── */
       .nd-input {
         width: 100%;
         height: 3rem;
@@ -141,7 +132,6 @@ function App() {
       .nd-input.ok  { border-color: #22c55e !important; background: #f0fdf4 !important; }
       .nd-input.err { border-color: #ef4444 !important; background: #fef2f2 !important; }
 
-      /* ── Pay option ── */
       .pay-row {
         border: 1.5px solid #e5e7eb; border-radius: 1rem;
         padding: 1rem 1.25rem; cursor: pointer;
@@ -150,7 +140,6 @@ function App() {
       .pay-row:hover  { border-color: var(--gold2); }
       .pay-row.picked { border-color: var(--gold); background: #fffbf0; }
 
-      /* ── Dot radio ── */
       .dot {
         width: 1.1rem; height: 1.1rem;
         border-radius: 50%; border: 2px solid #d1d5db; flex-shrink: 0;
@@ -158,32 +147,32 @@ function App() {
       }
       .dot.on { border-color: var(--gold); background: var(--gold); }
 
-      /* ── Animations ── */
       @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
       .fu  { animation: fadeUp .65s ease both; }
       .fu2 { animation: fadeUp .65s .12s ease both; }
       .fu3 { animation: fadeUp .65s .25s ease both; }
 
-      /* ── Section spacing ── */
       .nd-section { padding: 5rem 1.5rem; }
       @media(max-width:640px) { .nd-section { padding: 3.5rem 1.25rem; } }
 
-      /* ── Price number ── */
+      /* ── Fonte do preço — tamanho corrigido ── */
       .price-num {
         font-family: 'Playfair Display', Georgia, serif;
         font-weight: 700;
-        font-size: clamp(3.5rem, 12vw, 5rem);
+        font-size: clamp(2rem, 6vw, 2.75rem);
         color: #fff;
-        line-height: 1;
+        line-height: 1.15;
+        margin: 0;
       }
 
-      /* ── Section header ── */
       .section-tag {
         font-family: -apple-system, 'Segoe UI', sans-serif;
         font-weight: 700; font-size: .7rem;
         letter-spacing: .14em; text-transform: uppercase;
         color: var(--gold); margin-bottom: .5rem;
       }
+
+      @keyframes spin { to { transform: rotate(360deg); } }
     `;
     document.head.appendChild(s);
   }, []);
@@ -296,7 +285,6 @@ function App() {
     finally { setIsProcessing(false); }
   };
 
-  /* ─── Tela de sucesso ───────────────────────────────────────────────────── */
   if (inscriptionSuccess) return (
     <div style={{minHeight:'100vh',background:'var(--cream)',display:'flex',alignItems:'center',justifyContent:'center',padding:'1.5rem'}}>
       <div className="nd-card" style={{width:'100%',maxWidth:'26rem',padding:'2.5rem',textAlign:'center'}}>
@@ -312,38 +300,32 @@ function App() {
     </div>
   );
 
-  /* ─── Render ────────────────────────────────────────────────────────────── */
   return (
     <div style={{background:'var(--cream)',minHeight:'100vh'}}>
 
       {/* ══ HERO ═════════════════════════════════════════════════════════════ */}
       <section style={{position:'relative',minHeight:'100svh',overflow:'hidden'}}>
-        {/* Imagem de fundo */}
         <div style={{position:'absolute',inset:0,backgroundImage:`url(${heroImage})`,backgroundSize:'cover',backgroundPosition:'center 15%'}}/>
-        {/* Overlay */}
         <div style={{position:'absolute',inset:0,background:'linear-gradient(to bottom,rgba(8,18,42,.25) 0%,rgba(8,18,42,.55) 55%,rgba(8,18,42,.88) 100%)'}}/>
 
-        {/* Conteúdo */}
         <div style={{position:'relative',zIndex:10,minHeight:'100svh',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',padding:'6rem 1.5rem 3rem'}}>
           <div style={{maxWidth:'42rem',textAlign:'center'}}>
 
-            {/* Super-label */}
             <p className="fu" style={{fontFamily:"-apple-system,'Segoe UI',sans-serif",fontWeight:700,fontSize:'.72rem',letterSpacing:'.16em',textTransform:'uppercase',color:'var(--gold2)',marginBottom:'1.25rem',display:'flex',alignItems:'center',justifyContent:'center',gap:'.5rem'}}>
-
-              2º SEMINÁRIO ESPÍRITA DO NEEL
+              <Sparkles style={{width:'1rem',height:'1rem'}}/>
+              2º Seminário Espírita do NEEL
+              <Sparkles style={{width:'1rem',height:'1rem'}}/>
             </p>
 
-            {/* Título hero */}
+            {/* ── Título corrigido (era "min") ── */}
             <h1 className="fu2" style={{fontFamily:"'Playfair Display',Georgia,serif",fontWeight:700,fontSize:'clamp(3.2rem,10vw,6rem)',color:'#fff',lineHeight:1.08,marginBottom:'1.25rem'}}>
-              "Vinde a&nbsp;min
+              Vinde a Mim
             </h1>
 
-            {/* Citação */}
             <p className="fu2" style={{fontFamily:"'Lora',Georgia,serif",fontStyle:'italic',fontWeight:400,fontSize:'clamp(1rem,3vw,1.25rem)',color:'rgba(255,255,255,.78)',marginBottom:'2.75rem',lineHeight:1.65}}>
-              Todos os que estais cansados e oprimidos,<br/>e eu vos aliviarei."
+              "Todos os que estais cansados e oprimidos,<br/>e eu vos aliviarei."
             </p>
 
-            {/* Botões */}
             <div className="fu3" style={{display:'flex',flexWrap:'wrap',gap:'1rem',justifyContent:'center',marginBottom:'4rem'}}>
               <button className="btn-primary" onClick={openForm}>
                 Faça sua inscrição aqui <ArrowRight style={{width:'1.1rem',height:'1.1rem'}}/>
@@ -353,7 +335,6 @@ function App() {
               </button>
             </div>
 
-            {/* Badges de data/local */}
             <div className="fu3" style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:'1rem',color:'#fff'}}>
               {[
                 {icon:<Calendar style={{width:'1.25rem',height:'1.25rem'}}/>, top:'31 de Outubro', sub:'2026'},
@@ -375,23 +356,21 @@ function App() {
       <section id="sobre" className="nd-section" style={{background:'var(--cream)'}}>
         <div style={{maxWidth:'46rem',margin:'0 auto'}}>
 
-          {/* Cabeçalho */}
           <div style={{textAlign:'center',marginBottom:'2.75rem'}}>
-            <p className="section-tag">Núcleo Espírita Esperança de Luz - NEEL </p>
+            <p className="section-tag">Núcleo Espírita Esperança de Luz — NEEL</p>
             <h2 className="nd-title" style={{fontSize:'clamp(1.9rem,5vw,2.75rem)'}}>Informações do Evento</h2>
             <div className="gold-line"/>
           </div>
 
-          {/* Card de infos */}
           <div className="nd-card" style={{padding:'2rem 2.25rem'}}>
             {[
-              {label:'TEMA',         value:'"Vinde a Mim - todos os que estais cansados e aprimidos, e eu vos aliviarei."'},
-              {label:'DATA',         value:'31 de Outubro de 2026 — Sábado'},
-              {label:'HORÁRIO',      value:'08h às 17h'},
-              {label:'LOCAL',        value:'Auditório SESC Cidade Alta — Rua Coronel Bezerra, 33, Natal-RN'},
-              {label:'PALESTRANTES', value:'Jorge Elarrat (RO) e Rafael Siqueira (RJ)'},
-              {label:'REALIZAÇÃO',   value:'NEEL — Centro Espírita Esperança de Luz'},
-              {label:'APOIO',        value:'CRENORTE e FERN — Federação Espírita do RN'},
+              {label:'Tema',         value:'"Vinde a Mim — todos os que estais cansados e oprimidos, e eu vos aliviarei."'},
+              {label:'Data',         value:'31 de Outubro de 2026 — Sábado'},
+              {label:'Horário',      value:'08h às 17h'},
+              {label:'Local',        value:'Auditório SESC Cidade Alta — Rua Coronel Bezerra, 33, Natal-RN'},
+              {label:'Palestrantes', value:'Jorge Elarrat (RO) e Rafael Siqueira (RJ)'},
+              {label:'Realização',   value:'NEEL — Centro Espírita Esperança de Luz'},
+              {label:'Apoio',        value:'CRENORTE e FERN — Federação Espírita do RN'},
             ].map(({label,value})=>(
               <div key={label} className="info-row">
                 <Sparkles style={{width:'.9rem',height:'.9rem',color:'var(--gold)',flexShrink:0,marginTop:'.2rem'}}/>
@@ -402,7 +381,6 @@ function App() {
               </div>
             ))}
 
-            {/* Contatos */}
             <div style={{marginTop:'1.75rem',paddingTop:'1.75rem',borderTop:'1px solid #ede8df'}}>
               <p className="nd-label" style={{marginBottom:'.75rem',display:'flex',alignItems:'center',gap:'.4rem'}}>
                 <Phone style={{width:'.9rem',height:'.9rem',color:'var(--gold)'}}/> Dúvidas? Fale Conosco:
@@ -425,26 +403,34 @@ function App() {
         </div>
       </section>
 
-      {/* ══ INSCRIÇÃO ════════════════════════════════════════════════════════ */}
-      <section id="custos" className="nd-section" style={{background:'#fff'}}>
+      {/* ══ INSCRIÇÃO ════════════════════════════════════════════════════════
+           Fundo bege (sem branco), card azul com layout corrigido:
+           badge → label "Valor do Ingresso" → preço → "por participante" → botão */}
+      <section id="custos" className="nd-section" style={{background:'var(--cream)'}}>
         <div style={{maxWidth:'38rem',margin:'0 auto'}}>
 
-          {/* Card azul — preço + lote + botão */}
           <div className="nd-card" style={{marginBottom:'1.5rem',overflow:'hidden'}}>
             <div style={{background:'linear-gradient(145deg,#0d1b3e 0%,#1a3570 100%)',padding:'3.5rem 2rem',textAlign:'center'}}>
 
-             {/* Badge lote — bloco separado, sem competir com o botão */}
-              <span className="nd-tag" style={{display:'inline-block',background:'var(--gold)',color:'#fff',borderRadius:'9999px',padding:'.45rem 1.25rem',marginBottom:'2rem',letterSpacing:'.1em'}}>
+              {/* 1 — Badge lote no topo */}
+              <span className="nd-tag" style={{display:'inline-block',background:'var(--gold)',color:'#fff',borderRadius:'9999px',padding:'.45rem 1.25rem',marginBottom:'1.5rem',letterSpacing:'.1em'}}>
                 1º Lote Disponível
               </span>
-              
-              <p className="price-num"> Valor do ingresso: R$&nbsp;100,00</p>
-              <p style={{fontFamily:"'Lora',Georgia,serif",color:'rgba(255,255,255,.55)',fontSize:'.92rem',margin:'.5rem 0 1.75rem'}}>
+
+              {/* 2 — Label "Valor do Ingresso" (fonte pequena, separada do número) */}
+              <p style={{fontFamily:"-apple-system,'Segoe UI',sans-serif",fontWeight:700,fontSize:'.68rem',letterSpacing:'.14em',textTransform:'uppercase',color:'rgba(255,255,255,.45)',marginBottom:'.4rem'}}>
+                Valor do Ingresso
+              </p>
+
+              {/* 3 — Número do preço (tamanho controlado pelo .price-num) */}
+              <p className="price-num">R$&nbsp;100,00</p>
+
+              {/* 4 — "por participante" */}
+              <p style={{fontFamily:"'Lora',Georgia,serif",color:'rgba(255,255,255,.5)',fontSize:'.88rem',margin:'.4rem 0 2rem'}}>
                 por participante
               </p>
 
-
-              {/* Botão — linha própria */}
+              {/* 5 — Botão na linha própria */}
               <div>
                 {!showForm ? (
                   <button className="btn-primary" style={{width:'100%',maxWidth:'22rem',fontSize:'1.05rem',padding:'1.1rem 2rem'}} onClick={openForm}>
@@ -464,7 +450,6 @@ function App() {
           {showForm && (
             <div id="form-anchor" className="nd-card">
 
-              {/* Header do form */}
               <div style={{background:'linear-gradient(135deg,#0d1b3e,#1a3570)',padding:'1.75rem 2rem'}}>
                 <h3 style={{fontFamily:"'Playfair Display',serif",fontWeight:700,fontSize:'1.35rem',color:'#fff',display:'flex',alignItems:'center',gap:'.6rem',margin:0}}>
                   <User style={{width:'1.1rem',height:'1.1rem',color:'var(--gold2)'}}/> Dados para Inscrição
@@ -477,14 +462,12 @@ function App() {
               <div style={{padding:'2rem'}}>
                 <form onSubmit={handleSubmit}>
 
-                  {/* Nome */}
                   <div style={{marginBottom:'1.25rem'}}>
                     <label style={{fontFamily:"-apple-system,'Segoe UI',sans-serif",fontWeight:700,fontSize:'.7rem',letterSpacing:'.1em',textTransform:'uppercase',color:'#6b7280',display:'block',marginBottom:'.5rem'}}>Nome completo *</label>
                     <input name="nomeParticipante" value={formData.nomeParticipante} onChange={handleChange}
                            required placeholder="Seu nome completo" className="nd-input" />
                   </div>
 
-                  {/* WhatsApp */}
                   <div style={{background:'#fffbf0',border:'1.5px solid #f0d98a',borderRadius:'1rem',padding:'1.25rem',marginBottom:'1.25rem'}}>
                     <p style={{fontFamily:"-apple-system,'Segoe UI',sans-serif",fontWeight:700,fontSize:'.82rem',color:'#92400e',display:'flex',alignItems:'center',gap:'.5rem',marginBottom:'1rem'}}>
                       <Phone style={{width:'.9rem',height:'.9rem',color:'var(--gold)'}}/> O comprovante será enviado para este WhatsApp — digite com atenção!
@@ -507,7 +490,6 @@ function App() {
                     {phoneValid && <p style={{color:'#16a34a',fontSize:'.8rem',marginTop:'.5rem',display:'flex',alignItems:'center',gap:'.3rem'}}><CheckCircle style={{width:'.8rem',height:'.8rem'}}/>WhatsApp confirmado!</p>}
                   </div>
 
-                  {/* Email + CPF */}
                   <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'1rem',marginBottom:'1.75rem'}}>
                     <div>
                       <label style={{fontFamily:"-apple-system,'Segoe UI',sans-serif",fontWeight:700,fontSize:'.68rem',letterSpacing:'.1em',textTransform:'uppercase',color:'#6b7280',display:'block',marginBottom:'.4rem'}}>E-mail *</label>
@@ -524,15 +506,13 @@ function App() {
                     </div>
                   </div>
 
-                  {/* Pagamento */}
                   <p style={{fontFamily:"'Playfair Display',serif",fontWeight:700,fontSize:'1.1rem',color:'var(--navy)',marginBottom:'1rem',display:'flex',alignItems:'center',gap:'.5rem'}}>
                     <CreditCard style={{width:'1rem',height:'1rem',color:'var(--gold)'}}/> Forma de Pagamento
                   </p>
                   <div style={{display:'flex',flexDirection:'column',gap:'.75rem',marginBottom:'1.25rem'}}>
-                    {/* PIX */}
                     <div className={`pay-row ${formData.paymentMethod==='pix'?'picked':''}`}
                          onClick={()=>setFormData(p=>({...p,paymentMethod:'pix',installments:1}))}>
-                      <div style={{display:'flex',alignItems:'center',gap:.75+'rem'}}>
+                      <div style={{display:'flex',alignItems:'center',gap:'.75rem'}}>
                         <div className={`dot ${formData.paymentMethod==='pix'?'on':''}`}/>
                         <div>
                           <p style={{fontFamily:"-apple-system,'Segoe UI',sans-serif",fontWeight:700,fontSize:'.95rem',color:'var(--navy)',margin:0}}>PIX</p>
@@ -540,10 +520,9 @@ function App() {
                         </div>
                       </div>
                     </div>
-                    {/* Cartão */}
                     <div className={`pay-row ${formData.paymentMethod==='credit'?'picked':''}`}
                          onClick={()=>setFormData(p=>({...p,paymentMethod:'credit',installments:1}))}>
-                      <div style={{display:'flex',alignItems:'center',gap:.75+'rem'}}>
+                      <div style={{display:'flex',alignItems:'center',gap:'.75rem'}}>
                         <div className={`dot ${formData.paymentMethod==='credit'?'on':''}`}/>
                         <div>
                           <p style={{fontFamily:"-apple-system,'Segoe UI',sans-serif",fontWeight:700,fontSize:'.95rem',color:'var(--navy)',margin:0}}>Cartão de Crédito</p>
@@ -553,7 +532,6 @@ function App() {
                     </div>
                   </div>
 
-                  {/* Parcelas */}
                   {formData.paymentMethod==='credit' && (
                     <div style={{marginBottom:'1.25rem'}}>
                       <label style={{fontFamily:"-apple-system,'Segoe UI',sans-serif",fontWeight:700,fontSize:'.68rem',letterSpacing:'.1em',textTransform:'uppercase',color:'#6b7280',display:'block',marginBottom:'.4rem'}}>Parcelas</label>
@@ -570,7 +548,6 @@ function App() {
                     </div>
                   )}
 
-                  {/* Total */}
                   <div style={{background:'linear-gradient(135deg,#fffbf0,#fef3c7)',border:'1.5px solid #f0d98a',borderRadius:'1rem',padding:'1.25rem',textAlign:'center',marginBottom:'1.5rem'}}>
                     <p style={{fontFamily:"-apple-system,'Segoe UI',sans-serif",fontWeight:700,fontSize:'.68rem',letterSpacing:'.12em',textTransform:'uppercase',color:'#92400e',marginBottom:'.3rem'}}>Valor Total</p>
                     <p style={{fontFamily:"'Playfair Display',serif",fontWeight:700,fontSize:'2.25rem',color:'var(--navy)',lineHeight:1}}>
@@ -583,7 +560,6 @@ function App() {
                     )}
                   </div>
 
-                  {/* Submit */}
                   <button type="submit" className="btn-primary"
                           style={{width:'100%',padding:'1.1rem',fontSize:'1rem',borderRadius:'.875rem'}}
                           disabled={isProcessing||!phoneValid||!cpfValid}>
@@ -615,7 +591,7 @@ function App() {
         </p>
         <div style={{display:'flex',justifyContent:'center',gap:'1.25rem',marginBottom:'1rem'}}>
           {[
-            {href:'https://instagram.com/neelsga',icon:<Instagram style={{width:'1.2rem',height:'1.2rem'}}/>},
+            {href:'https://instagram.com/neel.sga',icon:<Instagram style={{width:'1.2rem',height:'1.2rem'}}/>},
             {href:'https://wa.me/5584991335975',  icon:<Phone    style={{width:'1.2rem',height:'1.2rem'}}/>},
           ].map(({href,icon})=>(
             <a key={href} href={href} style={{color:'rgba(255,255,255,.4)',transition:'color .2s'}}
@@ -626,7 +602,7 @@ function App() {
           ))}
         </div>
         <p style={{fontFamily:"'Lora',serif",fontSize:'.78rem',color:'rgba(255,255,255,.35)'}}>
-          © 2026 NEEL — Centro Espírita Esperança de Luz. Todos os direitos reservados.
+          © 2026 NEEL — Núcleo Espírita Esperança de Luz. Todos os direitos reservados.
         </p>
         <p style={{fontFamily:"'Lora',serif",fontSize:'.7rem',color:'rgba(255,255,255,.25)',marginTop:'.25rem'}}>
           31 de Outubro de 2026 — Natal, RN
