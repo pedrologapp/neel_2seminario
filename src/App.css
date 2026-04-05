@@ -49,25 +49,18 @@
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  
-  /* Cores atualizadas baseadas no flyer do Seminário */
-  --primary: oklch(0.35 0.12 250); /* Azul profundo espiritual */
+  --primary: oklch(0.35 0.12 250);
   --primary-foreground: oklch(0.985 0 0);
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);
   --muted: oklch(0.97 0 0);
   --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.85 0.15 85); /* Dourado/Amarelo do flyer */
+  --accent: oklch(0.85 0.15 85);
   --accent-foreground: oklch(0.2 0.05 250);
-  
   --destructive: oklch(0.577 0.245 27.325);
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
   --ring: oklch(0.708 0 0);
-  
-  /* Cores utilitárias */
-  --color-success: #10b981;
-  --color-danger: #ef4444;
 }
 
 .dark {
@@ -97,89 +90,27 @@
   }
   body {
     @apply bg-background text-foreground antialiased;
+    /* Fonte base — mesma da referência (imagem 3) */
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
   }
 }
 
-/* ============================================
-   TIPOGRAFIA E FONTES
-   ============================================ */
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Lora:ital,wght@0,400;0,600;1,400&display=swap');
+/* ── Scroll suave ── */
+html { scroll-behavior: smooth; }
 
-.font-serif {
-  font-family: 'Playfair Display', serif;
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #f4efe6; }
+::-webkit-scrollbar-thumb { background: rgba(13,27,62,.25); border-radius: 9999px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(13,27,62,.4); }
+
+/* ── Animação de spin (botão de loading) ── */
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
 
-p {
-  font-family: 'Lora', serif;
-}
-
-/* ============================================
-   ESTILOS ESPECÍFICOS DO SEMINÁRIO
-   ============================================ */
-
-.hero-section {
-  position: relative;
-  overflow: hidden;
-}
-
-.section-padding {
-  @apply py-16 px-4 md:py-24 md:px-8;
-}
-
-.card-hover {
-  @apply transition-all duration-300 hover:shadow-2xl hover:-translate-y-2;
-}
-
-/* Animações */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.animate-fade-in {
-  animation: fadeIn 0.8s ease-out forwards;
-}
-
-/* Estados de Validação */
-.input-valid {
-  @apply border-green-500 bg-green-50;
-}
-
-.input-invalid {
-  @apply border-red-500 bg-red-50;
-}
-
-/* Utilitários Visuais */
-.text-gradient-gold {
-  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.shadow-spiritual {
-  box-shadow: 0 20px 50px rgba(30, 58, 138, 0.15);
-}
-
-/* Scroll Suave */
-html {
-  scroll-behavior: smooth;
-}
-
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  @apply bg-muted;
-}
-
-::-webkit-scrollbar-thumb {
-  @apply bg-primary/30 rounded-full hover:bg-primary/50 transition-colors;
-}
-
-
-
+/* ── Fontes Google — carregadas via link no <head> pelo useEffect do JSX ──
+   Playfair Display: títulos (peso, presença)
+   Lora:            corpo de texto (leiturabilidade, serifa suave)
+   Mantidas aqui como fallback para SSR / pré-render               ── */
 
