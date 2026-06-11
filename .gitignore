@@ -1,0 +1,17 @@
+# Dependências
+node_modules/
+
+# Build (a Vercel gera o build na hora do deploy)
+dist/
+
+# Documentos internos — contém credenciais (workflow n8n com chave Asaas)
+docs/
+
+# Variáveis de ambiente
+.env
+.env.*
+
+# Sistema / editor
+.DS_Store
+Thumbs.db
+*.log

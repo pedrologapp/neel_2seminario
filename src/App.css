@@ -109,8 +109,161 @@ html { scroll-behavior: smooth; }
   to { transform: rotate(360deg); }
 }
 
-/* ── Fontes Google — carregadas via link no <head> pelo useEffect do JSX ──
+/* ── Fontes Google — carregadas via <link> no index.html ──
    Playfair Display: títulos (peso, presença)
-   Lora:            corpo de texto (leiturabilidade, serifa suave)
-   Mantidas aqui como fallback para SSR / pré-render               ── */
+   Lora:            corpo de texto (leiturabilidade, serifa suave) ── */
+
+/* ════════════════════════════════════════════════════════════
+   Estilos do seminário (antes injetados via useEffect no App.jsx)
+   ════════════════════════════════════════════════════════════ */
+
+:root {
+  --navy:  #0d1b3e;
+  --gold:  #b8861e;
+  --gold2: #d4a732;
+  --cream: #f4efe6;
+  --white: #ffffff;
+}
+
+.nd-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1.15;
+}
+.nd-subtitle {
+  font-family: 'Lora', Georgia, serif;
+  font-weight: 400;
+  color: #4b5563;
+  line-height: 1.7;
+}
+.nd-label {
+  font-family: 'Lora', Georgia, serif;
+  font-weight: 600;
+  font-size: .95rem;
+  color: var(--navy);
+}
+.nd-value {
+  font-family: 'Lora', Georgia, serif;
+  font-weight: 400;
+  font-size: .95rem;
+  color: #374151;
+}
+.nd-tag {
+  font-family: -apple-system, 'Segoe UI', sans-serif;
+  font-weight: 700;
+  font-size: .68rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.btn-primary {
+  display: inline-flex; align-items: center; justify-content: center; gap: .6rem;
+  background: var(--gold);
+  color: #fff;
+  font-family: -apple-system, 'Segoe UI', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: .03em;
+  border: none; border-radius: 9999px;
+  padding: 1rem 2.25rem;
+  cursor: pointer;
+  transition: background .2s, transform .15s, box-shadow .2s;
+  box-shadow: 0 4px 16px rgba(184,134,30,.35);
+  text-decoration: none;
+}
+.btn-primary:hover {
+  background: var(--gold2);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(184,134,30,.45);
+}
+.btn-primary:disabled { opacity: .5; cursor: not-allowed; transform: none; box-shadow: none; }
+
+.btn-ghost-white {
+  display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+  background: transparent;
+  color: #fff;
+  font-family: -apple-system, 'Segoe UI', sans-serif;
+  font-weight: 500;
+  font-size: 1rem;
+  border: 2px solid rgba(255,255,255,.5);
+  border-radius: 9999px;
+  padding: .95rem 2rem;
+  cursor: pointer;
+  transition: border-color .2s, background .2s;
+}
+.btn-ghost-white:hover { border-color: #fff; background: rgba(255,255,255,.1); }
+
+.nd-card {
+  background: #fff;
+  border-radius: 1.25rem;
+  border: none;
+  box-shadow: 0 2px 20px rgba(13,27,62,.08);
+  overflow: hidden;
+}
+
+.gold-line {
+  width: 48px; height: 3px;
+  background: linear-gradient(90deg, var(--gold), var(--gold2));
+  border-radius: 2px; margin: .75rem auto 0;
+}
+
+.info-row { display: flex; gap: .75rem; align-items: flex-start; padding: .85rem 0; border-bottom: 1px solid #f0ebe0; }
+.info-row:last-child { border-bottom: none; }
+
+.nd-input {
+  width: 100%;
+  height: 3rem;
+  padding: 0 1rem;
+  border: 1.5px solid #e5e7eb !important;
+  border-radius: .75rem !important;
+  font-family: 'Lora', serif !important;
+  font-size: .95rem !important;
+  color: #111827 !important;
+  background: #fff !important;
+  transition: border-color .2s, box-shadow .2s !important;
+  outline: none !important;
+}
+.nd-input:focus { border-color: var(--gold) !important; box-shadow: 0 0 0 3px rgba(184,134,30,.12) !important; }
+.nd-input.ok  { border-color: #22c55e !important; background: #f0fdf4 !important; }
+.nd-input.err { border-color: #ef4444 !important; background: #fef2f2 !important; }
+
+.pay-row {
+  border: 1.5px solid #e5e7eb; border-radius: 1rem;
+  padding: 1rem 1.25rem; cursor: pointer;
+  transition: border-color .2s, background .2s;
+}
+.pay-row:hover  { border-color: var(--gold2); }
+.pay-row.picked { border-color: var(--gold); background: #fffbf0; }
+
+.dot {
+  width: 1.1rem; height: 1.1rem;
+  border-radius: 50%; border: 2px solid #d1d5db; flex-shrink: 0;
+  transition: border-color .2s, background .2s;
+}
+.dot.on { border-color: var(--gold); background: var(--gold); }
+
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+.fu  { animation: fadeUp .65s ease both; }
+.fu2 { animation: fadeUp .65s .12s ease both; }
+.fu3 { animation: fadeUp .65s .25s ease both; }
+
+.nd-section { padding: 5rem 1.5rem; }
+@media(max-width:640px) { .nd-section { padding: 3.5rem 1.25rem; } }
+
+.price-num {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 700;
+  font-size: clamp(2rem, 6vw, 2.75rem);
+  color: #fff;
+  line-height: 1.15;
+  margin: 0;
+}
+
+.section-tag {
+  font-family: -apple-system, 'Segoe UI', sans-serif;
+  font-weight: 700; font-size: .7rem;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: .5rem;
+}
 

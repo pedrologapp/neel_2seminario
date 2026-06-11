@@ -1,183 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './App.css';
-import { Button } from './components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from './components/ui/card';
-import { Separator } from './components/ui/separator';
-import { Input } from './components/ui/input';
-import { Label } from './components/ui/label';
 
 import heroImage from './assets/hero.jpg';
 
 import {
-  MapPin, Clock, Calendar, Users, CreditCard, Phone,
-  Shield, Heart, CheckCircle, ArrowRight, User, X,
-  Sparkles, Zap, Instagram,
+  MapPin, Clock, Calendar, CreditCard, Phone,
+  CheckCircle, ArrowRight, User, X,
+  Sparkles, Instagram,
 } from 'lucide-react';
 
 function App() {
 
-  useEffect(() => {
-    if (document.getElementById('neel-extra')) return;
-    const s = document.createElement('style');
-    s.id = 'neel-extra';
-    s.textContent = `
-      :root {
-        --navy:  #0d1b3e;
-        --gold:  #b8861e;
-        --gold2: #d4a732;
-        --cream: #f4efe6;
-        --white: #ffffff;
-      }
-
-      .nd-title {
-        font-family: 'Playfair Display', Georgia, serif;
-        font-weight: 700;
-        color: var(--navy);
-        line-height: 1.15;
-      }
-      .nd-subtitle {
-        font-family: 'Lora', Georgia, serif;
-        font-weight: 400;
-        color: #4b5563;
-        line-height: 1.7;
-      }
-      .nd-label {
-        font-family: 'Lora', Georgia, serif;
-        font-weight: 600;
-        font-size: .95rem;
-        color: var(--navy);
-      }
-      .nd-value {
-        font-family: 'Lora', Georgia, serif;
-        font-weight: 400;
-        font-size: .95rem;
-        color: #374151;
-      }
-      .nd-tag {
-        font-family: -apple-system, 'Segoe UI', sans-serif;
-        font-weight: 700;
-        font-size: .68rem;
-        letter-spacing: .12em;
-        text-transform: uppercase;
-      }
-
-      .btn-primary {
-        display: inline-flex; align-items: center; justify-content: center; gap: .6rem;
-        background: var(--gold);
-        color: #fff;
-        font-family: -apple-system, 'Segoe UI', sans-serif;
-        font-weight: 700;
-        font-size: 1rem;
-        letter-spacing: .03em;
-        border: none; border-radius: 9999px;
-        padding: 1rem 2.25rem;
-        cursor: pointer;
-        transition: background .2s, transform .15s, box-shadow .2s;
-        box-shadow: 0 4px 16px rgba(184,134,30,.35);
-        text-decoration: none;
-      }
-      .btn-primary:hover {
-        background: var(--gold2);
-        transform: translateY(-2px);
-        box-shadow: 0 8px 24px rgba(184,134,30,.45);
-      }
-      .btn-primary:disabled { opacity: .5; cursor: not-allowed; transform: none; box-shadow: none; }
-
-      .btn-ghost-white {
-        display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
-        background: transparent;
-        color: #fff;
-        font-family: -apple-system, 'Segoe UI', sans-serif;
-        font-weight: 500;
-        font-size: 1rem;
-        border: 2px solid rgba(255,255,255,.5);
-        border-radius: 9999px;
-        padding: .95rem 2rem;
-        cursor: pointer;
-        transition: border-color .2s, background .2s;
-      }
-      .btn-ghost-white:hover { border-color: #fff; background: rgba(255,255,255,.1); }
-
-      .nd-card {
-        background: #fff;
-        border-radius: 1.25rem;
-        border: none;
-        box-shadow: 0 2px 20px rgba(13,27,62,.08);
-        overflow: hidden;
-      }
-
-      .gold-line {
-        width: 48px; height: 3px;
-        background: linear-gradient(90deg, var(--gold), var(--gold2));
-        border-radius: 2px; margin: .75rem auto 0;
-      }
-
-      .info-row { display: flex; gap: .75rem; align-items: flex-start; padding: .85rem 0; border-bottom: 1px solid #f0ebe0; }
-      .info-row:last-child { border-bottom: none; }
-
-      .nd-input {
-        width: 100%;
-        height: 3rem;
-        padding: 0 1rem;
-        border: 1.5px solid #e5e7eb !important;
-        border-radius: .75rem !important;
-        font-family: 'Lora', serif !important;
-        font-size: .95rem !important;
-        color: #111827 !important;
-        background: #fff !important;
-        transition: border-color .2s, box-shadow .2s !important;
-        outline: none !important;
-      }
-      .nd-input:focus { border-color: var(--gold) !important; box-shadow: 0 0 0 3px rgba(184,134,30,.12) !important; }
-      .nd-input.ok  { border-color: #22c55e !important; background: #f0fdf4 !important; }
-      .nd-input.err { border-color: #ef4444 !important; background: #fef2f2 !important; }
-
-      .pay-row {
-        border: 1.5px solid #e5e7eb; border-radius: 1rem;
-        padding: 1rem 1.25rem; cursor: pointer;
-        transition: border-color .2s, background .2s;
-      }
-      .pay-row:hover  { border-color: var(--gold2); }
-      .pay-row.picked { border-color: var(--gold); background: #fffbf0; }
-
-      .dot {
-        width: 1.1rem; height: 1.1rem;
-        border-radius: 50%; border: 2px solid #d1d5db; flex-shrink: 0;
-        transition: border-color .2s, background .2s;
-      }
-      .dot.on { border-color: var(--gold); background: var(--gold); }
-
-      @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
-      .fu  { animation: fadeUp .65s ease both; }
-      .fu2 { animation: fadeUp .65s .12s ease both; }
-      .fu3 { animation: fadeUp .65s .25s ease both; }
-
-      .nd-section { padding: 5rem 1.5rem; }
-      @media(max-width:640px) { .nd-section { padding: 3.5rem 1.25rem; } }
-
-      /* ── Fonte do preço — tamanho corrigido ── */
-      .price-num {
-        font-family: 'Playfair Display', Georgia, serif;
-        font-weight: 700;
-        font-size: clamp(2rem, 6vw, 2.75rem);
-        color: #fff;
-        line-height: 1.15;
-        margin: 0;
-      }
-
-      .section-tag {
-        font-family: -apple-system, 'Segoe UI', sans-serif;
-        font-weight: 700; font-size: .7rem;
-        letter-spacing: .14em; text-transform: uppercase;
-        color: var(--gold); margin-bottom: .5rem;
-      }
-
-      @keyframes spin { to { transform: rotate(360deg); } }
-    `;
-    document.head.appendChild(s);
-  }, []);
-
-  /* ─── Lógica (intacta) ──────────────────────────────────────────────────── */
+  /* ─── Lógica ───────────────────────────────────────────────────────────── */
   const TAXA_ANTECIPACAO_VISTA = 0.025;
   const TAXA_ANTECIPACAO_PARCELADO = 0.03;
 
@@ -197,6 +31,9 @@ function App() {
   const [cpfValid,  setCpfValid]   = useState(false);
   const [phoneError,setPhoneError] = useState('');
   const [phoneValid,setPhoneValid] = useState(false);
+  const [emailError,setEmailError] = useState('');
+
+  const validarEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.trim());
 
   const validarCPF = (cpf) => {
     cpf = cpf.replace(/[^\d]/g,'');
@@ -256,6 +93,10 @@ function App() {
       if(!d){setPhoneError('');setPhoneValid(false);return;}
       if(d!==od){setPhoneError('Os números não coincidem');setPhoneValid(false);}
       else if(d.length===11){setPhoneError('');setPhoneValid(true);}
+    } else if (name==='email') {
+      setFormData(p=>({...p,email:value}));
+      if(!value.trim()) setEmailError('');
+      else setEmailError(validarEmail(value)?'':'E-mail inválido');
     } else {
       setFormData(p=>({...p,[name]:value}));
     }
@@ -266,6 +107,7 @@ function App() {
     const r=formData.cpf.replace(/\D/g,'');
     if(!r||r.length!==11){alert('CPF inválido.');return false;}
     if(!validarCPF(r)){alert('CPF inválido.');return false;}
+    if(!validarEmail(formData.email)){alert('E-mail inválido.');return false;}
     if(tdigs(formData.phone).length<11){alert('WhatsApp inválido.');return false;}
     if(tdigs(formData.phone)!==tdigs(formData.phoneConfirm)){alert('Os números de WhatsApp não coincidem.');return false;}
     return true;
@@ -282,11 +124,15 @@ function App() {
         body:JSON.stringify({nomeParticipante:formData.nomeParticipante,cpf:formData.cpf,email:formData.email,phone:formData.phone,paymentMethod:formData.paymentMethod,installments:formData.installments,ticketQuantity:formData.quantidade,amount:valorTotal,timestamp:new Date().toISOString(),event:'NEEL-2SeminarioEspirita'}),
       });
       if(res.ok){
-        const d=await res.json();
-        if(d.success===false){alert(d.message||'Erro.');return;}
+        const d=await res.json().catch(()=>null);
+        if(!d){alert('Resposta inesperada do servidor. Tente novamente ou fale conosco pelo WhatsApp.');return;}
+        if(d.success===false){alert(d.message||'Erro ao processar a inscrição.');return;}
         if(d.paymentUrl){setPaymentUrl(d.paymentUrl);setInscriptionSuccess(true);window.location.href=d.paymentUrl;}
-        else alert('Link de pagamento não encontrado.');
-      } else { const e2=await res.json(); alert(e2.message||'Erro no servidor.'); }
+        else alert('Link de pagamento não encontrado. Fale conosco pelo WhatsApp (84) 99133-5975.');
+      } else {
+        const e2=await res.json().catch(()=>null);
+        alert(e2?.message||'Erro no servidor. Tente novamente em instantes.');
+      }
     } catch(err){ console.error(err); alert('Erro de conexão. Tente novamente.'); }
     finally { setIsProcessing(false); }
   };
@@ -325,10 +171,10 @@ function App() {
 
             {/* ── Título corrigido (era "min") ── */}
             <h1 className="fu2" style={{fontFamily:"'Playfair Display',Georgia,serif",fontWeight:700,fontSize:'clamp(3.2rem,10vw,6rem)',color:'#fff',lineHeight:1.08,marginBottom:'1.25rem'}}>
-              "Vinde a mim
+              “Vinde a mim
             </h1>
             <p className="fu2" style={{fontFamily:"'Lora',Georgia,serif",fontStyle:'italic',fontWeight:400,fontSize:'clamp(1rem,3vw,1.25rem)',color:'rgba(255,255,255,.78)',marginBottom:'2.75rem',lineHeight:1.65}}>
-              Todos os que estais cansados e oprimidos,<br/>e eu vos aliviarei."
+              Todos os que estais cansados e oprimidos,<br/>e eu vos aliviarei.”
             </p>
 
             <div className="fu3" style={{display:'flex',flexWrap:'wrap',gap:'1rem',justifyContent:'center',marginBottom:'4rem'}}>
@@ -527,7 +373,9 @@ function App() {
                     <div>
                       <label style={{fontFamily:"-apple-system,'Segoe UI',sans-serif",fontWeight:700,fontSize:'.68rem',letterSpacing:'.1em',textTransform:'uppercase',color:'#6b7280',display:'block',marginBottom:'.4rem'}}>E-mail *</label>
                       <input name="email" type="email" value={formData.email} onChange={handleChange}
-                             required placeholder="seu@email.com" className="nd-input" />
+                             required placeholder="seu@email.com"
+                             className={`nd-input ${formData.email?(emailError?'err':'ok'):''}`} />
+                      {emailError && <p style={{color:'#dc2626',fontSize:'.75rem',marginTop:'.35rem'}}>{emailError}</p>}
                     </div>
                     <div>
                       <label style={{fontFamily:"-apple-system,'Segoe UI',sans-serif",fontWeight:700,fontSize:'.68rem',letterSpacing:'.1em',textTransform:'uppercase',color:'#6b7280',display:'block',marginBottom:'.4rem'}}>CPF *</label>
@@ -601,7 +449,7 @@ function App() {
 
                   <button type="submit" className="btn-primary"
                           style={{width:'100%',padding:'1.1rem',fontSize:'1rem',borderRadius:'.875rem'}}
-                          disabled={isProcessing||!phoneValid||!cpfValid}>
+                          disabled={isProcessing||!phoneValid||!cpfValid||!validarEmail(formData.email)}>
                     {isProcessing
                       ? <><div style={{width:'1.1rem',height:'1.1rem',border:'2px solid rgba(255,255,255,.4)',borderTopColor:'#fff',borderRadius:'50%',animation:'spin .7s linear infinite'}}/> Processando...</>
                       : <>Finalizar e Ir para Pagamento <ArrowRight style={{width:'1.1rem',height:'1.1rem'}}/></>
