@@ -9,6 +9,9 @@ import {
   Sparkles, Instagram, Users, Heart, HeartHandshake, UtensilsCrossed,
 } from 'lucide-react';
 
+// ⚙️ Modo manutenção — coloque false para reabrir o site normalmente
+const EM_MANUTENCAO = true;
+
 const PRECO_BASE   = 100.0;
 const PRECO_ALMOCO = 25.0;
 
@@ -201,6 +204,48 @@ function App() {
     } catch(err){ console.error(err); alert('Erro de conexão. Tente novamente.'); }
     finally { setIsProcessing(false); }
   };
+
+  /* ─── Tela de manutenção ────────────────────────────────────────────────── */
+  if (EM_MANUTENCAO) return (
+    <div style={{position:'relative',minHeight:'100svh',display:'flex',alignItems:'center',justifyContent:'center',padding:'1.5rem',overflow:'hidden'}}>
+      <div style={{position:'absolute',inset:0,backgroundImage:`url(${heroImage})`,backgroundSize:'cover',backgroundPosition:'center 15%'}}/>
+      <div style={{position:'absolute',inset:0,background:'linear-gradient(to bottom,rgba(8,18,42,.78),rgba(8,18,42,.94))'}}/>
+
+      <div className="fu" style={{position:'relative',zIndex:1,textAlign:'center',maxWidth:'34rem'}}>
+        <p className="hero-badge" style={{margin:'0 auto 1.75rem'}}>
+          <Sparkles style={{width:'.85rem',height:'.85rem'}}/> 2º Seminário Espírita do NEEL
+        </p>
+
+        <h1 style={{fontFamily:"'Playfair Display',Georgia,serif",fontWeight:700,fontSize:'clamp(2.2rem,7vw,3.5rem)',color:'#fff',lineHeight:1.12,margin:'0 0 1.25rem',textShadow:'0 4px 30px rgba(0,0,0,.35)'}}>
+          Estamos em manutenção
+        </h1>
+
+        <p style={{fontFamily:"'Lora',Georgia,serif",fontSize:'clamp(1rem,3vw,1.2rem)',color:'rgba(255,255,255,.82)',lineHeight:1.7,margin:'0 0 2.5rem'}}>
+          Estamos aprimorando a página de inscrições e voltamos em breve.<br/>
+          Agradecemos a sua compreensão. 🕊️
+        </p>
+
+        <div style={{display:'flex',flexDirection:'column',gap:'.75rem',alignItems:'center',marginBottom:'2.5rem'}}>
+          <p style={{fontFamily:"-apple-system,'Segoe UI',sans-serif",fontWeight:700,fontSize:'.7rem',letterSpacing:'.14em',textTransform:'uppercase',color:'var(--gold2)'}}>
+            Enquanto isso, fale conosco
+          </p>
+          <div style={{display:'flex',flexWrap:'wrap',gap:'.75rem',justifyContent:'center'}}>
+            <a href="https://wa.me/5584991335975" className="btn-primary" style={{padding:'.85rem 1.75rem',fontSize:'.92rem'}}>
+              <Phone style={{width:'1rem',height:'1rem'}}/> WhatsApp
+            </a>
+            <a href="https://instagram.com/neel.sga" className="btn-ghost-white" style={{padding:'.8rem 1.75rem',fontSize:'.92rem'}}>
+              <Instagram style={{width:'1rem',height:'1rem'}}/> @neel.sga
+            </a>
+          </div>
+        </div>
+
+        <div style={{display:'inline-flex',flexWrap:'wrap',gap:'1.25rem',justifyContent:'center',color:'rgba(255,255,255,.7)',fontFamily:"'Lora',serif",fontSize:'.85rem'}}>
+          <span style={{display:'inline-flex',alignItems:'center',gap:'.4rem'}}><Calendar style={{width:'.95rem',height:'.95rem',color:'var(--gold2)'}}/> 31 de Outubro de 2026</span>
+          <span style={{display:'inline-flex',alignItems:'center',gap:'.4rem'}}><MapPin style={{width:'.95rem',height:'.95rem',color:'var(--gold2)'}}/> SESC Cidade Alta, Natal-RN</span>
+        </div>
+      </div>
+    </div>
+  );
 
   /* ─── Tela de sucesso ───────────────────────────────────────────────────── */
   if (inscriptionSuccess) return (
