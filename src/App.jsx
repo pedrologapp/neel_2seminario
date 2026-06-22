@@ -10,7 +10,7 @@ import {
 } from 'lucide-react';
 
 // ⚙️ Modo manutenção — coloque false para reabrir o site normalmente
-const EM_MANUTENCAO = false;
+const EM_MANUTENCAO = true;
 
 const PRECO_BASE   = 100.0;
 const PRECO_ALMOCO = 25.0;
